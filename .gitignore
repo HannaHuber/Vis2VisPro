@@ -45,3 +45,52 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+Accelerators
+Charts
+CMake
+Common
+Deprecated
+Documentation
+Domains
+Filters
+Geovis
+GUISupport
+Imaging
+Infovis
+Interaction
+IO
+Parallel
+Remote
+Rendering
+Testing
+ThirdParty
+Utilities
+Views
+Web
+Wrapping
+
+# Visual Studio files
+*.sdf
+*.opensdf
+*.suo
+*.vcxproj.filters
+*.vcxproj.user
+*.ilk
+*.pdb
+*.tlog
+*.obj
+*.log
+*.idb
+
+# Visualisierung_2 application
+Visualisierung_2.exe
+
+# Cmake
+*.cmake
+*.rule
+build/CMakeFiles/
+
+# External folder
+Debug/External/
+Release/External/
+External/
