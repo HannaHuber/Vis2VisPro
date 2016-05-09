@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Helpers\FileHelpers.cpp" />
+    <ClCompile Include="..\Helpers\StringHelpers.cpp" />
     <ClCompile Include="..\Scene\BoundingBox.cpp" />
     <ClCompile Include="..\Scene\Camera.cpp" />
     <ClCompile Include="..\Scene\Energy.cpp" />
@@ -39,6 +41,8 @@
     <ClCompile Include="ViewFrustum.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Helpers\FileHelpers.hpp" />
+    <ClInclude Include="..\Helpers\StringHelpers.hpp" />
     <ClInclude Include="..\Scene\BoundingBox.h" />
     <ClInclude Include="..\Scene\Camera.h" />
     <ClInclude Include="..\Scene\Energy.h" />
@@ -126,7 +130,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External;$(SolutionDir)Helpers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +148,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External;$(SolutionDir)Helpers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
