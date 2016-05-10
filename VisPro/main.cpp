@@ -32,6 +32,8 @@
 #include "CutawaySurface.h"
 #include "Quad.h"
 
+#include "StringHelpers.hpp"
+
 using namespace std;
 using namespace glm;
 
@@ -333,7 +335,15 @@ void cleanup() {
 void initScreenParameters(){
 
 	// Read from file
-	std::ifstream settingsFile("settings.txt");
+//#ifdef _DEBUG
+	std::string execPath = Helper::ExecutionPath();
+	std::string settings_abs = execPath + "settings.txt";
+
+	std::ifstream settingsFile(settings_abs);
+//#else
+//	std::ifstream settingsFile("./settings.txt");
+//#endif
+
 	if (settingsFile.fail()){
 		std::cout << "ERROR: Reading settingsfile failed! Using standard settings instead" << std::endl;
 	}

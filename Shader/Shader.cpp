@@ -64,14 +64,13 @@ void Shader::useShader() const
 
 void Shader::loadShader(const std::string& shader, GLenum shaderType, GLuint& handle)
 {
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	std::string execPath = Helper::ExecutionPath();
 	std::string shader_abs = execPath + shader.substr(2,shader.length()-2);
 	std::ifstream shaderFile(shader_abs);
-#else
-
-	std::ifstream shaderFile(shader);
-#endif
+//#else
+//	std::ifstream shaderFile(shader);
+//#endif
 
 	if (!shaderFile.good())
 	{
