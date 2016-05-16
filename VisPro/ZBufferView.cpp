@@ -30,8 +30,11 @@ bool ZBufferView::ShowBufferView(bool show)
 			//depthMat.copyTo(m_depthMat);
 			cv::flip(depthMat, m_depthMat, 0);
 
+			// scale values from 0..1 to 0..255
+			m_depthMat.convertTo(m_grayMat, CV_8UC1, 255, 0);
+
 			cv::namedWindow(m_bufferWindowName.c_str(), CV_WINDOW_AUTOSIZE);
-			cv::imshow(m_bufferWindowName.c_str(), m_depthMat);
+			cv::imshow(m_bufferWindowName.c_str(), m_grayMat);
 			m_bufferWindowHandle = (HWND)cvGetWindowHandle(m_bufferWindowName.c_str());
 
 		}

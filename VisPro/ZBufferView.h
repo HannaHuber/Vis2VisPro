@@ -29,6 +29,7 @@ class ZBufferView : public BufferView{
 private:
 	float *m_depthValues;
 	cv::Mat m_depthMat;
+	cv::Mat m_grayMat;
 
 public:
 	ZBufferView(int width, int height);
