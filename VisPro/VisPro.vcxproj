@@ -38,6 +38,7 @@
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="SceneObjectManager.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureView.cpp" />
     <ClCompile Include="UserInput.cpp" />
     <ClCompile Include="ViewFrustum.cpp" />
     <ClCompile Include="ZBufferView.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Quad.h" />
     <ClInclude Include="SceneObjectManager.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureView.h" />
     <ClInclude Include="UserInput.h" />
     <ClInclude Include="ViewFrustum.h" />
     <ClInclude Include="ZBufferView.h" />
