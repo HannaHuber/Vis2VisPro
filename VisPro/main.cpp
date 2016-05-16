@@ -33,6 +33,21 @@
 #include "Quad.h"
 
 #include "StringHelpers.hpp"
+//#include <boost_1_58_0/boost/gil/gil_all.hpp>
+//#include "boost/gil/gil_all.hpp"
+#include <opencv2\opencv.hpp>
+#include <opencv2\imgproc\imgproc.hpp>
+#include <opencv2\highgui\highgui.hpp>
+#include <opencv2\features2d\features2d.hpp>
+#include <opencv2\nonfree\features2d.hpp>
+#include <opencv2\highgui\highgui.hpp>
+#include <opencv2\nonfree\nonfree.hpp>
+
+#include <Windows.h> 
+#include <opencv2\highgui\highgui_c.h>
+#include "ZBufferView.h"
+#include "RGBBufferView.h"
+
 
 using namespace std;
 using namespace glm;
@@ -74,8 +89,6 @@ UserInput user_input;
 
 // Number of culled faces
 int drawnFaces = 0;
-
-
 
 int main(int argc, char** argv) {	
 
@@ -127,6 +140,10 @@ int main(int argc, char** argv) {
 	double interval = 1; 
 	int fps = 0;
 
+	// Init
+	ZBufferView zBufferView(width, height);
+	RGBBufferView rgbBufferView(width, height);
+
 	// Render loop running condition
 	bool isRunning = true;
 	std::cout << std::endl << "Renderloop is starting..." << std::endl;
@@ -153,6 +170,17 @@ int main(int argc, char** argv) {
 
 		// Init depth image
 		createDepthImage();
+
+		// TODO: check depth buffer here
+		// write out z-Buffer as image or view with CodeXL
+
+		zBufferView.ShowBufferView(showZBufferView);
+		rgbBufferView.ShowBufferView(showZBufferView);
+		if (updateZBufferView){
+			zBufferView.UpdateBufferView();
+			rgbBufferView.UpdateBufferView();
+		}
+		updateZBufferView = false;
 
 		// Compute cutaway surface
 		calculateCutawaySurface();

@@ -13,6 +13,9 @@ bool useTransparency = true;
 bool useBloom = false;
 bool countDown = true;
 
+bool showZBufferView = false;
+bool updateZBufferView = false;
+
 UserInput::UserInput(GLFWwindow* win)
 : window(win)
 {
@@ -215,6 +218,30 @@ void UserInput::switchBloomMode(){
 	}
 }
 
+void UserInput::toggleShowZBufferView()
+{
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+		if (glfwGetTime() - lastButtonPress > minDist){
+ 			std::cout << "Toggle show z buffer mode" << std::endl;
+			lastButtonPress = glfwGetTime();
+			showZBufferView = !showZBufferView;
+		}
+	}
+
+}
+
+void UserInput::toggleUpdateZBufferView()
+{
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+		if (glfwGetTime() - lastButtonPress > minDist){
+			std::cout << "Toggle update z buffer mode" << std::endl;
+			lastButtonPress = glfwGetTime();
+			updateZBufferView = !updateZBufferView;
+		}
+	}
+
+}
+
 void UserInput::switchModi() {
 	
 		switchWireFrameMode();
@@ -225,4 +252,7 @@ void UserInput::switchModi() {
 		switchTransparencyMode();
 		switchBloomMode();
 		switchCountdownMode();	
+
+		toggleShowZBufferView();
+		toggleUpdateZBufferView();
 }

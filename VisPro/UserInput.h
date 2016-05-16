@@ -41,9 +41,13 @@ private:
 	void switchTransparencyMode();
 	void switchBloomMode();
 	void switchCountdownMode();
+
+	void toggleShowZBufferView();
+	void toggleUpdateZBufferView();
+
 };
 
 //global
-extern bool showFrameTime, useWireFrame, useLinearTexSampling, useViewFrustumCulling, useTransparency, useBloom, countDown;
+extern bool showFrameTime, useWireFrame, useLinearTexSampling, useViewFrustumCulling, useTransparency, useBloom, countDown, showZBufferView, updateZBufferView;
 extern int useMipMapping; // 0: off, 1: nearest neighbour, 2: linear
 
