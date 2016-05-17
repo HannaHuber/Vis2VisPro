@@ -29,6 +29,7 @@ bool TextureView::ShowBufferView(bool show)
 			// get texture information
 			glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
 			// TODO: restore texture
+			glBindTexture(GL_TEXTURE_2D, 0);
 
 			// make an OpenCV image
 			cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);
@@ -76,7 +77,7 @@ bool TextureView::UpdateBufferView()
 		// get texture information
 		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
 		// TODO: restore texture
-
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// make an OpenCV image
 		cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);

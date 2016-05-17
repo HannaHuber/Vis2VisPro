@@ -33,6 +33,7 @@
     <ClCompile Include="..\Shader\TextureShader.cpp" />
     <ClCompile Include="..\Shader\ZBufferShader.cpp" />
     <ClCompile Include="CutawaySurface.cpp" />
+    <ClCompile Include="FrameBufferObjectView.cpp" />
     <ClCompile Include="RGBBufferView.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Quad.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="..\Shader\ZBufferShader.h" />
     <ClInclude Include="BufferView.h" />
     <ClInclude Include="CutawaySurface.h" />
+    <ClInclude Include="FrameBufferObjectView.h" />
     <ClInclude Include="RGBBufferView.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="SceneObjectManager.h" />
