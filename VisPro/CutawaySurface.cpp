@@ -148,5 +148,10 @@ void CutawaySurface::prepareRenderPass(int unit) {
 	glDepthFunc(GL_LESS);
 
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, target_tex);
+	if (last_target == 2) {
+		glBindTexture(GL_TEXTURE_2D, tex2);
+	}
+	else {
+		glBindTexture(GL_TEXTURE_2D, tex1);
+	}
 }

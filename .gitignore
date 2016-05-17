@@ -95,4 +95,5 @@ Debug/External/
 Release/External/
 
 *.dll
+*.exe
 External/
