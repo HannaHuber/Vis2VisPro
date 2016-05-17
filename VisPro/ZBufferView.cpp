@@ -73,13 +73,15 @@ bool ZBufferView::UpdateBufferView()
 		cv::flip(depthMat, m_depthMat, 0);
 		//cv::cvtColor(m_RGBMat, m_BGRMat, CV_RGB2BGR);
 
+		// scale values from 0..1 to 0..255
+		m_depthMat.convertTo(m_grayMat, CV_8UC1, 255, 0);
 
 		//// check minimal and maximal value
 		//double min, max;
 		//cv::minMaxLoc(m_depthMat, &min, &max);
 
 		// is this the same window ?
-		cv::imshow(m_bufferWindowName.c_str(), m_depthMat);
+		cv::imshow(m_bufferWindowName.c_str(), m_grayMat);
 		
 		return true;
 

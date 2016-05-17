@@ -47,6 +47,7 @@
 #include <opencv2\highgui\highgui_c.h>
 #include "ZBufferView.h"
 #include "RGBBufferView.h"
+#include "TextureView.h"
 
 
 using namespace std;
@@ -143,6 +144,7 @@ int main(int argc, char** argv) {
 	// Init
 	ZBufferView zBufferView(width, height);
 	RGBBufferView rgbBufferView(width, height);
+	TextureView tex1View(width, height, 0);
 
 	// Render loop running condition
 	bool isRunning = true;
@@ -180,10 +182,16 @@ int main(int argc, char** argv) {
 			zBufferView.UpdateBufferView();
 			rgbBufferView.UpdateBufferView();
 		}
-		updateZBufferView = false;
+		//updateZBufferView = false;
 
 		// Compute cutaway surface
 		calculateCutawaySurface();
+
+		tex1View.ShowBufferView(showZBufferView);
+		if (updateZBufferView){
+			tex1View.UpdateBufferView();
+		}
+		updateZBufferView = false;
 
 		// Draw 
 		if (useWireFrame){											// Filled polygons/wireframe 
