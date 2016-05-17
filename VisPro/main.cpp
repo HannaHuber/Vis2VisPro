@@ -306,7 +306,7 @@ void init(GLFWwindow* window) {
 	}
 
 	// Init camera
-	mat4 model = translate(mat4(1.0), vec3(-5.0, 1.0, 25.0));
+	mat4 model = translate(mat4(1.0), vec3(20.0, 10.0, -20));
 	camera = new Camera(model);
 	camera->setProjMatrix(width, height, fov, near_plane, far_plane);
 	
