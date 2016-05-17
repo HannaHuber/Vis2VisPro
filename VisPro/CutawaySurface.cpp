@@ -120,7 +120,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
 		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//glActiveTexture(GL_TEXTURE0 + 2);
+		glActiveTexture(GL_TEXTURE0 + 2);
 		glBindTexture(GL_TEXTURE_2D, tex2);
 		last_target = 1;
 	}
@@ -128,7 +128,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
 		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//glActiveTexture(GL_TEXTURE0 + 2);
+		glActiveTexture(GL_TEXTURE0 + 2);
 		glBindTexture(GL_TEXTURE_2D, tex1);
 		last_target = 2;
 	}
