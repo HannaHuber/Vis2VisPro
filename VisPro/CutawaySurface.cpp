@@ -102,23 +102,6 @@ void CutawaySurface::endZBufferPass() {
 void CutawaySurface::quadPass(int step, mat4& vp) {
 	glViewport(0, 0, width, height);
 
-	if (last_target == 2) {
-		look_up_tex = tex2;
-		target_tex = tex1;
-		target_fbo = fbo1;
-		last_target = 1;
-	}
-	else {
-		look_up_tex = tex1;
-		target_tex = tex2;
-		target_fbo = fbo2;
-		last_target = 2;
-	}
-	
-	glBindFramebuffer(GL_FRAMEBUFFER, target_fbo);
-	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	quad_shader->useShader();
 
 	// Set step length
@@ -133,10 +116,27 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 	auto model_location = glGetUniformLocation(quad_shader->programHandle, "model");
 	glUniformMatrix4fv(model_location, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0)));
 
+	if (last_target == 2) {
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
+		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//glActiveTexture(GL_TEXTURE0 + 2);
+		glBindTexture(GL_TEXTURE_2D, tex2);
+		last_target = 1;
+	}
+	else {
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
+		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//glActiveTexture(GL_TEXTURE0 + 2);
+		glBindTexture(GL_TEXTURE_2D, tex1);
+		last_target = 2;
+	}
+
 	// Draw
 	quad->bindVAO();
 	glDisable(GL_DEPTH_TEST);
-	glBindTexture(GL_TEXTURE_2D, look_up_tex);
+	
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
 
@@ -144,7 +144,9 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 
 
 void CutawaySurface::prepareRenderPass(int unit) {
-	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, target_tex);
 }
