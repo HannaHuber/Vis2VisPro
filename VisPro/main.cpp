@@ -144,7 +144,8 @@ int main(int argc, char** argv) {
 	// Init
 	ZBufferView zBufferView(width, height);
 	RGBBufferView rgbBufferView(width, height);
-	TextureView tex1View(width, height, 0);
+	TextureView tex1View(width, height, 1);
+	TextureView tex2View(width, height, 2);
 
 	// Render loop running condition
 	bool isRunning = true;
@@ -187,9 +188,11 @@ int main(int argc, char** argv) {
 		// Compute cutaway surface
 		calculateCutawaySurface();
 
-		tex1View.ShowBufferView(showZBufferView);
+		tex1View.ShowBufferView(showZBufferView); 
+		tex2View.ShowBufferView(showZBufferView);
 		if (updateZBufferView){
 			tex1View.UpdateBufferView();
+			tex2View.UpdateBufferView();
 		}
 		updateZBufferView = false;
 
