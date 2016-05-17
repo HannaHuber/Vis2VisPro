@@ -144,8 +144,10 @@ int main(int argc, char** argv) {
 	// Init
 	ZBufferView zBufferView(width, height);
 	RGBBufferView rgbBufferView(width, height);
-	TextureView tex1View(width, height, 1, 2);
-	TextureView tex2View(width, height, 2, 2);
+	TextureView tex1View(width, height, 1, 0);
+	TextureView tex2View(width, height, 2, 0);
+	TextureView tex3View(width, height, 1, 2);
+	TextureView tex4View(width, height, 2, 2);
 
 	// Render loop running condition
 	bool isRunning = true;
@@ -190,9 +192,13 @@ int main(int argc, char** argv) {
 
 		tex1View.ShowBufferView(showZBufferView); 
 		tex2View.ShowBufferView(showZBufferView);
+		tex3View.ShowBufferView(showZBufferView);
+		tex4View.ShowBufferView(showZBufferView);
 		if (updateZBufferView){
 			tex1View.UpdateBufferView();
 			tex2View.UpdateBufferView();
+			tex3View.UpdateBufferView();
+			tex4View.UpdateBufferView();
 		}
 		updateZBufferView = false;
 
