@@ -93,4 +93,6 @@ build/CMakeFiles/
 # External folder
 Debug/External/
 Release/External/
+
+*.dll
 External/
