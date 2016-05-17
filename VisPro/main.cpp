@@ -144,8 +144,8 @@ int main(int argc, char** argv) {
 	// Init
 	ZBufferView zBufferView(width, height);
 	RGBBufferView rgbBufferView(width, height);
-	TextureView tex1View(width, height, 1);
-	TextureView tex2View(width, height, 2);
+	TextureView tex1View(width, height, 1, 2);
+	TextureView tex2View(width, height, 2, 2);
 
 	// Render loop running condition
 	bool isRunning = true;

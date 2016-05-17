@@ -1,6 +1,6 @@
 #include "TextureView.h"
 
-TextureView::TextureView(int width, int height, GLuint textureID) : BufferView(width, height), m_textureID(textureID)
+TextureView::TextureView(int width, int height, GLuint textureID, GLuint textureUnitID) : BufferView(width, height), m_textureID(textureID), m_textureUnitID(textureUnitID)
 {
 	char _Dest[99];
 	_itoa(textureID, _Dest, 10);
@@ -22,14 +22,16 @@ bool TextureView::ShowBufferView(bool show)
 		if (m_bufferWindowHandle == nullptr)
 		{
 			// TODO: backup current used texture
-			// void glActiveTexture(GLenum texture);
-
+			
+			// activate corresponding texture unit for read?
+			glActiveTexture(GL_TEXTURE0 + m_textureUnitID);
 			// bind texture
 			glBindTexture(GL_TEXTURE_2D, m_textureID);
 			// get texture information
 			glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
 			// TODO: restore texture
 			glBindTexture(GL_TEXTURE_2D, 0);
+			glActiveTexture(GL_TEXTURE0);
 
 			// make an OpenCV image
 			cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);
@@ -70,14 +72,16 @@ bool TextureView::UpdateBufferView()
 			return false;
 		}
 		// TODO: backup current used texture
-		// void glActiveTexture(GLenum texture);
 
+		// activate corresponding texture unit for read?
+		glActiveTexture(GL_TEXTURE0 + m_textureUnitID);
 		// bind texture
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
 		// get texture information
 		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
 		// TODO: restore texture
 		glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE0);
 
 		// make an OpenCV image
 		cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);
