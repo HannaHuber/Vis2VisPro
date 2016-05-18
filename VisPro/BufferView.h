@@ -37,8 +37,11 @@ public:
 
 	}
 
-	virtual bool ShowBufferView(bool show) = 0;
+	virtual bool ShowBufferView(bool show);
 
-	virtual bool UpdateBufferView() = 0;
+	virtual bool UpdateBufferView();
+
+protected:
+	virtual cv::Mat ReadBufferToMatrix() = 0;
 
 };

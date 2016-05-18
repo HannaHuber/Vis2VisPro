@@ -35,8 +35,6 @@ private:
 public:
 	RGBBufferView(int width, int height);
 
-	virtual bool ShowBufferView(bool show);
-
-	virtual bool UpdateBufferView();
-
+protected:
+	virtual cv::Mat ReadBufferToMatrix();
 };

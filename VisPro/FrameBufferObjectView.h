@@ -1,19 +1,18 @@
 #pragma once
 
-#include "BufferView.h"
+#include "TextureView.h"
 
-class FrameBufferObjectView : BufferView
+class FrameBufferObjectView : public TextureView
 {
 
 private:
-	GLubyte *m_fboBuffer;
-	cv::Mat m_fboMat;
+	//GLubyte *m_fboBuffer;
+	//cv::Mat m_fboMat;
 	GLuint m_fboID;
 
 public:
-	FrameBufferObjectView(int width, int height, GLuint fboID);
+	FrameBufferObjectView(int width, int height, GLuint fboID, GLuint textureID, GLuint textureUnitID);
 
-	virtual bool ShowBufferView(bool show);
-	virtual bool UpdateBufferView();
-
+protected:
+	virtual cv::Mat ReadBufferToMatrix();
 };

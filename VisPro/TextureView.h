@@ -2,10 +2,10 @@
 
 #include "BufferView.h"
 
-class TextureView : BufferView
+class TextureView : public BufferView
 {
 
-private:
+protected:
 	GLubyte *m_texBuffer;
 	cv::Mat m_texMat;
 	GLuint m_textureID;
@@ -14,7 +14,6 @@ private:
 public:
 	TextureView(int width, int height, GLuint textureID, GLuint textureUnitID);
 
-	virtual bool ShowBufferView(bool show);
-	virtual bool UpdateBufferView();
-
+protected:
+	virtual cv::Mat ReadBufferToMatrix();
 };

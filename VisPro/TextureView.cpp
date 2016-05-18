@@ -19,89 +19,28 @@ TextureView::TextureView(int width, int height, GLuint textureID, GLuint texture
 	m_texMat = cv::Mat(m_height, m_width, CV_8UC3, m_texBuffer);
 }
 
-
-bool TextureView::ShowBufferView(bool show)
+cv::Mat TextureView::ReadBufferToMatrix()
 {
-	if (show)
-	{
-		if (m_bufferWindowHandle == nullptr)
-		{
-			// TODO: backup current used texture
-			
-			// activate corresponding texture unit for read?
-			glActiveTexture(GL_TEXTURE0 + m_textureUnitID);
-			// bind texture
-			glBindTexture(GL_TEXTURE_2D, m_textureID);
-			// get texture information
-			glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
-			// TODO: restore texture
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glActiveTexture(GL_TEXTURE0);
+	// TODO: backup current used texture
 
-			// make an OpenCV image
-			cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);
-			// is this necessary?
-			texMat.copyTo(m_texMat);
-			//cv::flip(depthMat, m_depthMat, 0);
-			//cv::cvtColor(m_RGBMat, m_BGRMat, CV_RGB2BGR);
+	// activate corresponding texture unit for read?
+	glActiveTexture(GL_TEXTURE0 + m_textureUnitID);
+	// bind texture
+	glBindTexture(GL_TEXTURE_2D, m_textureID);
+	// get texture information
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
+	// TODO: restore texture
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE0);
 
-			cv::namedWindow(m_bufferWindowName.c_str(), CV_WINDOW_AUTOSIZE);
-			cv::imshow(m_bufferWindowName.c_str(), m_texMat);
-			m_bufferWindowHandle = (HWND)cvGetWindowHandle(m_bufferWindowName.c_str());
+	// make an OpenCV image
+	cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);
+	// is this necessary?
+	texMat.copyTo(m_texMat);
+	//cv::flip(depthMat, m_depthMat, 0);
+	//cv::cvtColor(m_RGBMat, m_BGRMat, CV_RGB2BGR);
 
-		}
-
-	}
-	else
-	{
-		if (m_bufferWindowHandle != nullptr)
-		{
-			cvDestroyWindow(m_bufferWindowName.c_str());
-			m_bufferWindowHandle = nullptr;
-		}
-	}
-
-	return true;
-}
-
-bool TextureView::UpdateBufferView()
-{
-	if (m_bufferWindowHandle != nullptr)
-	{
-		if (!IsWindowVisible(m_bufferWindowHandle))
-		{
-			// destroy handle
-			cvDestroyWindow(m_bufferWindowName.c_str());
-			m_bufferWindowHandle = nullptr;
-
-			return false;
-		}
-		// TODO: backup current used texture
-
-		// activate corresponding texture unit for read?
-		glActiveTexture(GL_TEXTURE0 + m_textureUnitID);
-		// bind texture
-		glBindTexture(GL_TEXTURE_2D, m_textureID);
-		// get texture information
-		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, m_texBuffer);
-		// TODO: restore texture
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glActiveTexture(GL_TEXTURE0);
-
-		// make an OpenCV image
-		cv::Mat texMat(m_height, m_width, CV_8UC3, m_texBuffer);
-		// is this necessary?
-		texMat.copyTo(m_texMat);
-		//cv::flip(depthMat, m_depthMat, 0);
-		//cv::cvtColor(m_RGBMat, m_BGRMat, CV_RGB2BGR);
-
-		// is this the same window ?
-		cv::imshow(m_bufferWindowName.c_str(), m_texMat);
-
-		return true;
-
-	}
-
+	return m_texMat;
 }
 
 //void printPixelsOfMipMap(int mipMapLevel)   

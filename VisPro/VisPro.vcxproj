@@ -32,6 +32,7 @@
     <ClCompile Include="..\Shader\Shader.cpp" />
     <ClCompile Include="..\Shader\TextureShader.cpp" />
     <ClCompile Include="..\Shader\ZBufferShader.cpp" />
+    <ClCompile Include="BufferView.cpp" />
     <ClCompile Include="CutawaySurface.cpp" />
     <ClCompile Include="FrameBufferObjectView.cpp" />
     <ClCompile Include="RGBBufferView.cpp" />
