@@ -221,7 +221,7 @@ void UserInput::switchBloomMode(){
 void UserInput::toggleShowZBufferView()
 {
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
-		if (glfwGetTime() - lastButtonPress > minDist){
+		if (glfwGetTime() - lastButtonPress > minDist * 6.0){
  			std::cout << "Toggle show z buffer mode" << std::endl;
 			lastButtonPress = glfwGetTime();
 			showZBufferView = !showZBufferView;
@@ -233,7 +233,7 @@ void UserInput::toggleShowZBufferView()
 void UserInput::toggleUpdateZBufferView()
 {
 	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
-		if (glfwGetTime() - lastButtonPress > minDist){
+		if (glfwGetTime() - lastButtonPress > minDist * 3.0){
 			std::cout << "Toggle update z buffer mode" << std::endl;
 			lastButtonPress = glfwGetTime();
 			updateZBufferView = !updateZBufferView;

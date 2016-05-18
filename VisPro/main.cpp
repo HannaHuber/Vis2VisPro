@@ -48,6 +48,7 @@
 #include "ZBufferView.h"
 #include "RGBBufferView.h"
 #include "TextureView.h"
+#include "FrameBufferObjectView.h"
 
 
 using namespace std;
@@ -144,12 +145,19 @@ int main(int argc, char** argv) {
 	// Init
 	ZBufferView zBufferView(width, height);
 	RGBBufferView rgbBufferView(width, height);
-	TextureView tex0View(width, height, 0, 0);
-	TextureView tex1View(width, height, 1, 0);
-	TextureView tex2View(width, height, 2, 0);
-	TextureView tex3View(width, height, 0, 2);
-	TextureView tex4View(width, height, 1, 2);
-	TextureView tex5View(width, height, 2, 2);
+	TextureView tex1View(width, height, 0, 1);
+	TextureView tex2View(width, height, 0, 2);
+	TextureView tex3View(width, height, 2, 1);
+	TextureView tex4View(width, height, 2, 2);
+	FrameBufferObjectView fbo101View(width, height, 1, 0, 1);
+	FrameBufferObjectView fbo102View(width, height, 1, 0, 2);
+	FrameBufferObjectView fbo121View(width, height, 1, 2, 1);
+	FrameBufferObjectView fbo122View(width, height, 1, 2, 2);
+	FrameBufferObjectView fbo201View(width, height, 2, 0, 1);
+	FrameBufferObjectView fbo202View(width, height, 2, 0, 2);
+	FrameBufferObjectView fbo221View(width, height, 2, 2, 1);
+	FrameBufferObjectView fbo222View(width, height, 2, 2, 2);
+
 
 	// Render loop running condition
 	bool isRunning = true;
@@ -192,19 +200,31 @@ int main(int argc, char** argv) {
 		// Compute cutaway surface
 		calculateCutawaySurface();
 
-		tex0View.ShowBufferView(showZBufferView);
 		tex1View.ShowBufferView(showZBufferView); 
 		tex2View.ShowBufferView(showZBufferView);
 		tex3View.ShowBufferView(showZBufferView);
 		tex4View.ShowBufferView(showZBufferView);
-		tex5View.ShowBufferView(showZBufferView);
+		fbo101View.ShowBufferView(showZBufferView);
+		fbo102View.ShowBufferView(showZBufferView);
+		fbo121View.ShowBufferView(showZBufferView);
+		fbo122View.ShowBufferView(showZBufferView);
+		fbo201View.ShowBufferView(showZBufferView);
+		fbo202View.ShowBufferView(showZBufferView);
+		fbo221View.ShowBufferView(showZBufferView);
+		fbo222View.ShowBufferView(showZBufferView);
 		if (updateZBufferView){
-			tex0View.UpdateBufferView();
 			tex1View.UpdateBufferView();
 			tex2View.UpdateBufferView();
 			tex3View.UpdateBufferView();
 			tex4View.UpdateBufferView();
-			tex5View.UpdateBufferView();
+			fbo101View.UpdateBufferView();
+			fbo102View.UpdateBufferView();
+			fbo121View.UpdateBufferView();
+			fbo122View.UpdateBufferView();
+			fbo201View.UpdateBufferView();
+			fbo202View.UpdateBufferView();
+			fbo221View.UpdateBufferView();
+			fbo222View.UpdateBufferView();
 		}
 		updateZBufferView = false;
 

@@ -11,7 +11,7 @@ private:
 	GLuint m_fboID;
 
 public:
-	FrameBufferObjectView(int width, int height, GLuint fboID, GLuint textureID, GLuint textureUnitID);
+	FrameBufferObjectView(int width, int height, GLuint fboID, GLuint textureUnitID, GLuint textureID);
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix();

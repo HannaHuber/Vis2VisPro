@@ -1,16 +1,16 @@
 #include "TextureView.h"
 
-TextureView::TextureView(int width, int height, GLuint textureID, GLuint textureUnitID) : BufferView(width, height), m_textureID(textureID), m_textureUnitID(textureUnitID)
+TextureView::TextureView(int width, int height, GLuint textureUnitID, GLuint textureID) : BufferView(width, height), m_textureUnitID(textureUnitID), m_textureID(textureID)
 {
-	char _Dest[99];
-	_itoa(textureID, _Dest, 10);
-	std::string texIDStr = std::string(_Dest);
-
 	char _Dest2[99];
 	_itoa(textureUnitID, _Dest2, 10);
 	std::string texUnitIDStr = std::string(_Dest2);
 
-	m_bufferWindowName = "texture view - tex: " + texIDStr + " text unit: " + texUnitIDStr;
+	char _Dest[99];
+	_itoa(textureID, _Dest, 10);
+	std::string texIDStr = std::string(_Dest);
+
+	m_bufferWindowName = "texture view - tex unit: " + texUnitIDStr + " tex: " + texIDStr;
 
 	m_texBuffer = new GLubyte[m_width*m_height*3];
 	for (int i = 0; i < m_width*m_height*3; i++)

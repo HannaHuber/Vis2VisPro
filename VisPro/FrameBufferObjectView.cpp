@@ -1,13 +1,22 @@
 #include "FrameBufferObjectView.h"
 
 
-FrameBufferObjectView::FrameBufferObjectView(int width, int height, GLuint fboID, GLuint textureID, GLuint textureUnitID) 
-: TextureView(width, height, textureID, textureUnitID), m_fboID(fboID)
+FrameBufferObjectView::FrameBufferObjectView(int width, int height, GLuint fboID, GLuint textureUnitID, GLuint textureID)
+: TextureView(width, height, textureUnitID, textureID), m_fboID(fboID)
 {
+	char _Dest3[99];
+	_itoa(fboID, _Dest3, 10);
+	std::string fboIDStr = std::string(_Dest3);
+	
+	char _Dest2[99];
+	_itoa(textureUnitID, _Dest2, 10);
+	std::string texUnitIDStr = std::string(_Dest2);
+
 	char _Dest[99];
-	_itoa(fboID, _Dest, 10);
-	std::string fboIDStr = std::string(_Dest);
-	m_bufferWindowName = "frame buffer object view " + fboIDStr;
+	_itoa(textureID, _Dest, 10);
+	std::string texIDStr = std::string(_Dest);
+
+	m_bufferWindowName = "frame buffer object view - fbo: " + fboIDStr + " tex unit: " + texUnitIDStr + " tex: " + texIDStr;
 
 	//m_fboBuffer = new GLubyte[m_width*m_height * 3];
 	//for (int i = 0; i < m_width*m_height * 3; i++)
