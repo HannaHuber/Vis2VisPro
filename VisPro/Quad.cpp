@@ -25,13 +25,13 @@ Quad::Quad() {
 }
 
 // Init vertex positions
-GLfloat Quad::vertices[24] = { 0.0f, 0.0f, 0.0f, 1.0f,
-							   0.0f, 800.0f, 0.0f, 0.0f,
-							   1024.0f, 800.0f, 1.0f, 0.0f,
+GLfloat Quad::vertices[24] = { 0.0f, 800.0f, 0.0f, 1.0f,
+							   0.0f, 0.0f, 0.0f, 0.0f,
+							   1024.0f, 0.0f, 1.0f, 0.0f,
 
-							   0.0f, 0.0f, 0.0f, 1.0f,
-							   1024.0f, 800.0f, 1.0f, 0.0f,
-							   1024.0f, 0.0f, 1.0f, 1.0f
+							   0.0f, 800.0f, 0.0f, 1.0f,
+							   1024.0f, 0.0f, 1.0f, 0.0f,
+							   1024.0f, 800.0f, 1.0f, 1.0f
 };
 
 Quad::~Quad() {

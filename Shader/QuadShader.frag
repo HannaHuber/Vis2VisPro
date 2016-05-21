@@ -1,6 +1,8 @@
 #version 400 core
 
 in vec2 qCoords[8];
+in vec2 textureCoords;
+
 out vec4 outColor;
 
 uniform sampler2D lookUpTexture;
@@ -23,5 +25,7 @@ void main()
 		}
 	}
 	vec3 outColor = cMax;
-    
+
+	outColor = vec3(texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0);
+    outColor = vec3(1,0,0);
 }

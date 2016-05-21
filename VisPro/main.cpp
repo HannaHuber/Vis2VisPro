@@ -75,8 +75,8 @@ vector<shared_ptr<Environment>> environment;
 
 // Camera
 Camera* camera;
-float speed = 4.4f;
-float look_speed = 0.001f;
+float speed = 15.0f;
+float look_speed = 0.005f;
 float near_plane = 0.1;
 float far_plane = 180.0;
 float ratio = width / height;
@@ -371,7 +371,7 @@ void createDepthImage() {
 void calculateCutawaySurface() {
 	
 	// Init step size with larger image dimension n
-	int step = (width > height ? width / 2 : height / 2); 
+	int step = 1; // (width > height ? width / 2 : height / 2);
 
 	// Iterate over window with changing step size k = n/2^i at the ith iteration 
 	while (step > 0) {
