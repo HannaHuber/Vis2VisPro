@@ -76,7 +76,7 @@ vector<shared_ptr<Environment>> environment;
 // Camera
 Camera* camera;
 float speed = 15.0f;
-float look_speed = 0.003f;
+float look_speed = 0.001f;
 float near_plane = 0.1;
 float far_plane = 180.0;
 float ratio = width / height;
@@ -143,20 +143,20 @@ int main(int argc, char** argv) {
 	int fps = 0;
 
 	// Init
-	ZBufferView zBufferView(width, height);
+	ZBufferView zBufferView(width, height, cutaway.getFBOHandle(1));
 	RGBBufferView rgbBufferView(width, height);
-	TextureView tex1View(width, height, 0, 1);
-	TextureView tex2View(width, height, 0, 2);
-	TextureView tex3View(width, height, 2, 1);
-	TextureView tex4View(width, height, 2, 2);
-	FrameBufferObjectView fbo101View(width, height, 1, 0, 1);
+	TextureView tex1View(width, height, 0, cutaway.getTextureHandle(1));
+	TextureView tex2View(width, height, 0, cutaway.getTextureHandle(2));
+	/*TextureView tex3View(width, height, 2, cutaway.getTextureHandle(1));
+	TextureView tex4View(width, height, 2, cutaway.getTextureHandle(2));*/
+	/*FrameBufferObjectView fbo101View(width, height, 1, 0, 1);
 	FrameBufferObjectView fbo102View(width, height, 1, 0, 2);
 	FrameBufferObjectView fbo121View(width, height, 1, 2, 1);
 	FrameBufferObjectView fbo122View(width, height, 1, 2, 2);
 	FrameBufferObjectView fbo201View(width, height, 2, 0, 1);
 	FrameBufferObjectView fbo202View(width, height, 2, 0, 2);
 	FrameBufferObjectView fbo221View(width, height, 2, 2, 1);
-	FrameBufferObjectView fbo222View(width, height, 2, 2, 2);
+	FrameBufferObjectView fbo222View(width, height, 2, 2, 2);*/
 
 
 	// Render loop running condition
@@ -202,29 +202,29 @@ int main(int argc, char** argv) {
 
 		tex1View.ShowBufferView(showZBufferView); 
 		tex2View.ShowBufferView(showZBufferView);
-		tex3View.ShowBufferView(showZBufferView);
-		tex4View.ShowBufferView(showZBufferView);
-		fbo101View.ShowBufferView(showZBufferView);
+		/*tex3View.ShowBufferView(showZBufferView);
+		tex4View.ShowBufferView(showZBufferView);*/
+		/*fbo101View.ShowBufferView(showZBufferView);
 		fbo102View.ShowBufferView(showZBufferView);
 		fbo121View.ShowBufferView(showZBufferView);
 		fbo122View.ShowBufferView(showZBufferView);
 		fbo201View.ShowBufferView(showZBufferView);
 		fbo202View.ShowBufferView(showZBufferView);
 		fbo221View.ShowBufferView(showZBufferView);
-		fbo222View.ShowBufferView(showZBufferView);
+		fbo222View.ShowBufferView(showZBufferView);*/
 		if (updateZBufferView){
 			tex1View.UpdateBufferView();
 			tex2View.UpdateBufferView();
-			tex3View.UpdateBufferView();
-			tex4View.UpdateBufferView();
-			fbo101View.UpdateBufferView();
+			/*tex3View.UpdateBufferView();
+			tex4View.UpdateBufferView();*/
+			/*fbo101View.UpdateBufferView();
 			fbo102View.UpdateBufferView();
 			fbo121View.UpdateBufferView();
 			fbo122View.UpdateBufferView();
 			fbo201View.UpdateBufferView();
 			fbo202View.UpdateBufferView();
 			fbo221View.UpdateBufferView();
-			fbo222View.UpdateBufferView();
+			fbo222View.UpdateBufferView();*/
 		}
 		updateZBufferView = false;
 
