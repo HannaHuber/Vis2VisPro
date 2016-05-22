@@ -76,7 +76,7 @@ vector<shared_ptr<Environment>> environment;
 // Camera
 Camera* camera;
 float speed = 15.0f;
-float look_speed = 0.005f;
+float look_speed = 0.003f;
 float near_plane = 0.1;
 float far_plane = 180.0;
 float ratio = width / height;
