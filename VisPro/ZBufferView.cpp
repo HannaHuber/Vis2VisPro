@@ -1,6 +1,6 @@
 #include "ZBufferView.h"
 
-ZBufferView::ZBufferView(int width, int height) : BufferView(width, height)
+ZBufferView::ZBufferView(int width, int height, GLuint fboHandle) : BufferView(width, height), m_fboHandle(fboHandle)
 {
 	m_bufferWindowName = "Z buffer view";
 
@@ -13,7 +13,8 @@ ZBufferView::ZBufferView(int width, int height) : BufferView(width, height)
 
 cv::Mat ZBufferView::ReadBufferToMatrix()
 {
-	glReadBuffer(GL_FRONT);
+	//glReadBuffer(GL_FRONT);
+	glReadBuffer(m_fboHandle);
 	//glReadBuffer(GL_BACK);
 	glReadPixels(0, 0, m_width, m_height, GL_DEPTH_COMPONENT, GL_FLOAT, m_depthValues);
 	// make an OpenCV image

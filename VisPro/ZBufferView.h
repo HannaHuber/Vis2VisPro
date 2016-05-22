@@ -30,9 +30,10 @@ private:
 	float *m_depthValues;
 	cv::Mat m_depthMat;
 	cv::Mat m_grayMat;
+	GLuint m_fboHandle;
 
 public:
-	ZBufferView(int width, int height);
+	ZBufferView(int width, int height, GLuint fboHandle);
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix();
