@@ -120,7 +120,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
 		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glActiveTexture(GL_TEXTURE0 + 2);
+		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, tex2);
 		last_target = 1;
 	}
@@ -128,7 +128,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
 		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glActiveTexture(GL_TEXTURE0 + 2);
+		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, tex1);
 		last_target = 2;
 	}
@@ -153,5 +153,31 @@ void CutawaySurface::prepareRenderPass(int unit) {
 	}
 	else {
 		glBindTexture(GL_TEXTURE_2D, tex1);
+	}
+}
+
+GLuint CutawaySurface::getTextureHandle(int tex)
+{
+	switch (tex)
+	{
+	case 1:
+		return tex1;
+	case 2:
+		return tex2;
+	default:
+		return tex1;
+	}
+}
+
+GLuint CutawaySurface::getFBOHandle(int fbo)
+{
+	switch (fbo)
+	{
+	case 1:
+		return fbo1;
+	case 2:
+		return fbo2;
+	default:
+		return fbo1;
 	}
 }

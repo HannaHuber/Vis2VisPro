@@ -15,6 +15,8 @@ public:
 	void endZBufferPass();
 	void quadPass(int step, glm::mat4& vp);
 	void prepareRenderPass(int unit);
+	GLuint getTextureHandle(int tex);
+	GLuint getFBOHandle(int fbo);
 	
 	ZBufferShader* z_buffer_shader;
 	Quad* quad;
