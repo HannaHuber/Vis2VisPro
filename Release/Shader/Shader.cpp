@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "StringHelpers.hpp"
+
 using namespace std;
 
 Shader::Shader(const std::string& vertexShader, const std::string& fragmentShader)
@@ -62,8 +64,14 @@ void Shader::useShader() const
 
 void Shader::loadShader(const std::string& shader, GLenum shaderType, GLuint& handle)
 {
-	std::ifstream shaderFile(shader);
-	
+//#ifdef _DEBUG
+	std::string execPath = Helper::ExecutionPath();
+	std::string shader_abs = execPath + shader.substr(2,shader.length()-2);
+	std::ifstream shaderFile(shader_abs);
+//#else
+//	std::ifstream shaderFile(shader);
+//#endif
+
 	if (!shaderFile.good())
 	{
 		std::cout << "Error in Shader.cpp: Loading file '" << shader << "' failed!" << std::endl;
