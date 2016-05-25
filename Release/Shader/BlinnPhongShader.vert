@@ -6,6 +6,9 @@ out vec3 worldNormal;
 out vec4 worldPos4D;
 out vec3 viewVector;
 
+out vec4 cutCoords;
+uniform mat4 proj;
+
 uniform mat4 model;				// contains position
 uniform mat4 view_proj;			// contains camera-position etc
 uniform vec3 camera_coords;
@@ -38,5 +41,8 @@ void main(){
 	worldPos4D = model * vec4(position, 1);
 	worldNormal = normalize(mat3(transpose(inverse(model)))*normalize(normal));
 	viewVector =  camera_coords - worldPos4D.xyz;
+
+	vec4 cutCoords = proj * model * vec4(position, 1);
+	cutCoords.xyz = cutCoords.xyz*0.5 + 0.5*cutCoords.w;
 
 }
