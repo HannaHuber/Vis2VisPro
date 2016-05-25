@@ -21,7 +21,6 @@ public:
 	ZBufferShader* z_buffer_shader;
 	Quad* quad;
 	QuadShader* quad_shader;
-	glm::mat4 proj;
 private:
 	GLuint tex1, tex2, look_up_tex, target_tex, fbo1, fbo2, target_fbo;
 	int width, height, last_target;

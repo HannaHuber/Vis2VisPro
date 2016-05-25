@@ -129,18 +129,13 @@ void Mesh::renderToZBuffer() {
 
 void Mesh::renderPass(const CutawaySurface* c, mat4& vp, vec3 cam, bool clip) {
 	shader->useShader();
-	setUniformsForRenderPass(c->proj, vp, cam, clip);
+	setUniformsForRenderPass(vp, cam, clip);
 	draw();
 	glUseProgram(0);
 
 }
-void Mesh::setUniformsForRenderPass(const mat4& proj, mat4& vp, vec3 cam, bool clip) {
+void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, bool clip) {
 	
-	// Cutaway projection matrix
-	auto cut_proj_location = glGetUniformLocation(shader->programHandle, "proj");
-	glUniformMatrix4fv(cut_proj_location, 1, GL_FALSE, glm::value_ptr(proj));
-
-
 	// View projection matrix
 	auto view_proj_location = glGetUniformLocation(shader->programHandle, "view_proj");
 	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));

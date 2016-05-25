@@ -3,8 +3,6 @@ in vec3 worldNormal;
 in vec4 worldPos4D;
 in vec3 viewVector;
 
-in vec4 cutCoords;
-
 uniform int light_count;
 uniform vec3 light_location[20]; //Note: not more than 20 lights are allowed
 uniform vec3 light_intensity[20];
@@ -38,24 +36,17 @@ void main() {
 
 	bool draw = true;
 	if (clip) {
-		// Debug
-		vec2 cutTex = cutCoords.xy/cutCoords.w;
-		float z = cutCoords.z/cutCoords.w;
 		float px = gl_FragCoord.x/1024.0;
 		float py = gl_FragCoord.y/800.0;
 		float pz = gl_FragCoord.w;
-
 		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;
-		float cutaway_depth = texture(cutaway_surface, cutTex).b;
-
-		// Debug
+		float cutaway_depth = texture(cutaway_surface, vec2(px,py)).b;
 		vec2 cutaway_coords = texture(cutaway_surface, p.xy).rg;
-		outColor = vec4(cutTex.x, cutTex.y, z, 1);
+		outColor = vec4(cutaway_depth, cutaway_depth, cutaway_depth, 1);
 		draw = false;
-
-		if (z <= cutaway_depth ) {
-			draw = false;
-			discard;
+		if (p.z <= cutaway_depth ) {
+			//draw = false;
+			//discard;
 		}
 	}
 	

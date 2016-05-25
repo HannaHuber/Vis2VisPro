@@ -56,10 +56,9 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 	// Init framebuffer and attach depth map
 	glGenFramebuffers(1, &fbo1);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
-	//glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex1, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex1, 0);
-	GLenum DrawBuffers1[1] = { GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, DrawBuffers1);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex1, 0);
+	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -73,10 +72,9 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glGenFramebuffers(1, &fbo2);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
-	//glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex2, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex2, 0);
-	GLenum DrawBuffers2[1] = { GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, DrawBuffers2);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex2, 0);
+	/*GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers);*/
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -87,9 +85,6 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 	// Init quad + quad shader
 	quad = new Quad();
 	quad_shader = new QuadShader(z_near, z_far, angle);
-
-	// Init orthographic projection matrix 
-	proj = glm::ortho(1, width + 1, 1, height + 1);
 }
 
 void CutawaySurface::prepareZBufferPass() {
@@ -115,8 +110,9 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 
 	// Set view projection matrix
 	auto view_proj_location = glGetUniformLocation(quad_shader->programHandle, "view_proj");
-	//glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));
-	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(proj));
+	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));
+	/*mat4 proj = glm::ortho(0, width - 1, 0, height - 1);
+	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(proj));*/
 
 	// Set model matrix
 	auto model_location = glGetUniformLocation(quad_shader->programHandle, "model");
