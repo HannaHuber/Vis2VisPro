@@ -94,6 +94,8 @@ build/CMakeFiles/
 Debug/External/
 Release/External/
 
-# *.dll
+*.dll
 *.exe
+Debug/VisPro.exe
+Release/VisPro.exe
 External/
