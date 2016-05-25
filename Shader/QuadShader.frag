@@ -15,7 +15,7 @@ void main()
 	float m, z, c;
 	vec3 cMax = vec3(-1, -1, -1);
 	for (int i=0; i<8; ++i) {
-		qScreenCoords[i] = texture(lookUpTexture, qCoords[0]).rg;
+		qScreenCoords[i] = texture(lookUpTexture, qCoords[i]).rg;
 		z = texture(lookUpTexture, gl_FragCoord.xy).b;
 		m = -(PMsz + z)/tanPhi;
 		c = z - m*sqrt(pow(gl_FragCoord.x-qScreenCoords[i].x,2)+pow(gl_FragCoord.y-qScreenCoords[i].y,2));
