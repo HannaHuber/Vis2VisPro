@@ -110,7 +110,9 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 
 	// Set view projection matrix
 	auto view_proj_location = glGetUniformLocation(quad_shader->programHandle, "view_proj");
-	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));
+	//glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));
+	mat4 proj = glm::ortho(0, width - 1, 0, height - 1);
+	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(proj));
 
 	// Set model matrix
 	auto model_location = glGetUniformLocation(quad_shader->programHandle, "model");
