@@ -84,7 +84,7 @@ float fov = glm::radians(70.0f);
 
 // Distance transform
 CutawaySurface cutaway;
-float drill_angle = glm::radians(45.0f);
+float drill_angle = glm::radians(10.0f);
 
 // Control
 UserInput user_input;
@@ -369,7 +369,7 @@ void createDepthImage() {
 void calculateCutawaySurface() {
 	
 	// Init step size with larger image dimension n
-	int step = 1; // (width > height ? width / 2 : height / 2);
+	int step = (width > height ? width / 2 : height / 2);
 
 	// Iterate over window with changing step size k = n/2^i at the ith iteration 
 	while (step > 0) {
