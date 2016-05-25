@@ -36,8 +36,19 @@ void main() {
 
 	bool draw = true;
 	if (clip) {
+		// Debug
+		float px = gl_FragCoord.x/1024.0;
+		float py = gl_FragCoord.y/800.0;
+		float pz = gl_FragCoord.w;
+
 		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;
 		float cutaway_depth = texture(cutaway_surface, p.xy).b;
+
+		// Debug
+		vec2 cutaway_coords = texture(cutaway_surface, p.xy).rg;
+		//outColor = vec4(cutaway_depth, cutaway_depth, cutaway_depth, 1);
+		//draw = false;
+
 		if (p.z <= cutaway_depth ) {
 			draw = false;
 			discard;
@@ -76,5 +87,6 @@ void main() {
 	}
 	
 	outColor = vec4(outColor.xyz,material.transparency);
+	
 		
 }
