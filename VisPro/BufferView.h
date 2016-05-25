@@ -32,9 +32,9 @@ protected:
 	int m_height = 800;
 
 public:
-	BufferView(int width, int height) : m_width(width), m_height(height)
+	BufferView(int width, int height, const std::string &windowName) : m_width(width), m_height(height), m_bufferWindowName(windowName)
 	{
-
+		m_bufferWindowName = "buffer view: " + windowName;
 	}
 
 	virtual bool ShowBufferView(bool show);

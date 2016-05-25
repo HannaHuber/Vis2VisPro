@@ -1,9 +1,9 @@
 #include "RGBBufferView.h"
 
 
-RGBBufferView::RGBBufferView(int width, int height) : BufferView(width, height)
+RGBBufferView::RGBBufferView(int width, int height, const std::string &windowName) : BufferView(width, height, windowName)
 {
-	m_bufferWindowName = "RGB buffer view";
+	m_bufferWindowName = "RGB buffer view: " + windowName;
 
 	m_RGBValues = new byte[width*height * 3];
 

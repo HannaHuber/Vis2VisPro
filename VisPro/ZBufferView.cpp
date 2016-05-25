@@ -1,8 +1,8 @@
 #include "ZBufferView.h"
 
-ZBufferView::ZBufferView(int width, int height, GLuint fboHandle) : BufferView(width, height), m_fboHandle(fboHandle)
+ZBufferView::ZBufferView(int width, int height, const std::string &windowName, GLuint fboHandle) : BufferView(width, height, windowName), m_fboHandle(fboHandle)
 {
-	m_bufferWindowName = "Z buffer view";
+	m_bufferWindowName = "Z buffer view: " + windowName;
 
 	m_depthValues = new float[m_width * m_height];
 	for (int i = 0; i < m_width*m_height; i++)

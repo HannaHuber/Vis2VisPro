@@ -33,7 +33,7 @@ private:
 	cv::Mat m_BGRMat;
 
 public:
-	RGBBufferView(int width, int height);
+	RGBBufferView(int width, int height, const std::string &windowName);
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix();

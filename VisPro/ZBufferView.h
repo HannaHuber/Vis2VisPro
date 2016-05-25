@@ -33,7 +33,7 @@ private:
 	GLuint m_fboHandle;
 
 public:
-	ZBufferView(int width, int height, GLuint fboHandle);
+	ZBufferView(int width, int height, const std::string &windowName, GLuint fboHandle);
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix();
