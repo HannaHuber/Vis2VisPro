@@ -148,6 +148,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\lib\Release\Win32;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\lib-vc2013;$(SolutionDir)External\assimp\lib\assimp_release-dll_win32;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Bullet\cmake_builds\src\BulletCollision\cmake_builds\lib\Debug;$(SolutionDir)External\Bullet\cmake_builds\src\BulletDynamics\cmake_builds\lib\Debug;$(SolutionDir)External\Bullet\cmake_builds\src\LinearMath\cmake_builds\lib\Debug;$(SolutionDir)External\opencv-2.4.12\opencv\build\x86\vc12\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;opencv_calib3d2412d.lib;opencv_contrib2412d.lib;opencv_core2412d.lib;opencv_features2d2412d.lib;opencv_flann2412d.lib;opencv_gpu2412d.lib;opencv_highgui2412d.lib;opencv_imgproc2412d.lib;opencv_legacy2412d.lib;opencv_ml2412d.lib;opencv_objdetect2412d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy  $(SolutionDir)shader $(SolutionDir)debug\shader /Y /I /R
+xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -168,6 +172,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\lib\Release\Win32;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\lib-vc2013;$(SolutionDir)External\assimp\lib\assimp_release-dll_win32;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Bullet\cmake_builds\lib\Release;$(SolutionDir)External\opencv-2.4.12\opencv\build\x86\vc12\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;opencv_calib3d2412.lib;opencv_contrib2412.lib;opencv_core2412.lib;opencv_features2d2412.lib;opencv_flann2412.lib;opencv_gpu2412.lib;opencv_highgui2412.lib;opencv_imgproc2412.lib;opencv_legacy2412.lib;opencv_ml2412.lib;opencv_objdetect2412.lib;opencv_ts2412.lib;opencv_video2412.lib;opencv_nonfree2412.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy  $(SolutionDir)shader $(SolutionDir)release\shader /Y /I /R
+xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
