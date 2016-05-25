@@ -36,8 +36,9 @@ void main() {
 
 	bool draw = true;
 	if (clip) {
-		float cutaway_depth = texture(cutaway_surface, gl_FragCoord.xy).b;
-		if (gl_FragCoord.z <= cutaway_depth ) {
+		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;
+		float cutaway_depth = texture(cutaway_surface, p.xy).b;
+		if (p.z <= cutaway_depth ) {
 			draw = false;
 			discard;
 		}
