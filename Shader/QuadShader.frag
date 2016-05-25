@@ -3,7 +3,9 @@
 in vec2 qCoords[8];
 in vec2 textureCoords;
 
-out vec4 outColor;
+// CBR
+//out vec4 outColor;
+layout(location = 0) out vec4 outColor;
 
 uniform sampler2D lookUpTexture;
 uniform float PMsz;
