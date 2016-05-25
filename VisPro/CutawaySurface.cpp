@@ -110,9 +110,9 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 
 	// Set view projection matrix
 	auto view_proj_location = glGetUniformLocation(quad_shader->programHandle, "view_proj");
-	//glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));
-	mat4 proj = glm::ortho(0, width - 1, 0, height - 1);
-	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(proj));
+	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(vp));
+	/*mat4 proj = glm::ortho(0, width - 1, 0, height - 1);
+	glUniformMatrix4fv(view_proj_location, 1, GL_FALSE, glm::value_ptr(proj));*/
 
 	// Set model matrix
 	auto model_location = glGetUniformLocation(quad_shader->programHandle, "model");
@@ -134,6 +134,8 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glBindTexture(GL_TEXTURE_2D, tex1);
 		last_target = 2;
 	}
+	auto ztex_location = glGetUniformLocation(quad_shader->programHandle, "lookUpTexture");
+	glUniform1i(ztex_location, 0);
 
 	// Draw
 	quad->bindVAO();
@@ -141,6 +143,8 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 	
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
+
+	glUseProgram(0);
 
 }
 

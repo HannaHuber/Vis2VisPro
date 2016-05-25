@@ -375,10 +375,11 @@ void calculateCutawaySurface() {
 	while (step > 0) {
 
 		// Draw quad + calculate distance transform
-		cutaway.quadPass(step, camera->proj_matrix * camera->view_matrix());
+		cutaway.quadPass(step, camera->proj_matrix);
 
 		// Update step size for next iteration
 		step /= 2;
+		
 	}
 
 }
