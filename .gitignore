@@ -97,3 +97,4 @@ Release/External/
 # *.dll
 *.exe
 External/
+*.dll
