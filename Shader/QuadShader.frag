@@ -29,7 +29,7 @@ void main()
 
 	// Debugging
 	//outColor = vec3(texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0);
-    //outColor = vec3(1,0,0);
+    //outColor = vec3(100,200,500);
 
 	//gl_FragColor = cMax;
 }
