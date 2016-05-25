@@ -18,7 +18,7 @@ void main()
 	for (int i=0; i<8; ++i) {
 		qScreenCoords[i] = texture(lookUpTexture, qCoords[i]).rg;
 		z = texture(lookUpTexture, gl_FragCoord.xy).b;
-		m = tanPhi; // Try ortho first: -(PMsz + z)/tanPhi;
+		m = -(PMsz + z)/tanPhi;
 		c = z - m*sqrt(pow(gl_FragCoord.x-qScreenCoords[i].x,2)+pow(gl_FragCoord.y-qScreenCoords[i].y,2));
 		if (c>cMax.z) {
 			cMax.z = c;

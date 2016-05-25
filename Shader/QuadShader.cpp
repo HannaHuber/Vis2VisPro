@@ -11,7 +11,7 @@ QuadShader::QuadShader(float z_near, float z_far, float angle)
 	
 	// Set tangent of drill angle
 	auto tanphi_location = glGetUniformLocation(programHandle, "tanPhi");
-	glUniform1f(tanphi_location, glm::atan(angle));
+	glUniform1f(tanphi_location, glm::tan(angle));
 
 	glUseProgram(0);
 }
