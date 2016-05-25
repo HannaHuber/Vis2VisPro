@@ -3,7 +3,7 @@
 in vec2 qCoords[8];
 in vec2 textureCoords;
 
-out vec4 outColor;
+out vec3 outColor;
 
 uniform sampler2D lookUpTexture;
 uniform float PMsz;
@@ -26,6 +26,7 @@ void main()
 	}
 	vec3 outColor = cMax;
 
-	outColor = vec3(texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0);
-    outColor = vec3(1,0,0);
+	// Debugging
+	//outColor = vec3(texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).r/1024.0);
+    //outColor = vec3(1,0,0);
 }
