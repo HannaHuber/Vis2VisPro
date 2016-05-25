@@ -36,4 +36,6 @@ void main()
 	////outColor = vec3(1,0,0);
 	////// outColor = vec3(texture(lookUpTexture, textureCoords).r/1024.0, texture(lookUpTexture, textureCoords).g/1024.0, texture(lookUpTexture, textureCoords).b/1024.0);
     ////// wo wird vec4 outColor gesetzt?
+
+	//gl_FragColor = cMax;
 }
