@@ -57,8 +57,8 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 	glGenFramebuffers(1, &fbo1);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex1, 0);
-	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, DrawBuffers);
+	GLenum DrawBuffers1[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers1);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -73,8 +73,8 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 	glGenFramebuffers(1, &fbo2);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex2, 0);
-	/*GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, DrawBuffers);*/
+	GLenum DrawBuffers2[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers2);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -96,7 +96,7 @@ void CutawaySurface::prepareZBufferPass() {
 	
 }
 void CutawaySurface::endZBufferPass() {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void CutawaySurface::quadPass(int step, mat4& vp) {
@@ -156,6 +156,7 @@ void CutawaySurface::prepareRenderPass(int unit) {
 	glActiveTexture(GL_TEXTURE0 + unit);
 	if (last_target == 2) {
 		glBindTexture(GL_TEXTURE_2D, tex2);
+		//glBindTexture(GL_TEXTURE_2D, tex1);
 	}
 	else {
 		glBindTexture(GL_TEXTURE_2D, tex1);
