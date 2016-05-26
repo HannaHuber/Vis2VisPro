@@ -89,6 +89,8 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 
 void CutawaySurface::prepareZBufferPass() {
 	glDepthFunc(GL_GREATER);
+	glCullFace(GL_FRONT);
+	glEnable(GL_CULL_FACE);
 	glViewport(0, 0, width, height);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
 	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
@@ -97,11 +99,16 @@ void CutawaySurface::prepareZBufferPass() {
 }
 void CutawaySurface::endZBufferPass() {
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDepthFunc(GL_LESS);
+	glClearDepth(1.0);
+	glCullFace(GL_BACK);
 }
 
 void CutawaySurface::quadPass(int step, mat4& vp) {
 	glViewport(0, 0, width, height);
-
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_ALWAYS);
 	quad_shader->useShader();
 
 	// Set step length
