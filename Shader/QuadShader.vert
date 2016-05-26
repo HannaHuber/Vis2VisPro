@@ -13,7 +13,8 @@ uniform int step;
 
 void main()
 {
-    gl_Position = view_proj * model * vec4(position.x, position.y, 0, 1); 
+    //gl_Position = view_proj * model * vec4(position.x, position.y, 0, 1); 
+	gl_Position = vec4(position.x, position.y, 0, 1); 
 
 	qCoords[0] = vec2(gl_Position.x + step, gl_Position.y - step);
 	qCoords[1] = vec2(gl_Position.x + step, gl_Position.y );
@@ -27,5 +28,17 @@ void main()
 	qCoords[7] = vec2(gl_Position.x - step, gl_Position.y + step);
 
 	textureCoords = texCoords;
+	float tex_step = step/1024.0;
+
+	qCoords[0] = vec2(texCoords.x + tex_step, texCoords.y - tex_step);
+	qCoords[1] = vec2(texCoords.x + tex_step, texCoords.y );
+	qCoords[2] = vec2(texCoords.x + tex_step, texCoords.y + tex_step);
+
+	qCoords[3] = vec2(texCoords.x, texCoords.y - tex_step);
+	qCoords[4] = vec2(texCoords.x, texCoords.y + tex_step);
+
+	qCoords[5] = vec2(texCoords.x - tex_step, texCoords.y - tex_step);
+	qCoords[6] = vec2(texCoords.x - tex_step, texCoords.y );
+	qCoords[7] = vec2(texCoords.x - tex_step, texCoords.y + tex_step);
 
 } 
