@@ -96,7 +96,7 @@ Release/External/
 
 *.dll
 *.exe
-Debug/VisPro.exe
-Release/VisPro.exe
+Debug/
+Release/
 External/
 
