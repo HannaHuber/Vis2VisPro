@@ -28,17 +28,18 @@ void main()
 	qCoords[7] = vec2(gl_Position.x - step, gl_Position.y + step);
 
 	textureCoords = texCoords;
-	float tex_step = step/1024.0;
+	float x_step = step/1024.0;
+	float y_step = step/800.0;
 
-	qCoords[0] = vec2(texCoords.x + tex_step, texCoords.y - tex_step);
-	qCoords[1] = vec2(texCoords.x + tex_step, texCoords.y );
-	qCoords[2] = vec2(texCoords.x + tex_step, texCoords.y + tex_step);
+	qCoords[0] = vec2(texCoords.x + x_step, texCoords.y - y_step);
+	qCoords[1] = vec2(texCoords.x + x_step, texCoords.y );
+	qCoords[2] = vec2(texCoords.x + x_step, texCoords.y + y_step);
 
-	qCoords[3] = vec2(texCoords.x, texCoords.y - tex_step);
-	qCoords[4] = vec2(texCoords.x, texCoords.y + tex_step);
+	qCoords[3] = vec2(texCoords.x, texCoords.y - y_step);
+	qCoords[4] = vec2(texCoords.x, texCoords.y + y_step);
 
-	qCoords[5] = vec2(texCoords.x - tex_step, texCoords.y - tex_step);
-	qCoords[6] = vec2(texCoords.x - tex_step, texCoords.y );
-	qCoords[7] = vec2(texCoords.x - tex_step, texCoords.y + tex_step);
+	qCoords[5] = vec2(texCoords.x - x_step, texCoords.y - y_step);
+	qCoords[6] = vec2(texCoords.x - x_step, texCoords.y );
+	qCoords[7] = vec2(texCoords.x - x_step, texCoords.y + y_step);
 
 } 
