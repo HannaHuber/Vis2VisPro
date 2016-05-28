@@ -11,7 +11,7 @@ private:
 	GLuint m_fboID;
 
 public:
-	FrameBufferObjectView(int width, int height, const std::string &windowName, GLuint fboID, GLuint textureUnitID, GLuint textureID);
+	FrameBufferObjectView(int width, int height, const std::string &windowName, Channels channels, GLuint fboID, GLuint textureUnitID, GLuint textureID);
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix();

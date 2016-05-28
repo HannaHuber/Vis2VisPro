@@ -1,6 +1,6 @@
 #include "TextureView.h"
 
-TextureView::TextureView(int width, int height, const std::string &windowName, GLuint textureUnitID, GLuint textureID) : BufferView(width, height, windowName), m_textureUnitID(textureUnitID), m_textureID(textureID)
+TextureView::TextureView(int width, int height, const std::string &windowName, Channels channels, GLuint textureUnitID, GLuint textureID) : BufferView(width, height, windowName, channels), m_textureUnitID(textureUnitID), m_textureID(textureID)
 {
 	char _Dest2[99];
 	_itoa(textureUnitID, _Dest2, 10);

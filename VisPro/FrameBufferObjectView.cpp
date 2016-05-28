@@ -1,8 +1,8 @@
 #include "FrameBufferObjectView.h"
 
 
-FrameBufferObjectView::FrameBufferObjectView(int width, int height, const std::string &windowName, GLuint fboID, GLuint textureUnitID, GLuint textureID)
-: TextureView(width, height, windowName, textureUnitID, textureID), m_fboID(fboID)
+FrameBufferObjectView::FrameBufferObjectView(int width, int height, const std::string &windowName, Channels channels, GLuint fboID, GLuint textureUnitID, GLuint textureID)
+: TextureView(width, height, windowName, channels, textureUnitID, textureID), m_fboID(fboID)
 {
 	char _Dest3[99];
 	_itoa(fboID, _Dest3, 10);

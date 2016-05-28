@@ -22,17 +22,22 @@
 #include <glew.h>
 
 
+enum Channels {RGB, RG_B, R_G_B, R, G, B};
+
 class BufferView{
 
 protected:
 	std::string m_bufferWindowName = "buffer view";
-	HWND m_bufferWindowHandle = nullptr;
+	//HWND m_bufferWindowHandle = nullptr;
+	std::vector<std::tuple<HWND, std::string>> m_bufferWindowHandles;
 
 	int m_width = 1024;
 	int m_height = 800;
 
+	Channels m_channels;
+
 public:
-	BufferView(int width, int height, const std::string &windowName) : m_width(width), m_height(height), m_bufferWindowName(windowName)
+	BufferView(int width, int height, const std::string &windowName, Channels channels = Channels::RGB) : m_width(width), m_height(height), m_bufferWindowName(windowName), m_channels(channels)
 	{
 		m_bufferWindowName = "buffer view: " + windowName;
 	}
@@ -43,5 +48,8 @@ public:
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix() = 0;
+
+	virtual std::vector<std::tuple<cv::Mat, std::string>> SplitMatrixToChannels(const cv::Mat &rgbMat);
+	virtual std::string GetBufferWindowChannelName(const std::string &channelName);
 
 };

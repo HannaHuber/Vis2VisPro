@@ -12,7 +12,7 @@ protected:
 	GLuint m_textureUnitID;
 
 public:
-	TextureView(int width, int height, const std::string &windowName, GLuint textureUnitID, GLuint textureID);
+	TextureView(int width, int height, const std::string &windowName, Channels channels, GLuint textureUnitID, GLuint textureID);
 
 protected:
 	virtual cv::Mat ReadBufferToMatrix();
