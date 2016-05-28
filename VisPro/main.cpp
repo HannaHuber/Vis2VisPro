@@ -85,6 +85,7 @@ float fov = glm::radians(70.0f);
 // Distance transform
 CutawaySurface cutaway;
 float drill_angle = glm::radians(40.0f);
+bool doCutaway = true;
 
 // Control
 UserInput user_input;
@@ -186,46 +187,43 @@ int main(int argc, char** argv) {
 		// Update
 		update(window, deltaTime);
 
-		// Init depth image
-		createDepthImage();
+		// Perform cutaway
+		if (doCutaway)
+		{
+			// Init depth image
+			createDepthImage();
 
-		// TODO: check depth buffer here
-		// write out z-Buffer as image or view with CodeXL
+			// TODO: check depth buffer here
+			// write out z-Buffer as image or view with CodeXL
+			// check fbo1 i.e. tex1 if depth image is written
+			fbo101View.ShowBufferView(showZBufferView);
+			//zBufferView.ShowBufferView(showZBufferView);
+			//rgbBufferView.ShowBufferView(showZBufferView);
+			if (updateZBufferView){
+				fbo101View.UpdateBufferView();
 
-		// check fbo1 i.e. tex1 if depth image is written
-		fbo101View.ShowBufferView(showZBufferView);
+				//zBufferView.UpdateBufferView();
+				//rgbBufferView.UpdateBufferView();
+			}
+			//updateZBufferView = false;
 
-		//zBufferView.ShowBufferView(showZBufferView);
-		//rgbBufferView.ShowBufferView(showZBufferView);
-		if (updateZBufferView){
-			fbo101View.UpdateBufferView();
+			// Compute cutaway surface
+			calculateCutawaySurface();
 
-			//zBufferView.UpdateBufferView();
-			//rgbBufferView.UpdateBufferView();
+			// check if fbo1 i.e. tex1 and fbo2 i.e. tex2 has depth values written
+			fbo101View_II.ShowBufferView(showZBufferView);
+			fbo202View_II.ShowBufferView(showZBufferView);
+			//tex1View.ShowBufferView(showZBufferView); 
+			//tex2View.ShowBufferView(showZBufferView);
+			if (updateZBufferView){
+				fbo101View_II.UpdateBufferView();
+				fbo202View_II.UpdateBufferView();
+				//tex1View.UpdateBufferView();
+				//tex2View.UpdateBufferView();
+			}
+			updateZBufferView = false;
 		}
-		//updateZBufferView = false;
-
-		// Compute cutaway surface
-		calculateCutawaySurface();
-
-		// check if fbo1 i.e. tex1 and fbo2 i.e. tex2 has depth values written
-		fbo101View_II.ShowBufferView(showZBufferView);
-		fbo202View_II.ShowBufferView(showZBufferView);
-
-		//tex1View.ShowBufferView(showZBufferView); 
-		//tex2View.ShowBufferView(showZBufferView);
-
-
-		if (updateZBufferView){
-			fbo101View_II.UpdateBufferView();
-			fbo202View_II.UpdateBufferView();
-
-			//tex1View.UpdateBufferView();
-			//tex2View.UpdateBufferView();
-
-		}
-		updateZBufferView = false;
-
+		
 		// Draw 
 		if (useWireFrame){											// Filled polygons/wireframe 
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -346,7 +344,7 @@ void init(GLFWwindow* window) {
 	obj_manager.setLighting();
 
 	// Distance transform
-	cutaway.init(width, height, near_plane, far_plane, drill_angle);	
+	cutaway.init(width, height, near_plane, far_plane, drill_angle, doCutaway);	
 	
 }
 void update(GLFWwindow* window, float deltaTime) {
@@ -428,6 +426,9 @@ void initScreenParameters(){
 		else if (type == "height"){
 			height = value;
 		}
+		else if (type == "angle"){
+			drill_angle = value;
+		}
 		else if (type == "refreshrate"){
 			refreshrate = value;			
 		}
@@ -437,6 +438,17 @@ void initScreenParameters(){
 			}
 			else if (value == 1){
 				fullscreen = true;
+			}
+			else{
+				std::cout << "WARNING: In settings.txt is a value that has not been processed because the value of fullscreen must be 0 or 1 but is " << value << std::endl;
+			}
+		}
+		else if (type == "cutaway"){
+			if (value == 0){
+				doCutaway = false;
+			}
+			else if (value == 1){
+				doCutaway = true;
 			}
 			else{
 				std::cout << "WARNING: In settings.txt is a value that has not been processed because the value of fullscreen must be 0 or 1 but is " << value << std::endl;

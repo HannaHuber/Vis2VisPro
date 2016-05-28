@@ -59,9 +59,9 @@ int SceneObjectManager::draw(const CutawaySurface* c, bool useViewFrustumCulling
 	
 	int faces = 0;
 
-	// Draw + clip secondary objects
+	// Draw + clip secondary objects (if cutaway is enabled)
 	for (std::shared_ptr<Environment> e : *environment) {		
-		faces += e->draw(c, frustum, vpm, loc, useViewFrustumCulling, true);
+		faces += e->draw(c, frustum, vpm, loc, useViewFrustumCulling, c->cut);
 	}	
 
 	// Important: draw transparent objects (energy items) after all other objects

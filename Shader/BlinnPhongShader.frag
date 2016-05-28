@@ -20,6 +20,7 @@ uniform Material material;
 // Cutaway
 uniform sampler2D cutaway_surface;
 uniform bool clip;
+uniform vec2 texDim;
 
 layout(location = 0) out vec4 outColor;
 
@@ -37,8 +38,8 @@ void main() {
 	bool draw = true;
 	if (clip) {
 		// Debug
-		float px = gl_FragCoord.x/1024.0;
-		float py = gl_FragCoord.y/800.0;
+		float px = gl_FragCoord.x/texDim.x;
+		float py = gl_FragCoord.y/texDim.y;
 		float pz = gl_FragCoord.z;
 
 		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;

@@ -2,3 +2,5 @@ width 1024
 height 800
 refreshrate 60
 fullscreen 0
+cutaway 0
+angle 45
