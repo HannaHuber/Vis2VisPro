@@ -150,7 +150,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy  $(SolutionDir)shader $(SolutionDir)debug\shader /Y /I /R
-xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R</Command>
+xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R
+copy  $(SolutionDir)settings.txt  $(SolutionDir)debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -174,7 +175,8 @@ xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy  $(SolutionDir)shader $(SolutionDir)release\shader /Y /I /R
-xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R</Command>
+xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R
+copy  $(SolutionDir)settings.txt  $(SolutionDir)release</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
