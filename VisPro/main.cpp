@@ -146,22 +146,15 @@ int main(int argc, char** argv) {
 	// Init
 	ZBufferView zBufferView(width, height, "FBO1", cutaway.getFBOHandle(1));
 	RGBBufferView rgbBufferView(width, height, "RGB");
-	TextureView tex1View(width, height, "TEX1", 0, cutaway.getTextureHandle(1));
-	TextureView tex2View(width, height, "TEX2", 0, cutaway.getTextureHandle(2));
-	/*TextureView tex3View(width, height, 2, cutaway.getTextureHandle(1));
-	TextureView tex4View(width, height, 2, cutaway.getTextureHandle(2));*/
-	FrameBufferObjectView fbo101View(width, height, "after createDepthImage", 1, 0, 1);
-	FrameBufferObjectView fbo202View(width, height, "after createDepthImage", 2, 0, 2);
-	/*FrameBufferObjectView fbo102View(width, height, 1, 0, 2);
-	FrameBufferObjectView fbo121View(width, height, 1, 2, 1);
-	FrameBufferObjectView fbo122View(width, height, 1, 2, 2);
-	FrameBufferObjectView fbo201View(width, height, 2, 0, 1);
-	FrameBufferObjectView fbo202View(width, height, 2, 0, 2);
-	FrameBufferObjectView fbo221View(width, height, 2, 2, 1);
-	FrameBufferObjectView fbo222View(width, height, 2, 2, 2);*/
 
-	FrameBufferObjectView fbo101View_II(width, height, "after calculateCutawaySurface", 1, 0, 1);
-	FrameBufferObjectView fbo202View_II(width, height, "after calculateCutawaySurface", 2, 0, 2);
+	TextureView tex1View(width, height, "TEX1", Channels::RG_B, 0, cutaway.getTextureHandle(1));
+	TextureView tex2View(width, height, "TEX2", Channels::RG_B, 0, cutaway.getTextureHandle(2));
+
+	FrameBufferObjectView fbo101View(width, height, "after createDepthImage", Channels::RG_B, 1, 0, 1);
+	FrameBufferObjectView fbo202View(width, height, "after createDepthImage", Channels::RG_B, 2, 0, 2);
+
+	FrameBufferObjectView fbo101View_II(width, height, "after calculateCutawaySurface", Channels::RG_B, 1, 0, 1);
+	FrameBufferObjectView fbo202View_II(width, height, "after calculateCutawaySurface", Channels::RG_B, 2, 0, 2);
 
 	// Render loop running condition
 	bool isRunning = true;
