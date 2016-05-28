@@ -150,7 +150,9 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy  $(SolutionDir)shader $(SolutionDir)debug\shader /Y /I /R
+
 xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R
+
 copy  $(SolutionDir)settings.txt  $(SolutionDir)debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -175,7 +177,9 @@ copy  $(SolutionDir)settings.txt  $(SolutionDir)debug</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy  $(SolutionDir)shader $(SolutionDir)release\shader /Y /I /R
+
 xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R
+
 copy  $(SolutionDir)settings.txt  $(SolutionDir)release</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
