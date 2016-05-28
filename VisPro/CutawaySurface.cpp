@@ -89,26 +89,27 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 
 void CutawaySurface::prepareZBufferPass() {
 	glDepthFunc(GL_GREATER);
-	glCullFace(GL_FRONT);
-	glEnable(GL_CULL_FACE);
+	/*glCullFace(GL_FRONT);
+	glEnable(GL_CULL_FACE);*/
+	glDisable(GL_CULL_FACE);
 	glViewport(0, 0, width, height);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
-	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 }
 void CutawaySurface::endZBufferPass() {
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDepthFunc(GL_LESS);
-	glClearDepth(1.0);
-	glCullFace(GL_BACK);
+	/*glDepthFunc(GL_LESS);
+	glClearDepth(1.0);*/
+	//glCullFace(GL_BACK);
 }
 
 void CutawaySurface::quadPass(int step, mat4& vp) {
 	glViewport(0, 0, width, height);
-	glEnable(GL_DEPTH_TEST);
+	/*glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
-	glDepthFunc(GL_ALWAYS);
+	glDepthFunc(GL_ALWAYS);*/
 	quad_shader->useShader();
 
 	// Set step length
@@ -127,7 +128,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 
 	if (last_target == 2) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
-		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, tex2);
@@ -135,7 +136,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 	}
 	else {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
-		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, tex1);
@@ -159,6 +160,8 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 void CutawaySurface::prepareRenderPass(int unit) {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	if (last_target == 2) {

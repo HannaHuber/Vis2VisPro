@@ -84,7 +84,7 @@ float fov = glm::radians(70.0f);
 
 // Distance transform
 CutawaySurface cutaway;
-float drill_angle = glm::radians(60.0f);
+float drill_angle = glm::radians(20.0f);
 
 // Control
 UserInput user_input;
@@ -315,15 +315,15 @@ void init(GLFWwindow* window) {
 	std::vector<std::shared_ptr<PointLight>> allLights;
 	std::shared_ptr<Camera> importedCamera; //TODO: not used yet
 
-	// Import environment
-	vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Villa/villaLayer.dae", &allLights, importedCamera);
+	// Import environmentH
+	vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Japanese/japaneseHouse.dae", &allLights, importedCamera);
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Environment> f = make_shared<Environment>(list[i]->model_matrix, list[i]->meshes);
 		environment.push_back(f);
 	}
 	
 	// Import energy
-	list = s.importFrom("../Models/Villa/stoolLayer.dae", &allLights, importedCamera);
+	list = s.importFrom("../Models/Japanese/japaneseTableSep.dae", &allLights, importedCamera);
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Energy> f = make_shared<Energy>(list[i]->model_matrix, list[i]->meshes, 20);
 		e_items.push_back(f);
@@ -388,7 +388,7 @@ void draw() {
 
 	// Draw to screen
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, width, height);
 
