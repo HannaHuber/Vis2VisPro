@@ -51,7 +51,7 @@ void main() {
 		//outColor = vec4(cutaway_col.b, cutaway_col.b, cutaway_depth, 1);
 		//draw = false;
 
-		if (pz <= cutaway_depth ) {
+		if (pz < cutaway_depth ) {
 			draw = false;
 			discard;
 		}
