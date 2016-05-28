@@ -17,19 +17,21 @@ void main()
 	vec3 cMax = texture(lookUpTexture, textureCoords.xy).rgb;
 	//z = texture(lookUpTexture, gl_FragCoord.xy).b;
 	float z = cMax.z;
+	float zMax = z;
 	float m =  -(PMsz + z)/tanPhi;
 
-	for (int i=0; i<8; ++i) {
+	for (int i=0; i<9; ++i) {
 		qScreenCoords[i] = texture(lookUpTexture, qCoords[i]).rg;
-		
+		z = texture(lookUpTexture, qCoords[i]).b;
 		//c = z - m*sqrt(pow(gl_FragCoord.x-qScreenCoords[i].x,2)+pow(gl_FragCoord.y-qScreenCoords[i].y,2));
 		c = z - m*sqrt(pow(textureCoords.x-qScreenCoords[i].x,2)+pow(textureCoords.y-qScreenCoords[i].y,2));
 		if (c>cMax.z) {
 			cMax.z = c;
-			cMax.xy = qCoords[i];
+			zMax = z;
+			cMax.xy = qScreenCoords[i];
 		}
 	}
-	outColor = vec3(cMax.xy, texture(lookUpTexture, cMax.xy).b) ;
+	outColor = cMax;
 
 	// Debugging
 	//outColor = texture(lookUpTexture, textureCoords).rgb;

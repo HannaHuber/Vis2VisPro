@@ -84,7 +84,7 @@ float fov = glm::radians(70.0f);
 
 // Distance transform
 CutawaySurface cutaway;
-float drill_angle = glm::radians(20.0f);
+float drill_angle = glm::radians(60.0f);
 
 // Control
 UserInput user_input;
