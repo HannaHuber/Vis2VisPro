@@ -39,7 +39,9 @@ CutawaySurface::~CutawaySurface() {
 }
 
 // Initialize with OpenGL context
-void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) {
+void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, bool c) {
+	
+	cut = c;
 
 	width = w;
 	height = h;
@@ -84,7 +86,7 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle) 
 
 	// Init quad + quad shader
 	quad = new Quad();
-	quad_shader = new QuadShader(z_near, z_far, angle);
+	quad_shader = new QuadShader(z_near, z_far, angle, vec2((float) width, (float) height));
 }
 
 void CutawaySurface::prepareZBufferPass() {
@@ -197,4 +199,9 @@ GLuint CutawaySurface::getFBOHandle(int fbo)
 	default:
 		return fbo1;
 	}
+}
+
+vec2 CutawaySurface::getDimension() const
+{
+	return vec2((float)width, (float)height);
 }

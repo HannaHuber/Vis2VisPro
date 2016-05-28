@@ -10,6 +10,7 @@ uniform mat4 model;
 uniform mat4 view_proj; 
 
 uniform int step;
+uniform vec2 texDim;
 
 void main()
 {
@@ -28,8 +29,8 @@ void main()
 	qCoords[7] = vec2(gl_Position.x - step, gl_Position.y + step);
 
 	textureCoords = texCoords;
-	float x_step = step/1024.0;
-	float y_step = step/800.0;
+	float x_step = step/texDim.x;
+	float y_step = step/texDim.y;
 
 	qCoords[0] = vec2(texCoords.x + x_step, texCoords.y - y_step);
 	qCoords[1] = vec2(texCoords.x + x_step, texCoords.y );
