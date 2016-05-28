@@ -315,7 +315,7 @@ void init(GLFWwindow* window) {
 	}
 	
 	// Import energy
-	list = s.importFrom("../Models/Japanese/japaneseNoTable.dae", &allLights, importedCamera);
+	list = s.importFrom("../Models/Japanese/japaneseNoCarpet.dae", &allLights, importedCamera);
 	//list = s.importFrom("../Models/Villa/stoolLayer.dae", &allLights, importedCamera);
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Energy> f = make_shared<Energy>(list[i]->model_matrix, list[i]->meshes, 20);
