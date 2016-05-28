@@ -426,23 +426,23 @@ void init(GLFWwindow* window) {
 	std::shared_ptr<Camera> importedCamera; //TODO: not used yet
 
 	// Import environmentH
-	vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Japanese/japaneseHouse.dae", &allLights, importedCamera);
-	//vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Villa/villaLayer.dae", &allLights, importedCamera);
+	//vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Japanese/japaneseHouse.dae", &allLights, importedCamera);
+	vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Villa/villaLayer.dae", &allLights, importedCamera);
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Environment> f = make_shared<Environment>(list[i]->model_matrix, list[i]->meshes);
 		environment.push_back(f);
 	}
 	
 	// Import energy
-	list = s.importFrom("../Models/Japanese/japaneseNoCarpet.dae", &allLights, importedCamera);
-	//list = s.importFrom("../Models/Villa/stoolLayer.dae", &allLights, importedCamera);
+	//list = s.importFrom("../Models/Japanese/japaneseNoCarpet.dae", &allLights, importedCamera);
+	list = s.importFrom("../Models/Villa/stoolsLayer.dae", &allLights, importedCamera);
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Energy> f = make_shared<Energy>(list[i]->model_matrix, list[i]->meshes, 20);
 		e_items.push_back(f);
 	}
 
 	// Init camera
-	mat4 model = translate(mat4(1.0), vec3(20.0, 10.0, -20));
+	mat4 model = rotate(translate(mat4(1.0), vec3(40.0, 5.0, 5.0)), 89.0f, vec3(0,1,0));
 	camera = new Camera(model);
 	camera->setProjMatrix(width, height, fov, near_plane, far_plane);
 	
