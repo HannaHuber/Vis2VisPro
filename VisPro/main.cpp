@@ -292,9 +292,9 @@ int main(int argc, char** argv) {
 				//zBufferView.UpdateBufferView();
 				//rgbBufferView.UpdateBufferView();
 
-				// TEST
-				int i = EvalTclFile("C:\\Visualisierung_2\\UE\\Vis2VisPro\\VisPro\\GUI.tcl");
-				i=i;
+				//// TEST
+				//int i = EvalTclFile("C:\\Visualisierung_2\\UE\\Vis2VisPro\\VisPro\\GUI.tcl");
+				//i=i;
 			}
 			//updateZBufferView = false;
 
