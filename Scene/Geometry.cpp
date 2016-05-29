@@ -28,7 +28,7 @@ void Geometry::update(float deltaTime){
 }
 
 /*Returns the number of faces that have been drawn. Is 0 if Geometry is culled*/
-int Geometry::draw(const CutawaySurface* c, ViewFrustum& frust, glm::mat4& vp, glm::vec3 cam, bool useViewFrustumCulling, bool clip){
+int Geometry::draw(const CutawaySurface* c, ViewFrustum& frust, glm::mat4& vp, glm::vec3 cam, bool useViewFrustumCulling, float clip){
 	if (useViewFrustumCulling){
 		if (!b->initialized){ // only calc bounding box if not done yet (performance ;) - objects are not moving)
 			delete b;

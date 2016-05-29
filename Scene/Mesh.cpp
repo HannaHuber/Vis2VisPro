@@ -127,14 +127,14 @@ void Mesh::renderToZBuffer() {
 	glBindVertexArray(0);
 }
 
-void Mesh::renderPass(const CutawaySurface* c, mat4& vp, vec3 cam, bool clip) {
+void Mesh::renderPass(const CutawaySurface* c, mat4& vp, vec3 cam, float clip) {
 	shader->useShader();
 	setUniformsForRenderPass(vp, cam, clip);
 	draw();
 	glUseProgram(0);
 
 }
-void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, bool clip) {
+void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, float clip) {
 	
 	// View projection matrix
 	auto view_proj_location = glGetUniformLocation(shader->programHandle, "view_proj");
@@ -149,9 +149,9 @@ void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, bool clip) {
 	glUniform3fv(camera_coords_location, 1, glm::value_ptr(cam));
 
 	auto clip_location = glGetUniformLocation(shader->programHandle, "clip");
-	glUniform1i(clip_location, clip);
+	glUniform1f(clip_location, clip);
 	
-	if (clip) {
+	if (clip>0.5f) {
 		// Cutaway surface [activated and bound in CutawaySurface::prepareRenderpass() for all objects]
 		auto ztex_location = glGetUniformLocation(shader->programHandle, "cutaway_surface");
 		glUniform1i(ztex_location, 2);

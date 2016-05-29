@@ -34,8 +34,8 @@ public:
 
 
 	// Render pass methods
-	void renderPass(const CutawaySurface* c, glm::mat4& vp, glm::vec3 cam, bool clip);
-	void setUniformsForRenderPass(glm::mat4& vp, glm::vec3 cam, bool clip);
+	void renderPass(const CutawaySurface* c, glm::mat4& vp, glm::vec3 cam, float clip);
+	void setUniformsForRenderPass(glm::mat4& vp, glm::vec3 cam, float clip);
 	virtual void draw();
 		
 	// Initial settings

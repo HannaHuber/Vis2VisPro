@@ -86,15 +86,15 @@ vector<shared_ptr<Environment>> environment;
 Camera* camera;
 float speed = 15.0f;
 float look_speed = 0.001f;
-float near_plane = 0.1;
-float far_plane = 180.0;
+float near_plane = 0.1f;
+float far_plane = 180.0f;
 float ratio = width / height;
 float fov = glm::radians(70.0f);
 
 // Distance transform
 CutawaySurface cutaway;
 float drill_angle = glm::radians(40.0f);
-bool doCutaway = true;
+float doCutaway = 1.0f;
 
 // Control
 UserInput user_input;

@@ -19,7 +19,7 @@ uniform Material material;
 
 // Cutaway
 uniform sampler2D cutaway_surface;
-uniform bool clip;
+uniform float clip;
 uniform vec2 texDim;
 
 layout(location = 0) out vec4 outColor;
@@ -36,7 +36,7 @@ void main() {
 	normalize(worldNormal);	
 
 	bool draw = true;
-	if (clip) {
+	if (clip>0.5) {
 		// Debug
 		float px = gl_FragCoord.x/texDim.x;
 		float py = gl_FragCoord.y/texDim.y;

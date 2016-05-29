@@ -39,7 +39,7 @@ CutawaySurface::~CutawaySurface() {
 }
 
 // Initialize with OpenGL context
-void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, bool c) {
+void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, float c) {
 	
 	cut = c;
 
