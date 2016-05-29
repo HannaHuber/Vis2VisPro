@@ -336,6 +336,9 @@ int main(int argc, char** argv) {
 	m_environmentDaeFile = "../Models/Japanese/japaneseHouse.dae";
 	m_itemDaeFile = "../Models/Japanese/japaneseNoCarpet.dae";
 
+	// Use input parameters
+	initScreenParameters();
+
 	// wait on start key
 	while (!startSim)  {
 
@@ -344,9 +347,6 @@ int main(int argc, char** argv) {
 		}
 
 	}
-
-	// Use input parameters
-	initScreenParameters();
 	
 	// Init GLFW
 	if (!glfwInit()) {												// Init GLFW

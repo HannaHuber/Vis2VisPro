@@ -8,8 +8,8 @@ pack .top -side top -fill x
 
 # Create the command buttons.
 
-set butEnv [button .top.updateEnv -text "Open Env" -command SetEnv]
-set butItem [button .top.updateItem -text "Open Item" -command SetItem]
+set butEnv [button .top.updateEnv -text "Secondary Objects" -command SetEnv]
+set butItem [button .top.updateItem -text "Objects of Interest " -command SetItem]
 
 set butNear [button .top.updateNear -text "Update Near Plane" -command UpdateNear]
 set butFar [button .top.updateFar -text "Update Far Plane" -command UpdateFar]
