@@ -102,19 +102,22 @@ UserInput user_input;
 // Number of culled faces
 int drawnFaces = 0;
 
+GLFWwindow* m_window = nullptr;
 
 std::string m_environmentDaeFile = "";
 std::string m_itemDaeFile = "";
-
-void UpdateM(float m)
-{
-	// TODO: update shader with current m
-}
 
 void UpdateNearPlane(float nearPlane)
 {
 	// TODO: update shader with current value
 	near_plane = nearPlane;
+
+	if (m_window != nullptr)
+	{
+		// Get actual window size
+		glfwGetWindowSize(m_window, &width, &height);
+		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+	}
 }
 
 void UpdateFarPlane(float farPlane)
@@ -122,6 +125,12 @@ void UpdateFarPlane(float farPlane)
 	// TODO: update shader with current value
 	far_plane = farPlane;
 
+	if (m_window != nullptr)
+	{
+		// Get actual window size
+		glfwGetWindowSize(m_window, &width, &height);
+		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+	}
 }
 
 void UpdateDrillAngle(float drillAngle)
@@ -129,6 +138,12 @@ void UpdateDrillAngle(float drillAngle)
 	// TODO: update shader with current value
 	drill_angle = glm::radians(drillAngle);
 
+	if (m_window != nullptr)
+	{
+		// Get actual window size
+		glfwGetWindowSize(m_window, &width, &height);
+		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+	}
 }
 
 void UpdateEnvironment(const std::string &environmentDaeFile)
@@ -146,18 +161,6 @@ void UpdateItem(const std::string &itemDaeFile)
 // TCL components for GUI
 Tcl_Interp *interp = nullptr;
 static Tk_ArgvInfo argTable[] = { {"", TK_ARGV_END} };
-
-
-int SetMCmd(ClientData clientData, Tcl_Interp *interp,
-	int argc, CONST84 char *argv[])
-{
-
-	double m = atof(argv[1]);
-	if (m != 0)
-		UpdateM(m);
-
-	return 0;
-}
 
 int SetEnvironmentCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
@@ -232,9 +235,6 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	/*
 	* Define application-specific commands here.
 	*/
-	Tcl_CreateCommand(interp, "setM", SetMCmd,
-		(ClientData)Tk_MainWindow(interp),
-		(Tcl_CmdDeleteProc *)NULL);
 	Tcl_CreateCommand(interp, "setEnvironment", SetEnvironmentCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
@@ -369,15 +369,15 @@ int main(int argc, char** argv) {
 	}
 
 	// Open window
-	GLFWwindow* window = glfwCreateWindow(width, height, "ExtremelyCrazyTuStress", monitor, NULL); 
-	if (window == NULL){
+	m_window = glfwCreateWindow(width, height, "ExtremelyCrazyTuStress", monitor, NULL); 
+	if (m_window == NULL){
 		std::cout << "Failed to open GLFW window." << std::endl;
 		glfwTerminate();
 		std::exit(-1);
 	}
 
 	// Init shader, scene objects and pipeline matrices
-	init(window);
+	init(m_window);
 
 	//InitTcl(argc, argv);
 
@@ -434,7 +434,7 @@ int main(int argc, char** argv) {
 		}
 
 		// Update
-		update(window, deltaTime);
+		update(m_window, deltaTime);
 
 		// Perform cutaway
 		if (doCutaway)
@@ -489,7 +489,7 @@ int main(int argc, char** argv) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); 
 
 		// Swap buffers
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(m_window);
 
 		// Get window events
 		glfwPollEvents();
@@ -615,7 +615,7 @@ void update(GLFWwindow* window, float deltaTime) {
 	
 	// Scene objects
 	obj_manager.update(deltaTime);		
-	
+
 }
 
 void createDepthImage() {

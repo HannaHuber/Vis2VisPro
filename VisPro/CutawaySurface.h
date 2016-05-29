@@ -11,6 +11,8 @@ public:
 	~CutawaySurface();
 
 	void init(int w, int h, float z_near, float z_far, float angle, float cut);
+
+	void update(int w, int h, float z_near, float z_far, float angle, float c);
 	void prepareZBufferPass();
 	void endZBufferPass();
 	void quadPass(int step, glm::mat4& vp);

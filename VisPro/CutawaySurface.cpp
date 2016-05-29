@@ -91,6 +91,17 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 	quad_shader = new QuadShader(z_near, z_far, angle, vec2((float) width, (float) height));
 }
 
+void CutawaySurface::update(int w, int h, float z_near, float z_far, float angle, float c)
+{
+	cut = c;
+
+	width = w;
+	height = h;
+
+	z_buffer_shader = new ZBufferShader(vec2((float)width, (float)height));
+	quad_shader = new QuadShader(z_near, z_far, angle, vec2((float)width, (float)height));
+}
+
 void CutawaySurface::prepareZBufferPass() {
 	glDepthFunc(GL_GREATER);
 	/*glCullFace(GL_FRONT);
