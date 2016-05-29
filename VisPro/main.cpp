@@ -135,8 +135,27 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	return TCL_OK;
 }
 
-int InitTcl(int argc, char *argv[])
+int InitTcl(int argc_in, char *argv_in[])
 {
+
+	int argc = argc_in;
+	char **argv = argv_in;
+
+	std::string guiScript;
+	if (argc == 1)
+	{
+		// use VisPro.tcl as GUI
+		std::string execPath = Helper::ExecutionPath();
+		guiScript = execPath + "VisProGUI.tcl";
+
+		argc++;
+		argv = new char*[argc];
+
+		argv[0] = argv_in[0];
+		argv[1] = (char *) guiScript.c_str();
+	}
+
+
 	//Tcl_Interp *interp;
 	/*
 	* Create an interpreter for the error message from

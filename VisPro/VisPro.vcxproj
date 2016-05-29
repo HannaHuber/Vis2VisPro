@@ -92,7 +92,7 @@
     <None Include="..\Shader\VertexShader.vert" />
     <None Include="..\Shader\ZBufferShader.frag" />
     <None Include="..\Shader\ZBufferShader.vert" />
-    <None Include="GUI.tcl" />
+    <None Include="..\Tcl\VisProGUI.tcl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{07040266-0C8E-4FD3-8F9B-71000D37DC0A}</ProjectGuid>
@@ -156,7 +156,8 @@
 
 xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R
 
-copy  $(SolutionDir)settings.txt  $(SolutionDir)debug</Command>
+copy  $(SolutionDir)settings.txt  $(SolutionDir)debug
+copy  $(SolutionDir)Tcl/VisProGUI.tcl  $(SolutionDir)debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -183,7 +184,8 @@ copy  $(SolutionDir)settings.txt  $(SolutionDir)debug</Command>
 
 xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R
 
-copy  $(SolutionDir)settings.txt  $(SolutionDir)release</Command>
+copy  $(SolutionDir)settings.txt  $(SolutionDir)release
+copy  $(SolutionDir)Tcl/VisProGUI.tcl  $(SolutionDir)release</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

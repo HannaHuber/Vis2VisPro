@@ -201,6 +201,7 @@ namespace Helper
 			usString[i] = us;
 			i++;
 		}
+		usString[i] = 0;
 
 		return usString;
 	}
