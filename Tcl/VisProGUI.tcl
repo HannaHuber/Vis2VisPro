@@ -24,7 +24,7 @@ set commandM 1
 set commandEnv ../Models/Japanese/japaneseHouse.dae
 set commandItem ../Models/Japanese/japaneseNoCarpet.dae
 
-set commandDrill 60
+set commandDrill 40
 set commandNear 0.1
 set commandFar 180.0
 

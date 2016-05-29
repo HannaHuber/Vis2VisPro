@@ -127,7 +127,7 @@ void UpdateFarPlane(float farPlane)
 void UpdateDrillAngle(float drillAngle)
 {
 	// TODO: update shader with current value
-	drill_angle = drillAngle;
+	drill_angle = glm::radians(drillAngle);
 
 }
 
