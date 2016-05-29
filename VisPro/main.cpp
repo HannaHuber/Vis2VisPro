@@ -1,5 +1,14 @@
 #pragma once
 
+// ----------------------------------------------------------------------------
+
+//#include <tcl.h>
+#include <tk.h>
+
+#include "MyTkMain.h"
+// ----------------------------------------------------------------------------
+
+
 // Standard
 #include <iostream>
 #include <fstream>
@@ -93,7 +102,86 @@ UserInput user_input;
 // Number of culled faces
 int drawnFaces = 0;
 
+// TCL components for GUI
+Tcl_Interp *interp = nullptr;
+static Tk_ArgvInfo argTable[] = { {"", TK_ARGV_END} };
+
+
+int Tk_AppInit(Tcl_Interp *interp) {
+	/*
+	* Initialize packages
+	*/
+	if (Tcl_Init(interp) == TCL_ERROR) {
+		return TCL_ERROR;
+	}
+	if (Tk_Init(interp) == TCL_ERROR) {
+		return TCL_ERROR;
+	}
+	/*
+	* Define application-specific commands here.
+	*/
+	//Tcl_CreateCommand(interp, "wclock", ClockCmd,
+	//	(ClientData)Tk_MainWindow(interp),
+	//	(Tcl_CmdDeleteProc *)NULL);
+	//Tcl_CreateObjCommand(interp, "oclock", ClockObjCmd,
+	//	(ClientData)NULL, ClockObjDestroy);
+
+	/*
+	* Define start-up filename. This file is read in
+	* case the program is run interactively.
+	*/
+	Tcl_SetVar(interp, "tcl_rcFileName", "~/.mytcl",
+		TCL_GLOBAL_ONLY);
+	return TCL_OK;
+}
+
+int InitTcl(int argc, char *argv[])
+{
+	//Tcl_Interp *interp;
+	/*
+	* Create an interpreter for the error message from
+	* Tk_ParseArgv. Another one is created by Tk_Main.
+	* Parse our arguments and leave the rest to Tk_Main.
+	*/
+	Tcl_FindExecutable(NULL);
+	interp = Tcl_CreateInterp();
+	if (Tk_ParseArgv(interp, (Tk_Window)NULL, &argc, (const char **) argv,
+		argTable, 0) != TCL_OK) {
+		fprintf(stderr, "%s\n", interp->resultDontUse);
+		exit(1);
+	}
+	//Tcl_DeleteInterp(interp);
+
+	wchar_t **wargv = new wchar_t*[argc];
+	for (int i = 0; i < argc; i++)
+	{
+		wchar_t *arg = Helper::convertCharArrayToLPCWSTR(argv[i]);
+		wargv[i] = arg;
+	}
+	//Tk_Main(argc, wargv, Tk_AppInit);
+	//My_Tk_MainEx(argc, wargv, Tk_AppInit, (Tcl_FindExecutable(0), (Tcl_CreateInterp)()));
+	My_Tk_MainEx(argc, wargv, Tk_AppInit, interp);
+
+	//exit(0);
+
+	return TCL_OK;
+}
+
+void TearDownTcl() 
+{ 
+	//Tcl_Finalize();
+
+	My_TK_EndMainEx(interp);
+}
+
+int EvalTclFile(char *fileName)
+{
+	return Tcl_EvalFile(interp, fileName);
+}
+
+
 int main(int argc, char** argv) {	
+
 
 	// Use input parameters
 	initScreenParameters();
@@ -128,6 +216,8 @@ int main(int argc, char** argv) {
 
 	// Init shader, scene objects and pipeline matrices
 	init(window);
+
+	InitTcl(argc, argv);
 
 	// Init frametime
 	float startTime = (float)glfwGetTime();
@@ -164,6 +254,10 @@ int main(int argc, char** argv) {
 	// ---------------------------------------------------------------------------------
 	while(isRunning)  { 
 
+		if (Tk_GetNumMainWindows() > 0) {
+			Tcl_DoOneEvent(0);
+		}
+
 		// Calculate frametime
 		deltaTime = (float)glfwGetTime()-lastTime;
 		lastTime = (float)glfwGetTime();
@@ -197,6 +291,10 @@ int main(int argc, char** argv) {
 
 				//zBufferView.UpdateBufferView();
 				//rgbBufferView.UpdateBufferView();
+
+				// TEST
+				int i = EvalTclFile("C:\\Visualisierung_2\\UE\\Vis2VisPro\\VisPro\\GUI.tcl");
+				i=i;
 			}
 			//updateZBufferView = false;
 
@@ -254,6 +352,8 @@ int main(int argc, char** argv) {
 
 	// Cleanup
 	cleanup();
+
+	TearDownTcl();
 
 	// End GLFW
 	glfwTerminate();

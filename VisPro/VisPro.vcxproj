@@ -32,6 +32,7 @@
     <ClCompile Include="..\Shader\Shader.cpp" />
     <ClCompile Include="..\Shader\TextureShader.cpp" />
     <ClCompile Include="..\Shader\ZBufferShader.cpp" />
+    <ClCompile Include="..\Tcl\MyTkMain.cpp" />
     <ClCompile Include="BufferView.cpp" />
     <ClCompile Include="CutawaySurface.cpp" />
     <ClCompile Include="FrameBufferObjectView.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="..\Shader\Shader.h" />
     <ClInclude Include="..\Shader\TextureShader.h" />
     <ClInclude Include="..\Shader\ZBufferShader.h" />
+    <ClInclude Include="..\Tcl\MyTkMain.h" />
     <ClInclude Include="BufferView.h" />
     <ClInclude Include="CutawaySurface.h" />
     <ClInclude Include="FrameBufferObjectView.h" />
@@ -90,6 +92,7 @@
     <None Include="..\Shader\VertexShader.vert" />
     <None Include="..\Shader\ZBufferShader.frag" />
     <None Include="..\Shader\ZBufferShader.vert" />
+    <None Include="GUI.tcl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{07040266-0C8E-4FD3-8F9B-71000D37DC0A}</ProjectGuid>
@@ -124,14 +127,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)build-$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)External\Freetype\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\assimp-3.1.1\include\assimp\Compiler</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)External\assimp-3.1.1\lib32;$(SolutionDir)External\FreeType\lib</LibraryPath>
+    <IncludePath>$(SolutionDir)External\Freetype\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\assimp-3.1.1\include\assimp\Compiler;$(SolutionDir)Tcl;$(SolutionDir)External\Tcl\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)External\assimp-3.1.1\lib32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Tcl\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)build-$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)External\Freetype\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\assimp-3.1.1\include\assimp\Compiler</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)External\assimp-3.1.1\lib32;$(SolutionDir)External\FreeType\lib</LibraryPath>
+    <IncludePath>$(SolutionDir)External\Freetype\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\assimp-3.1.1\include\assimp\Compiler;$(SolutionDir)Tcl;$(SolutionDir)External\Tcl\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)External\assimp-3.1.1\lib32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Tcl\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -140,13 +143,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External;$(SolutionDir)Helpers;$(SolutionDir)boost_1_58_0;$(SolutionDir)External\opencv-2.4.12\opencv\build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External;$(SolutionDir)Helpers;$(SolutionDir)boost_1_58_0;$(SolutionDir)External\opencv-2.4.12\opencv\build\include;$(SolutionDir)Tcl;$(SolutionDir)External\Tcl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\lib\Release\Win32;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\lib-vc2013;$(SolutionDir)External\assimp\lib\assimp_release-dll_win32;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Bullet\cmake_builds\src\BulletCollision\cmake_builds\lib\Debug;$(SolutionDir)External\Bullet\cmake_builds\src\BulletDynamics\cmake_builds\lib\Debug;$(SolutionDir)External\Bullet\cmake_builds\src\LinearMath\cmake_builds\lib\Debug;$(SolutionDir)External\opencv-2.4.12\opencv\build\x86\vc12\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;opencv_calib3d2412d.lib;opencv_contrib2412d.lib;opencv_core2412d.lib;opencv_features2d2412d.lib;opencv_flann2412d.lib;opencv_gpu2412d.lib;opencv_highgui2412d.lib;opencv_imgproc2412d.lib;opencv_legacy2412d.lib;opencv_ml2412d.lib;opencv_objdetect2412d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\lib\Release\Win32;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\lib-vc2013;$(SolutionDir)External\assimp\lib\assimp_release-dll_win32;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Bullet\cmake_builds\src\BulletCollision\cmake_builds\lib\Debug;$(SolutionDir)External\Bullet\cmake_builds\src\BulletDynamics\cmake_builds\lib\Debug;$(SolutionDir)External\Bullet\cmake_builds\src\LinearMath\cmake_builds\lib\Debug;$(SolutionDir)External\opencv-2.4.12\opencv\build\x86\vc12\lib;$(SolutionDir)External\tcl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;opencv_calib3d2412d.lib;opencv_contrib2412d.lib;opencv_core2412d.lib;opencv_features2d2412d.lib;opencv_flann2412d.lib;opencv_gpu2412d.lib;opencv_highgui2412d.lib;opencv_imgproc2412d.lib;opencv_legacy2412d.lib;opencv_ml2412d.lib;opencv_objdetect2412d.lib;tcl86.lib;tk86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy  $(SolutionDir)shader $(SolutionDir)debug\shader /Y /I /R
@@ -165,15 +168,15 @@ copy  $(SolutionDir)settings.txt  $(SolutionDir)debug</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External;$(SolutionDir)Helpers;$(SolutionDir)boost_1_58_0;$(SolutionDir)External\opencv-2.4.12\opencv\build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\include\GL;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\include\GLFW;$(SolutionDir)External\GLM\glm\glm;$(SolutionDir)External\assimp\include;$(SolutionDir)External\Bullet\bullet-2.82-r2704\src;$(SolutionDir)External\Freetype\include;$(SolutionDir)Scene;%(AdditionalIncludeDirectories);$(SolutionDir)Shader;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External;$(SolutionDir)Helpers;$(SolutionDir)boost_1_58_0;$(SolutionDir)External\opencv-2.4.12\opencv\build\include;$(SolutionDir)Tcl;$(SolutionDir)External\Tcl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\lib\Release\Win32;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\lib-vc2013;$(SolutionDir)External\assimp\lib\assimp_release-dll_win32;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Bullet\cmake_builds\lib\Release;$(SolutionDir)External\opencv-2.4.12\opencv\build\x86\vc12\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;opencv_calib3d2412.lib;opencv_contrib2412.lib;opencv_core2412.lib;opencv_features2d2412.lib;opencv_flann2412.lib;opencv_gpu2412.lib;opencv_highgui2412.lib;opencv_imgproc2412.lib;opencv_legacy2412.lib;opencv_ml2412.lib;opencv_objdetect2412.lib;opencv_ts2412.lib;opencv_video2412.lib;opencv_nonfree2412.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\GLEW\glew-1.12.0\lib\Release\Win32;$(SolutionDir)External\GLFW\glfw-3.1.1.bin.WIN32\lib-vc2013;$(SolutionDir)External\assimp\lib\assimp_release-dll_win32;$(SolutionDir)External\FreeImage\FreeImage\Dist\x32;$(SolutionDir)External\FreeType\lib;$(SolutionDir)External\Bullet\cmake_builds\lib\Release;$(SolutionDir)External\opencv-2.4.12\opencv\build\x86\vc12\lib;$(SolutionDir)External\tcl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;opencv_calib3d2412.lib;opencv_contrib2412.lib;opencv_core2412.lib;opencv_features2d2412.lib;opencv_flann2412.lib;opencv_gpu2412.lib;opencv_highgui2412.lib;opencv_imgproc2412.lib;opencv_legacy2412.lib;opencv_ml2412.lib;opencv_objdetect2412.lib;opencv_ts2412.lib;opencv_video2412.lib;opencv_nonfree2412.lib;tcl86.lib;tk86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy  $(SolutionDir)shader $(SolutionDir)release\shader /Y /I /R

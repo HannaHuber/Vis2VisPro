@@ -187,4 +187,22 @@ namespace Helper
 		std::string s(iStr);
 		return s;
 	}
+
+	unsigned short *convertWCharStrToUnsignedShortStr(const wchar_t *wcharArray)
+	{
+		// unsigned short Tcl_UniChar;
+		
+		unsigned short* usString = new unsigned short[4096];
+
+		int i = 0;
+		while (wcharArray[i] != '\0')
+		{
+			unsigned short us = wcharArray[i];
+			usString[i] = us;
+			i++;
+		}
+
+		return usString;
+	}
+
 }

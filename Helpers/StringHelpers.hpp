@@ -28,6 +28,8 @@ namespace Helper
 
 	std::string itos(int i);
 
+	unsigned short *convertWCharStrToUnsignedShortStr(const wchar_t *wcharArray);
+
 }
 
 #endif
