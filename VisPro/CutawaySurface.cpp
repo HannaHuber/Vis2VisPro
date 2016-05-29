@@ -128,7 +128,7 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 
 	// Set model matrix
 	auto model_location = glGetUniformLocation(quad_shader->programHandle, "model");
-	glUniformMatrix4fv(model_location, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0)));
+	glUniformMatrix4fv(model_location, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 
 	if (last_target == 2) {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo1);

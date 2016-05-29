@@ -586,7 +586,7 @@ void init(GLFWwindow* window) {
 	}
 
 	// Init camera
-	mat4 model = rotate(translate(mat4(1.0), vec3(40.0, 5.0, 5.0)), 89.0f, vec3(0,1,0));
+	mat4 model = rotate(translate(mat4(1.0f), vec3(40.0f, 5.0f, 5.0f)), 89.0f, vec3(0.0f,1.0f,0.0f));
 	camera = new Camera(model);
 	camera->setProjMatrix(width, height, fov, near_plane, far_plane);
 	
