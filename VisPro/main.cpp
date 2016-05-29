@@ -102,10 +102,27 @@ UserInput user_input;
 // Number of culled faces
 int drawnFaces = 0;
 
+
+void UpdateM(float m)
+{
+	// TODO: update shader with current m
+}
+
 // TCL components for GUI
 Tcl_Interp *interp = nullptr;
 static Tk_ArgvInfo argTable[] = { {"", TK_ARGV_END} };
 
+
+int SetMCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+
+	double m = atof(argv[1]);
+	if (m != 0)
+		UpdateM(m);
+
+	return 0;
+}
 
 int Tk_AppInit(Tcl_Interp *interp) {
 	/*
@@ -120,10 +137,10 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	/*
 	* Define application-specific commands here.
 	*/
-	//Tcl_CreateCommand(interp, "wclock", ClockCmd,
-	//	(ClientData)Tk_MainWindow(interp),
-	//	(Tcl_CmdDeleteProc *)NULL);
-	//Tcl_CreateObjCommand(interp, "oclock", ClockObjCmd,
+	Tcl_CreateCommand(interp, "setM", SetMCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	//Tcl_CreateObjCommand(interp, "setM", setMObjCmd,
 	//	(ClientData)NULL, ClockObjDestroy);
 
 	/*
