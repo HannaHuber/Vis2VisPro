@@ -327,10 +327,6 @@ int main(int argc, char** argv) {
 
 				//zBufferView.UpdateBufferView();
 				//rgbBufferView.UpdateBufferView();
-
-				//// TEST
-				//int i = EvalTclFile("C:\\Visualisierung_2\\UE\\Vis2VisPro\\VisPro\\GUI.tcl");
-				//i=i;
 			}
 			//updateZBufferView = false;
 
@@ -394,7 +390,7 @@ int main(int argc, char** argv) {
 	// End GLFW
 	glfwTerminate();
 
-	std::system("PAUSE");
+	//std::system("PAUSE");
 
 	std::exit(0);
 }

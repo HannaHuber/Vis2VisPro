@@ -9,27 +9,29 @@ pack .top -side top -fill x
 # Create the command buttons.
 
 button .top.quit -text Quit -command exit
-set but [button .top.run -text "Update" -command UpdateM]
-pack .top.quit .top.run -side right
+set butM [button .top.updateM -text "Update" -command UpdateM]
 
 # Create a labeled entry for the command
 
-label .top.l -text M-Parameter: -padx 0
-entry .top.cmd -width 20 -relief sunken \
-	-textvariable command
-pack .top.l -side left
-pack .top.cmd -side left -fill x -expand true
+label .top.labM -text M-Parameter: -padx 0
+entry .top.cmdM -width 20 -relief sunken \
+	-textvariable commandM
+
+grid .top.labM  -row 0 -column 0 -sticky e
+grid .top.cmdM -row 0 -column 1 -sticky e
+grid .top.updateM -row 0 -column 2 -sticky e
+grid .top.quit -row 1 -column 2 -sticky wens 
 
 # Set up key binding equivalents to the buttons
 
-bind .top.cmd <Return> UpdateM
-focus .top.cmd
+bind .top.cmdM <Return> UpdateM
+focus .top.cmdM
 
 # Run the program and arrange to read its input
 
 proc UpdateM {} {
-	global command 
-	setM $command\n
+	global commandM 
+	setM $commandM\n
 }
 
 
