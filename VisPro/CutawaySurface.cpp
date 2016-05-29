@@ -98,7 +98,14 @@ void CutawaySurface::update(int w, int h, float z_near, float z_far, float angle
 	width = w;
 	height = h;
 
+	// Update shaders
+	if (z_buffer_shader) {
+		delete z_buffer_shader;
+	}
 	z_buffer_shader = new ZBufferShader(vec2((float)width, (float)height));
+	if (quad_shader) {
+		delete quad_shader;
+	}
 	quad_shader = new QuadShader(z_near, z_far, angle, vec2((float)width, (float)height));
 }
 
