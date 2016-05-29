@@ -94,6 +94,10 @@ build/CMakeFiles/
 Debug/External/
 Release/External/
 
+# buid folder - nothing to commit here
+Debug
+Release
+
 *.dll
 *.exe
 Debug/Shader/
