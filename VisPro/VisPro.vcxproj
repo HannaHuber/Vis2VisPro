@@ -157,7 +157,7 @@
 xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R
 
 copy  $(SolutionDir)settings.txt  $(SolutionDir)debug
-copy  $(SolutionDir)Tcl/VisProGUI.tcl  $(SolutionDir)debug</Command>
+copy  $(SolutionDir)Tcl\VisProGUI.tcl  $(SolutionDir)debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -185,7 +185,7 @@ copy  $(SolutionDir)Tcl/VisProGUI.tcl  $(SolutionDir)debug</Command>
 xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R
 
 copy  $(SolutionDir)settings.txt  $(SolutionDir)release
-copy  $(SolutionDir)Tcl/VisProGUI.tcl  $(SolutionDir)release</Command>
+copy  $(SolutionDir)Tcl\VisProGUI.tcl  $(SolutionDir)release</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
