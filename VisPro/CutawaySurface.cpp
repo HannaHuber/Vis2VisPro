@@ -84,7 +84,7 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
 	// Init z buffer shader
-	z_buffer_shader = new ZBufferShader();
+	z_buffer_shader = new ZBufferShader(vec2((float)width, (float)height));
 
 	// Init quad + quad shader
 	quad = new Quad();
@@ -203,7 +203,7 @@ GLuint CutawaySurface::getFBOHandle(int fbo)
 	}
 }
 
-vec2 CutawaySurface::getDimension() const
+vec2 CutawaySurface::getDimension()
 {
 	return vec2((float)width, (float)height);
 }

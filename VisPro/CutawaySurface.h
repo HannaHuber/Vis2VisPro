@@ -15,7 +15,7 @@ public:
 	void endZBufferPass();
 	void quadPass(int step, glm::mat4& vp);
 	void prepareRenderPass(int unit);
-	glm::vec2 getDimension() const;
+	glm::vec2 getDimension();
 	GLuint getTextureHandle(int tex);
 	GLuint getFBOHandle(int fbo);
 	

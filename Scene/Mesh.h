@@ -35,11 +35,12 @@ public:
 
 	// Render pass methods
 	void renderPass(const CutawaySurface* c, glm::mat4& vp, glm::vec3 cam, bool clip);
-	void setUniformsForRenderPass(glm::mat4& vp, glm::vec3 cam, bool clip, glm::vec2 texDim);
+	void setUniformsForRenderPass(glm::mat4& vp, glm::vec3 cam, bool clip);
 	virtual void draw();
 		
 	// Initial settings
 	void setLighting(std::vector<std::shared_ptr<PointLight>> *allLights);
+	void setCutawayDimension(glm::vec2 dim);
 	void setShader(Shader* s);
 
 	BoundingBox* Mesh::calcBoundingBoxWithApplying();

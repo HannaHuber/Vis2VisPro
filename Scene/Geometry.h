@@ -17,7 +17,7 @@ public:
 	virtual void addChild(Geometry* g);
 	virtual void setShader(Shader* shader);
 	virtual void transformModelMatrix(glm::mat4& transform );
-	virtual void setLighting(std::vector<std::shared_ptr<PointLight>> *allLights);
+	virtual void init(std::vector<std::shared_ptr<PointLight>> *allLights, glm::vec2 dim);
 	virtual void setViewProj(glm::mat4& vpm);
 	virtual void setCameraLoc(glm::vec3 loc);
 	virtual void renderToZBuffer(ZBufferShader* z, glm::mat4& vp);

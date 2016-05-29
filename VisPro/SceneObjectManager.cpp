@@ -21,13 +21,16 @@ void SceneObjectManager::setObjects(Camera* c,
 }
 
 // Set light parameters for drawable objects
-void SceneObjectManager::setLighting() {
+void SceneObjectManager::init(glm::vec2 dim) {
+
+	// Set lighting + cutaway dimension
 	for (std::shared_ptr<Environment> e : *environment) {				// Set lighting for environment
-		e->setLighting(lights);
+		e->init(lights, dim);
 	}
 	for (std::shared_ptr<Energy> e : *e_items) {
-		e->setLighting(lights);								// Set lighting for energy items
+		e->init(lights, dim);								// Set lighting for energy items
 	}
+
 }
 
 // Render depth values to z buffer (depth map)

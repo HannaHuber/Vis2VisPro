@@ -14,7 +14,7 @@ public:
 					std::vector<std::shared_ptr<PointLight>>* l, 
 					std::vector<std::shared_ptr<Environment>>* e, 
 					std::vector<std::shared_ptr<Energy>>* e_i);
-	void setLighting();
+	void init(glm::vec2 dim);
 	
 	void update(float delta_t);
 	void renderToZBuffer(ZBufferShader* z, glm::mat4& vp);

@@ -4,6 +4,6 @@
 
 class ZBufferShader : public Shader {
 public:
-	ZBufferShader();
+	ZBufferShader(glm::vec2 dim);
 	~ZBufferShader();
 };

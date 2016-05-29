@@ -129,12 +129,12 @@ void Mesh::renderToZBuffer() {
 
 void Mesh::renderPass(const CutawaySurface* c, mat4& vp, vec3 cam, bool clip) {
 	shader->useShader();
-	setUniformsForRenderPass(vp, cam, clip, c->getDimension());
+	setUniformsForRenderPass(vp, cam, clip);
 	draw();
 	glUseProgram(0);
 
 }
-void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, bool clip, vec2 texDim) {
+void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, bool clip) {
 	
 	// View projection matrix
 	auto view_proj_location = glGetUniformLocation(shader->programHandle, "view_proj");
@@ -155,10 +155,6 @@ void Mesh::setUniformsForRenderPass(mat4& vp, vec3 cam, bool clip, vec2 texDim) 
 		// Cutaway surface [activated and bound in CutawaySurface::prepareRenderpass() for all objects]
 		auto ztex_location = glGetUniformLocation(shader->programHandle, "cutaway_surface");
 		glUniform1i(ztex_location, 2);
-
-		// Set texture dimensions
-		auto dim_location = glGetUniformLocation(shader->programHandle, "texDim");
-		glUniform2fv(dim_location, 1, glm::value_ptr(texDim));
 	}
 	
 
@@ -278,6 +274,9 @@ void Mesh::setShader(Shader* s) {
 
 void Mesh::setLighting(std::vector<std::shared_ptr<PointLight>> *allLights) {
 	shader->setLighting(allLights);
+}
+void Mesh::setCutawayDimension(glm::vec2 dim) {
+	shader->setCutawayDimension(dim);
 }
 const float* Mesh::vec3ToFloatArray(std::list<glm::vec3*>& vectors){
 	unsigned int arraySize = vectors.size()*3;

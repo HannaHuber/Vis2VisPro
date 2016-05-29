@@ -18,8 +18,7 @@ QuadShader::QuadShader(float z_near, float z_far, float angle, vec2 texDim)
 	glUniform1f(tanphi_location, glm::tan(angle));
 
 	// Set texture dimensions
-	auto dim_location = glGetUniformLocation(programHandle, "texDim");
-	glUniform2fv(dim_location, 1, glm::value_ptr(texDim));
+	setCutawayDimension(texDim);
 
 	glUseProgram(0);
 }

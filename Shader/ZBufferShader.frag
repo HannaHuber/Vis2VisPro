@@ -2,12 +2,13 @@
 #version 400 core
 
 layout(location = 0) out vec3 outColor;
+uniform vec2 texDim;
 
 
 void main() {
 	// Screen space coordinates
-	outColor.r = gl_FragCoord.x/1024.0;
-	outColor.g = gl_FragCoord.y/800.0;
+	outColor.r = gl_FragCoord.x/texDim.x;
+	outColor.g = gl_FragCoord.y/texDim.y;
 
 	// Depth values
 	outColor.b = gl_FragCoord.z;

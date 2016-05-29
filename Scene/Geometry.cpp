@@ -83,9 +83,10 @@ void Geometry::transformModelMatrix(mat4& transform){
 		meshes[i]->model_matrix = transform * meshes[i]->model_matrix;
 	}
 }
-void Geometry::setLighting(std::vector<std::shared_ptr<PointLight>> *allLights){
+void Geometry::init(std::vector<std::shared_ptr<PointLight>> *allLights, glm::vec2 dim){
 	for (unsigned int i = 0; i < meshes.size(); i++){
 		meshes[i]->setLighting(allLights);
+		meshes[i]->setCutawayDimension(dim);
 	}
 }
 void Geometry::setViewProj(mat4& vpm){

@@ -596,11 +596,13 @@ void init(GLFWwindow* window) {
 		&environment,
 		&e_items);
 	
-	// Lighting
-	obj_manager.setLighting();
-
 	// Distance transform
 	cutaway.init(width, height, near_plane, far_plane, drill_angle, doCutaway);	
+
+
+	// Lighting + cutaway dimensions
+	vec2 dim = cutaway.getDimension();
+	obj_manager.init(vec2((float) dim.x, (float) dim.y));
 	
 }
 void update(GLFWwindow* window, float deltaTime) {

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "gtc/type_ptr.hpp"
 
 #include "StringHelpers.hpp"
 
@@ -160,6 +161,16 @@ void Shader::linkWithGeometryShader()
 
 void Shader::setLighting(std::vector<std::shared_ptr<PointLight>> *allLights) {
 
+}
+
+void Shader::setCutawayDimension(glm::vec2 dim)
+{
+	useShader();
+
+	auto dim_location = glGetUniformLocation(programHandle, "texDim");
+	glUniform2fv(dim_location, 1, glm::value_ptr(dim));
+
+	glUseProgram(0);
 }
 
 void Shader::bindTexture(int unit) {
