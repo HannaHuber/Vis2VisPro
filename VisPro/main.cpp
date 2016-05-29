@@ -117,6 +117,7 @@ void UpdateNearPlane(float nearPlane)
 		// Get actual window size
 		glfwGetWindowSize(m_window, &width, &height);
 		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+		camera->setProjMatrix(width, height, fov, far_plane, near_plane);
 	}
 }
 
@@ -130,6 +131,7 @@ void UpdateFarPlane(float farPlane)
 		// Get actual window size
 		glfwGetWindowSize(m_window, &width, &height);
 		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+		camera->setProjMatrix(width, height, fov, far_plane, near_plane);
 	}
 }
 
@@ -369,7 +371,7 @@ int main(int argc, char** argv) {
 	}
 
 	// Open window
-	m_window = glfwCreateWindow(width, height, "ExtremelyCrazyTuStress", monitor, NULL); 
+	m_window = glfwCreateWindow(width, height, "Adaptive Cutaways", monitor, NULL); 
 	if (m_window == NULL){
 		std::cout << "Failed to open GLFW window." << std::endl;
 		glfwTerminate();
