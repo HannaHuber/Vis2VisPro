@@ -108,6 +108,18 @@ void UpdateM(float m)
 	// TODO: update shader with current m
 }
 
+void UpdateEnvironment(const std::string &environmentDaeFile)
+{
+	// TODO: update 
+
+}
+
+void UpdateItem(const std::string &itemDaeFile)
+{
+	// TODO: update 
+
+}
+
 // TCL components for GUI
 Tcl_Interp *interp = nullptr;
 static Tk_ArgvInfo argTable[] = { {"", TK_ARGV_END} };
@@ -120,6 +132,36 @@ int SetMCmd(ClientData clientData, Tcl_Interp *interp,
 	double m = atof(argv[1]);
 	if (m != 0)
 		UpdateM(m);
+
+	return 0;
+}
+
+int SetEnvironmentCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+
+	// TODO: if file exists
+	std::string envStr = argv[1];
+	UpdateEnvironment(envStr);
+
+	return 0;
+}
+
+int SetItemCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	// TODO: if file exists
+	std::string itemStr = argv[1];
+	UpdateItem(itemStr);
+
+	return 0;
+}
+
+bool startSim = false;
+int StartSimCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	startSim = true;
 
 	return 0;
 }
@@ -140,6 +182,16 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	Tcl_CreateCommand(interp, "setM", SetMCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "setEnvironment", SetEnvironmentCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "setItem", SetItemCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "startSim", StartSimCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+
 	//Tcl_CreateObjCommand(interp, "setM", setMObjCmd,
 	//	(ClientData)NULL, ClockObjDestroy);
 
@@ -218,6 +270,17 @@ int EvalTclFile(char *fileName)
 
 int main(int argc, char** argv) {	
 
+	InitTcl(argc, argv);
+
+
+	// wait on start key
+	while (!startSim)  {
+
+		if (Tk_GetNumMainWindows() > 0) {
+			Tcl_DoOneEvent(0);
+		}
+
+	}
 
 	// Use input parameters
 	initScreenParameters();
@@ -253,7 +316,7 @@ int main(int argc, char** argv) {
 	// Init shader, scene objects and pipeline matrices
 	init(window);
 
-	InitTcl(argc, argv);
+	//InitTcl(argc, argv);
 
 	// Init frametime
 	float startTime = (float)glfwGetTime();
@@ -385,14 +448,15 @@ int main(int argc, char** argv) {
 	// Cleanup
 	cleanup();
 
-	TearDownTcl();
+	//TearDownTcl();
 
 	// End GLFW
 	glfwTerminate();
 
 	//std::system("PAUSE");
+	//std::exit(0);
 
-	std::exit(0);
+	TearDownTcl();
 }
 
 void init(GLFWwindow* window) {
