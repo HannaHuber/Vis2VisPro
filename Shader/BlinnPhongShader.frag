@@ -44,15 +44,17 @@ void main() {
 
 		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;
 		float cutaway_depth = texture(cutaway_surface, vec2(px,py)).b;
+		//float disc = texture(cutaway_surface, vec3(px,py, pz), 0.01);
 
 		// Debug
-		vec3 cutaway_col = texture(cutaway_surface, vec2(px,py)).rgb;
+		//vec3 cutaway_col = texture(cutaway_surface, vec2(px,py)).rgb;
 		//outColor = vec4(cutaway_depth, cutaway_depth, cutaway_depth, 1);
 		//outColor = vec4(pz, pz, cutaway_depth, 1);
 		//outColor = vec4(cutaway_col.b, cutaway_col.b, cutaway_depth, 1);
 		//draw = false;
 
 		if (pz < cutaway_depth ) {
+		//if (disc==0.0) {
 			draw = false;
 			discard;
 		}
