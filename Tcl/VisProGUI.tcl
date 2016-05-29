@@ -3,20 +3,20 @@ wm title . VisProGUI
 
 # Create a frame for buttons and entry.
 
-frame .top -borderwidth 10
+ttk::frame .top -borderwidth 10
 pack .top -side top -fill x
 
 # Create the command buttons.
 
-set butEnv [button .top.updateEnv -text "Secondary Objects" -command SetEnv]
-set butItem [button .top.updateItem -text "Objects of Interest " -command SetItem]
+set butEnv [ttk::button .top.updateEnv -text "Secondary Objects" -command SetEnv]
+set butItem [ttk::button .top.updateItem -text "Objects of Interest " -command SetItem]
 
-set butNear [button .top.updateNear -text "Update Near Plane" -command UpdateNear]
-set butFar [button .top.updateFar -text "Update Far Plane" -command UpdateFar]
-set butDrill [button .top.updateDrill -text "Update Drill Angle" -command UpdateDrill]
+set butNear [ttk::button .top.updateNear -text "Update Near Plane" -command UpdateNear]
+set butFar [ttk::button .top.updateFar -text "Update Far Plane" -command UpdateFar]
+set butDrill [ttk::button .top.updateDrill -text "Update Drill Angle" -command UpdateDrill]
 
-set butStart [button .top.startSim -text "Start" -command StartSim]
-set butQ [button .top.quit -text "Quit" -command exit]
+set butStart [ttk::button .top.startSim -text "Start" -command StartSim]
+set butQ [ttk::button .top.quit -text "Quit" -command exit]
 
 # Create default values
 
