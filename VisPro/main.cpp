@@ -111,6 +111,26 @@ void UpdateM(float m)
 	// TODO: update shader with current m
 }
 
+void UpdateNearPlane(float nearPlane)
+{
+	// TODO: update shader with current value
+	near_plane = nearPlane;
+}
+
+void UpdateFarPlane(float farPlane)
+{
+	// TODO: update shader with current value
+	far_plane = farPlane;
+
+}
+
+void UpdateDrillAngle(float drillAngle)
+{
+	// TODO: update shader with current value
+	drill_angle = drillAngle;
+
+}
+
 void UpdateEnvironment(const std::string &environmentDaeFile)
 {
 	// TODO: update 
@@ -169,6 +189,36 @@ int StartSimCmd(ClientData clientData, Tcl_Interp *interp,
 	return 0;
 }
 
+int SetNearPlaneCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	double nearPlane = atof(argv[1]);
+	if (nearPlane != 0)
+		UpdateNearPlane(nearPlane);
+
+	return 0;
+}
+
+int SetFarPlaneCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	double farPlane = atof(argv[1]);
+	if (farPlane != 0)
+		UpdateFarPlane(farPlane);
+
+	return 0;
+}
+
+int SetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	double drillAngle = atof(argv[1]);
+	if (drillAngle != 0)
+		UpdateDrillAngle(drillAngle);
+
+	return 0;
+}
+
 int Tk_AppInit(Tcl_Interp *interp) {
 	/*
 	* Initialize packages
@@ -194,7 +244,15 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	Tcl_CreateCommand(interp, "startSim", StartSimCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
-
+	Tcl_CreateCommand(interp, "setNearPlane", SetNearPlaneCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "setFarPlane", SetFarPlaneCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "setDrillAngle", SetDrillAngleCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
 	//Tcl_CreateObjCommand(interp, "setM", setMObjCmd,
 	//	(ClientData)NULL, ClockObjDestroy);
 
