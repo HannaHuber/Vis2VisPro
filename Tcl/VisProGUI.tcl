@@ -17,32 +17,39 @@ set butItem [button .top.updateItem -text "Set" -command SetItem]
 
 set butStart [button .top.startSim -text "Start" -command StartSim]
 
+# Create default values
+
+set commandM 1
+set commandEnv ../Models/Japanese/japaneseHouse.dae
+set commandItem ../Models/Japanese/japaneseNoCarpet.dae
+
 # Create a labeled entry for the command
 
 label .top.labM -text M-Parameter: -padx 0
-entry .top.cmdM -width 20 -relief sunken \
+entry .top.cmdM -width 80 -relief sunken \
 	-textvariable commandM
 label .top.labEnv -text Environment: -padx 0
-entry .top.cmdEnv -width 20 -relief sunken \
+entry .top.cmdEnv -width 80 -relief sunken \
 	-textvariable commandEnv
 label .top.labItem -text Item: -padx 0
-entry .top.cmdItem -width 20 -relief sunken \
+entry .top.cmdItem -width 80 -relief sunken \
 	-textvariable commandItem
 
 grid .top.labM  -row 0 -column 0 -sticky e
 grid .top.cmdM -row 0 -column 1 -sticky e
-grid .top.updateM -row 0 -column 2 -sticky e
+grid .top.updateM -row 0 -column 2 -sticky wens
 
 grid .top.labEnv  -row 1 -column 0 -sticky e
 grid .top.cmdEnv -row 1 -column 1 -sticky e
-grid .top.updateEnv -row 1 -column 2 -sticky e
+grid .top.updateEnv -row 1 -column 2 -sticky wens
 
 grid .top.labItem  -row 2 -column 0 -sticky e
 grid .top.cmdItem -row 2 -column 1 -sticky e
-grid .top.updateItem -row 2 -column 2 -sticky e
+grid .top.updateItem -row 2 -column 2 -sticky wens
 
-grid .top.startSim -row 3 -column 0 -sticky e 
-grid .top.quit -row 3 -column 2 -sticky wens 
+grid .top.startSim -row 3 -column 2 -sticky wens 
+
+grid .top.quit -row 4 -column 2 -sticky wens 
 
 # Set up key binding equivalents to the buttons
 
@@ -54,7 +61,7 @@ focus .top.startSim
 
 proc UpdateM {} {
 	global commandM 
-	setM $commandM\n
+	setM $commandM
 }
 
 proc StartSim {} {
@@ -63,11 +70,11 @@ proc StartSim {} {
 
 proc SetEnv {} {
 	global commandEnv 
-	setEnvironment $commandEnv\n
+	setEnvironment $commandEnv
 }
 
 proc SetItem {} {
 	global commandItem 
-	setItem $commandItem\n
+	setItem $commandItem
 }
 

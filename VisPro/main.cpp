@@ -103,6 +103,9 @@ UserInput user_input;
 int drawnFaces = 0;
 
 
+std::string m_environmentDaeFile = "";
+std::string m_itemDaeFile = "";
+
 void UpdateM(float m)
 {
 	// TODO: update shader with current m
@@ -111,13 +114,13 @@ void UpdateM(float m)
 void UpdateEnvironment(const std::string &environmentDaeFile)
 {
 	// TODO: update 
-
+	m_environmentDaeFile = environmentDaeFile;
 }
 
 void UpdateItem(const std::string &itemDaeFile)
 {
 	// TODO: update 
-
+	m_itemDaeFile = itemDaeFile;
 }
 
 // TCL components for GUI
@@ -272,6 +275,8 @@ int main(int argc, char** argv) {
 
 	InitTcl(argc, argv);
 
+	m_environmentDaeFile = "../Models/Japanese/japaneseHouse.dae";
+	m_itemDaeFile = "../Models/Japanese/japaneseNoCarpet.dae";
 
 	// wait on start key
 	while (!startSim)  {
@@ -503,16 +508,20 @@ void init(GLFWwindow* window) {
 	std::shared_ptr<Camera> importedCamera; //TODO: not used yet
 
 	// Import environmentH
-	vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Japanese/japaneseHouse.dae", &allLights, importedCamera);
+	//vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Japanese/japaneseHouse.dae", &allLights, importedCamera);
 	//vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Villa/villaLayer.dae", &allLights, importedCamera);
+	vector<shared_ptr<Geometry>> list = s.importFrom(m_environmentDaeFile, &allLights, importedCamera);
+
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Environment> f = make_shared<Environment>(list[i]->model_matrix, list[i]->meshes);
 		environment.push_back(f);
 	}
 	
 	// Import energy
-	list = s.importFrom("../Models/Japanese/japaneseNoCarpet.dae", &allLights, importedCamera);
+	//list = s.importFrom("../Models/Japanese/japaneseNoCarpet.dae", &allLights, importedCamera);
 	//list = s.importFrom("../Models/Villa/stoolsLayer.dae", &allLights, importedCamera);
+	list = s.importFrom(m_itemDaeFile, &allLights, importedCamera);
+
 	for (int i = 0; i < list.size(); i++){
 		shared_ptr<Energy> f = make_shared<Energy>(list[i]->model_matrix, list[i]->meshes, 20);
 		e_items.push_back(f);
