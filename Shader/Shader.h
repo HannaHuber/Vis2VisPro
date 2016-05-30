@@ -18,6 +18,7 @@ public:
 
 	void useShader() const;
 	virtual void setLighting(std::vector<std::shared_ptr<PointLight>> *allLights);
+	void setCutawayDimension(glm::vec2 dim);
 	virtual void bindTexture(int unit);
 
 	GLuint programHandle;

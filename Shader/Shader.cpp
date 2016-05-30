@@ -3,13 +3,16 @@
 
 #include <iostream>
 #include <fstream>
+#include "gtc/type_ptr.hpp"
+
+#include "StringHelpers.hpp"
 
 using namespace std;
 
 Shader::Shader(const std::string& vertexShader, const std::string& fragmentShader)
 : programHandle(0)
-,vertexHandle(0)
-,fragmentHandle(0)
+, vertexHandle(0)
+, fragmentHandle(0)
 {
 	programHandle = glCreateProgram();
 
@@ -40,7 +43,7 @@ Shader::Shader(const std::string& vertexShader, const std::string& fragmentShade
 	}
 
 	loadShader(vertexShader, GL_VERTEX_SHADER, vertexHandle);
-	loadShader(geometryShader, GL_GEOMETRY_SHADER, geometryHandle); 
+	loadShader(geometryShader, GL_GEOMETRY_SHADER, geometryHandle);
 	loadShader(fragmentShader, GL_FRAGMENT_SHADER, fragmentHandle);
 	linkWithGeometryShader();
 }
@@ -62,8 +65,14 @@ void Shader::useShader() const
 
 void Shader::loadShader(const std::string& shader, GLenum shaderType, GLuint& handle)
 {
-	std::ifstream shaderFile(shader);
-	
+	//#ifdef _DEBUG
+	std::string execPath = Helper::ExecutionPath();
+	std::string shader_abs = execPath + shader.substr(2, shader.length() - 2);
+	std::ifstream shaderFile(shader_abs);
+	//#else
+	//	std::ifstream shaderFile(shader);
+	//#endif
+
 	if (!shaderFile.good())
 	{
 		std::cout << "Error in Shader.cpp: Loading file '" << shader << "' failed!" << std::endl;
@@ -89,7 +98,7 @@ void Shader::loadShader(const std::string& shader, GLenum shaderType, GLuint& ha
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &succeeded);
 	if (!succeeded){
 		GLint logSize;
-		glGetShaderiv(handle,GL_INFO_LOG_LENGTH,&logSize);
+		glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &logSize);
 		GLchar* msg = new GLchar[logSize];
 		glGetShaderInfoLog(handle, logSize, nullptr, msg);
 
@@ -109,7 +118,7 @@ void Shader::link()
 	glBindFragDataLocation(programHandle, 0, "outColor");
 
 	glLinkProgram(programHandle);
-	
+
 	GLint succeeded;
 	glGetProgramiv(programHandle, GL_COMPILE_STATUS, &succeeded);
 	if (!succeeded){
@@ -152,6 +161,16 @@ void Shader::linkWithGeometryShader()
 
 void Shader::setLighting(std::vector<std::shared_ptr<PointLight>> *allLights) {
 
+}
+
+void Shader::setCutawayDimension(glm::vec2 dim)
+{
+	useShader();
+
+	auto dim_location = glGetUniformLocation(programHandle, "texDim");
+	glUniform2fv(dim_location, 1, glm::value_ptr(dim));
+
+	glUseProgram(0);
 }
 
 void Shader::bindTexture(int unit) {

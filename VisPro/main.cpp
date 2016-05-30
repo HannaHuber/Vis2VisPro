@@ -729,7 +729,8 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, width, height);
 
-	cutaway->prepareRenderPass(2);
+	if (doCutaway)
+		cutaway->prepareRenderPass(2);
 
 	// Render scene
 	drawnFaces = obj_manager.draw(cutaway, useViewFrustumCulling);
