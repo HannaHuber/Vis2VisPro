@@ -32,6 +32,7 @@ public:
 	void prepareRenderPass(int unit);
 	
 	/** Dimension of cutaway surface plane in screen coordinates.
+	  * @return 2D vector of cutaway surface plane dimension
 	 */
 	glm::vec2 getDimension();
 	
@@ -47,6 +48,8 @@ public:
 	*/
 	GLuint getFBOHandle(int fbo);
 
+	/** Clear all used frame buffer objects and reset binding.
+	  */
 	void clearBuffers();
 	
 	ZBufferShader* z_buffer_shader;

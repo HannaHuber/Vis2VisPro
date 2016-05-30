@@ -72,6 +72,7 @@
     <ClInclude Include="BufferView.h" />
     <ClInclude Include="CutawaySurface.h" />
     <ClInclude Include="FrameBufferObjectView.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="RGBBufferView.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="SceneObjectManager.h" />
