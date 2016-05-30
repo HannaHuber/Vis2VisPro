@@ -748,7 +748,7 @@ void initScreenParameters(){
 			height = value;
 		}
 		else if (type == "angle"){
-			drill_angle = value;
+			drill_angle = glm::radians((float)value);
 		}
 		else if (type == "refreshrate"){
 			refreshrate = value;			
