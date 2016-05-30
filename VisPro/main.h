@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file main.h 
+  *@brief main application file
+  */
+
 // TCL integration
 #include <tk.h>
 #include "MyTkMain.h"

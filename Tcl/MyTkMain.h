@@ -1,6 +1,7 @@
 #pragma once
 
-/**
+/** @file MyTkMain.h
+*@brief Tcl/Tk integration file.
 * On Windows, this file needs to be compiled twice, once with
 * TK_ASCII_MAIN defined. This way both Tk_MainEx and Tk_MainExW
 * can be implemented, sharing the same source code.
