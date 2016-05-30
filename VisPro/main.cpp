@@ -107,9 +107,13 @@ GLFWwindow* m_window = nullptr;
 std::string m_environmentDaeFile = "";
 std::string m_itemDaeFile = "";
 
+// =============================================================================================
+// TCL - Integration
+// =============================================================================================
+
 void UpdateNearPlane(float nearPlane)
 {
-	// TODO: update shader with current value
+	// update shader with current value
 	near_plane = nearPlane;
 
 	if (m_window != nullptr)
@@ -123,7 +127,7 @@ void UpdateNearPlane(float nearPlane)
 
 void UpdateFarPlane(float farPlane)
 {
-	// TODO: update shader with current value
+	// update shader with current value
 	far_plane = farPlane;
 
 	if (m_window != nullptr)
@@ -137,7 +141,7 @@ void UpdateFarPlane(float farPlane)
 
 void UpdateDrillAngle(float drillAngle)
 {
-	// TODO: update shader with current value
+	// update shader with current value
 	drill_angle = glm::radians(drillAngle);
 
 	if (m_window != nullptr)
@@ -150,13 +154,13 @@ void UpdateDrillAngle(float drillAngle)
 
 void UpdateEnvironment(const std::string &environmentDaeFile)
 {
-	// TODO: update 
+	// update environment dae file 
 	m_environmentDaeFile = environmentDaeFile;
 }
 
 void UpdateItem(const std::string &itemDaeFile)
 {
-	// TODO: update 
+	// update item dae file 
 	m_itemDaeFile = itemDaeFile;
 }
 
@@ -168,7 +172,7 @@ int SetEnvironmentCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
 
-	// TODO: if file exists
+	// TODO: check if file exists
 	std::string envStr = argv[1];
 	UpdateEnvironment(envStr);
 
@@ -178,7 +182,7 @@ int SetEnvironmentCmd(ClientData clientData, Tcl_Interp *interp,
 int SetItemCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
-	// TODO: if file exists
+	// TODO: check if file exists
 	std::string itemStr = argv[1];
 	UpdateItem(itemStr);
 
@@ -255,8 +259,6 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	Tcl_CreateCommand(interp, "setDrillAngle", SetDrillAngleCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
-	//Tcl_CreateObjCommand(interp, "setM", setMObjCmd,
-	//	(ClientData)NULL, ClockObjDestroy);
 
 	/*
 	* Define start-up filename. This file is read in
@@ -287,7 +289,6 @@ int InitTcl(int argc_in, char *argv_in[])
 		argv[1] = (char *) guiScript.c_str();
 	}
 
-
 	//Tcl_Interp *interp;
 	/*
 	* Create an interpreter for the error message from
@@ -301,7 +302,6 @@ int InitTcl(int argc_in, char *argv_in[])
 		fprintf(stderr, "%s\n", interp->resultDontUse);
 		exit(1);
 	}
-	//Tcl_DeleteInterp(interp);
 
 	wchar_t **wargv = new wchar_t*[argc];
 	for (int i = 0; i < argc; i++)
@@ -309,11 +309,8 @@ int InitTcl(int argc_in, char *argv_in[])
 		wchar_t *arg = Helper::convertCharArrayToLPCWSTR(argv[i]);
 		wargv[i] = arg;
 	}
-	//Tk_Main(argc, wargv, Tk_AppInit);
-	//My_Tk_MainEx(argc, wargv, Tk_AppInit, (Tcl_FindExecutable(0), (Tcl_CreateInterp)()));
-	My_Tk_MainEx(argc, wargv, Tk_AppInit, interp);
 
-	//exit(0);
+	My_Tk_MainEx(argc, wargv, Tk_AppInit, interp);
 
 	return TCL_OK;
 }
@@ -329,6 +326,10 @@ int EvalTclFile(char *fileName)
 {
 	return Tcl_EvalFile(interp, fileName);
 }
+
+// =============================================================================================
+// End TCL - Integration
+// =============================================================================================
 
 
 int main(int argc, char** argv) {	
@@ -380,8 +381,6 @@ int main(int argc, char** argv) {
 
 	// Init shader, scene objects and pipeline matrices
 	init(m_window);
-
-	//InitTcl(argc, argv);
 
 	// Init frametime
 	float startTime = (float)glfwGetTime();
@@ -513,13 +512,8 @@ int main(int argc, char** argv) {
 	// Cleanup
 	cleanup();
 
-	//TearDownTcl();
-
 	// End GLFW
 	glfwTerminate();
-
-	//std::system("PAUSE");
-	//std::exit(0);
 
 	TearDownTcl();
 }
@@ -568,8 +562,6 @@ void init(GLFWwindow* window) {
 	std::shared_ptr<Camera> importedCamera; //TODO: not used yet
 
 	// Import environmentH
-	//vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Japanese/japaneseHouse.dae", &allLights, importedCamera);
-	//vector<shared_ptr<Geometry>> list = s.importFrom("../Models/Villa/villaLayer.dae", &allLights, importedCamera);
 	vector<shared_ptr<Geometry>> list = s.importFrom(m_environmentDaeFile, &allLights, importedCamera);
 
 	for (int i = 0; i < list.size(); i++){
@@ -578,8 +570,6 @@ void init(GLFWwindow* window) {
 	}
 	
 	// Import energy
-	//list = s.importFrom("../Models/Japanese/japaneseNoCarpet.dae", &allLights, importedCamera);
-	//list = s.importFrom("../Models/Villa/stoolsLayer.dae", &allLights, importedCamera);
 	list = s.importFrom(m_itemDaeFile, &allLights, importedCamera);
 
 	for (int i = 0; i < list.size(); i++){
