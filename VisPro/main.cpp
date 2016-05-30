@@ -170,22 +170,32 @@ static Tk_ArgvInfo argTable[] = { {"", TK_ARGV_END} };
 
 int SetEnvironmentCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
-{
-	// TODO: check if file exists
+{	
 	std::string envStr = argv[1];
-	UpdateEnvironment(envStr);
-
-	return TCL_OK;
+	
+	// check if file exists
+	ifstream f(envStr.c_str());
+	if (f.good())
+	{
+		UpdateEnvironment(envStr);
+		return TCL_OK;
+	}
+	return TCL_ERROR;
 }
 
 int SetItemCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
-	// TODO: check if file exists
 	std::string itemStr = argv[1];
-	UpdateItem(itemStr);
-
-	return TCL_OK;
+	
+	// check if file exists
+	ifstream f(itemStr.c_str());
+	if (f.good())
+	{
+		UpdateItem(itemStr);
+		return TCL_OK;
+	}
+	return TCL_ERROR;
 }
 
 bool startSim = false;

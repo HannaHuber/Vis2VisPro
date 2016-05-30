@@ -18,13 +18,7 @@ FrameBufferObjectView::FrameBufferObjectView(int width, int height, const std::s
 
 	m_bufferWindowName = "frame buffer object view: " + windowName + " fbo: " + fboIDStr + " tex unit: " + texUnitIDStr + " tex: " + texIDStr;
 
-	//m_fboBuffer = new GLubyte[m_width*m_height * 3];
-	//for (int i = 0; i < m_width*m_height * 3; i++)
-	//	m_fboBuffer[i] = 0;
-
-	//m_fboMat = cv::Mat(m_height, m_width, CV_8UC3, m_fboBuffer);
 }
-
 
 cv::Mat FrameBufferObjectView::ReadBufferToMatrix()
 {

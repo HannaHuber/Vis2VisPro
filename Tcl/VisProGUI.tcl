@@ -107,7 +107,11 @@ proc SetEnv {} {
 	}
 	set filename [tk_getOpenFile -filetypes $types]
 	set commandEnv $filename
-	setEnvironment $filename
+
+	# setEnvironment $filename
+	if {[catch {setEnvironment $filename}]} {
+		puts stderr "Could not set secondary objects."
+    }	
 }
 
 proc SetItem {} {
@@ -118,6 +122,11 @@ proc SetItem {} {
 	}
 	set filename [tk_getOpenFile -filetypes $types]
 	set commandItem $filename
-	setItem $filename
+	
+	# setItem $filename
+	if {[catch {setItem $filename}]} {
+		puts stderr "Could not set objects of interest."
+    }	
+
 }
 
