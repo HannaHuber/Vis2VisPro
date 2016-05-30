@@ -18,7 +18,7 @@ struct Material {
 uniform Material material;
 
 // Cutaway
-uniform sampler2D cutaway_surface;
+uniform sampler2DShadow cutaway_surface;
 uniform float clip;
 uniform vec2 texDim;
 
@@ -43,8 +43,9 @@ void main() {
 		float pz = gl_FragCoord.z;
 
 		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;
-		float cutaway_depth = texture(cutaway_surface, vec2(px,py)).b;
-		//float disc = texture(cutaway_surface, vec3(px,py, pz), 0.01);
+		//float cutaway_depth = texture(cutaway_surface, vec2(px,py)).x;
+		//float cutaway_depth = texture(cutaway_surface, vec2(px,py)).b;
+		float disc = texture(cutaway_surface, vec3(px,py, pz));
 
 		// Debug
 		//vec3 cutaway_col = texture(cutaway_surface, vec2(px,py)).rgb;
@@ -53,8 +54,8 @@ void main() {
 		//outColor = vec4(cutaway_col.b, cutaway_col.b, cutaway_depth, 1);
 		//draw = false;
 
-		if (pz < cutaway_depth ) {
-		//if (disc==0.0) {
+		//if (pz == cutaway_depth ) {
+		if (disc==0.0) {
 			draw = false;
 			discard;
 		}
@@ -87,7 +88,7 @@ void main() {
 
 		// Scale out_color to [0,1]
 		if (max(outColor.x, max(outColor.y, outColor.z))>1) {
-			outColor = outColor * 1.0f/max(outColor.x, max(outColor.y, outColor.z));
+			outColor = outColor * 1.0/max(outColor.x, max(outColor.y, outColor.z));
 		}
 
 		outColor = vec4(outColor.xyz,material.transparency);

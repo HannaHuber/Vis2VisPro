@@ -29,6 +29,6 @@ public:
 
 	float cut;
 private:
-	GLuint tex1, tex2, look_up_tex, target_tex, fbo1, fbo2, target_fbo;
+	GLuint pos_tex1, pos_tex2, depth_tex1, depth_tex2, look_up_tex, target_tex, fbo1, fbo2, target_fbo;
 	int width, height, last_target;
 };

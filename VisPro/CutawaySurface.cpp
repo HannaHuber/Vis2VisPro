@@ -12,11 +12,17 @@ CutawaySurface::CutawaySurface()
 	
 }
 CutawaySurface::~CutawaySurface() {
-	if (tex1) {
-		glDeleteTextures(1, &tex1);
+	if (pos_tex1) {
+		glDeleteTextures(1, &pos_tex1);
 	}
-	if (tex2) {
-		glDeleteTextures(1, &tex2);
+	if (pos_tex2) {
+		glDeleteTextures(1, &pos_tex2);
+	}
+	if (depth_tex1) {
+		glDeleteTextures(1, &depth_tex1);
+	}
+	if (depth_tex2) {
+		glDeleteTextures(1, &depth_tex2);
 	}
 	if (fbo1) {
 		glDeleteBuffers(1, &fbo1);
@@ -42,35 +48,52 @@ CutawaySurface::~CutawaySurface() {
 void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, float c) {
 	
 	cut = c;
-
 	width = w;
 	height = h;
 
-	// Init depth map
-	glGenTextures(1, &tex1);
-	glBindTexture(GL_TEXTURE_2D, tex1);
+	// Init first depth map
+	glGenTextures(1, &pos_tex1);
+	glBindTexture(GL_TEXTURE_2D, pos_tex1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_EQUAL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// Init first depth map
+	glGenTextures(1, &depth_tex1);
+	glBindTexture(GL_TEXTURE_2D, depth_tex1);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LESS);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	
-	// Init framebuffer and attach depth map
+	// Init first framebuffer and attach textures
 	glGenFramebuffers(1, &fbo1);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex1, 0);
-	GLenum DrawBuffers1[1] = { GL_COLOR_ATTACHMENT0 };
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, pos_tex1, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depth_tex1, 0);
+	GLenum DrawBuffers1[1] = { GL_COLOR_ATTACHMENT0};
 	glDrawBuffers(1, DrawBuffers1);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	// Init second texture and framebuffer for jump flooding
-	glGenTextures(1, &tex2);
-	glBindTexture(GL_TEXTURE_2D, tex2);
+	// Init second textures and framebuffer for jump flooding
+	glGenTextures(1, &pos_tex2);
+	glBindTexture(GL_TEXTURE_2D, pos_tex2);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_EQUAL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glGenTextures(1, &depth_tex2);
+	glBindTexture(GL_TEXTURE_2D, depth_tex2);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
@@ -78,8 +101,9 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glGenFramebuffers(1, &fbo2);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex2, 0);
-	GLenum DrawBuffers2[1] = { GL_COLOR_ATTACHMENT0 };
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, pos_tex2, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depth_tex2, 0);
+	GLenum DrawBuffers2[1] = { GL_COLOR_ATTACHMENT0};
 	glDrawBuffers(1, DrawBuffers2);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
@@ -155,7 +179,9 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE0 + 0);
-		glBindTexture(GL_TEXTURE_2D, tex2);
+		glBindTexture(GL_TEXTURE_2D, pos_tex2);
+		glActiveTexture(GL_TEXTURE0 + 2);
+		glBindTexture(GL_TEXTURE_2D, depth_tex2);
 		last_target = 1;
 	}
 	else {
@@ -163,11 +189,16 @@ void CutawaySurface::quadPass(int step, mat4& vp) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE0 + 0);
-		glBindTexture(GL_TEXTURE_2D, tex1);
+		glBindTexture(GL_TEXTURE_2D, pos_tex1);
+		glActiveTexture(GL_TEXTURE0 + 2);
+		glBindTexture(GL_TEXTURE_2D, depth_tex1);
 		last_target = 2;
 	}
-	auto ztex_location = glGetUniformLocation(quad_shader->programHandle, "lookUpTexture");
-	glUniform1i(ztex_location, 0);
+	//auto ztex_location = glGetUniformLocation(quad_shader->programHandle, "lookUpTexture");
+	auto ptex_location = glGetUniformLocation(quad_shader->programHandle, "posTexture");
+	glUniform1i(ptex_location, 0);
+	auto ztex_location = glGetUniformLocation(quad_shader->programHandle, "depthTexture");
+	glUniform1i(ztex_location, 2);
 
 	// Draw
 	quad->bindVAO();
@@ -189,11 +220,11 @@ void CutawaySurface::prepareRenderPass(int unit) {
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	if (last_target == 2) {
-		glBindTexture(GL_TEXTURE_2D, tex2);
+		glBindTexture(GL_TEXTURE_2D, depth_tex2);
 		//glBindTexture(GL_TEXTURE_2D, tex1);
 	}
 	else {
-		glBindTexture(GL_TEXTURE_2D, tex1);
+		glBindTexture(GL_TEXTURE_2D, depth_tex1);
 	}
 }
 
@@ -202,11 +233,11 @@ GLuint CutawaySurface::getTextureHandle(int tex)
 	switch (tex)
 	{
 	case 1:
-		return tex1;
+		return depth_tex1;
 	case 2:
-		return tex2;
+		return depth_tex2;
 	default:
-		return tex1;
+		return depth_tex1;
 	}
 }
 
