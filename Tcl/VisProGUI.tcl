@@ -6,18 +6,6 @@ wm title . VisProGUI
 ttk::frame .top -borderwidth 10
 pack .top -side top -fill x
 
-# Create the command buttons.
-
-set butEnv [ttk::button .top.updateEnv -text "Secondary Objects" -command SetEnv]
-set butItem [ttk::button .top.updateItem -text "Objects of Interest " -command SetItem]
-
-set butNear [ttk::button .top.updateNear -text "Update Near Plane" -command UpdateNear]
-set butFar [ttk::button .top.updateFar -text "Update Far Plane" -command UpdateFar]
-set butDrill [ttk::button .top.updateDrill -text "Update Drill Angle" -command UpdateDrill]
-
-set butStart [ttk::button .top.startSim -text "Start" -command StartSim]
-set butQ [ttk::button .top.quit -text "Quit" -command exit]
-
 # Create default values
 
 set commandEnv ../Models/Japanese/japaneseHouse.dae
@@ -30,6 +18,21 @@ set commandItem ../Models/Japanese/japaneseNoCarpet.dae
 set commandDrill [getDrillAngle]
 set commandNear [getNearPlane]
 set commandFar [getFarPlane]
+set commandDoCut [getDoCutaway]
+
+# Create the command buttons.
+
+set butEnv [ttk::button .top.updateEnv -text "Secondary Objects" -command SetEnv]
+set butItem [ttk::button .top.updateItem -text "Objects of Interest " -command SetItem]
+
+set butNear [ttk::button .top.updateNear -text "Update Near Plane" -command UpdateNear]
+set butFar [ttk::button .top.updateFar -text "Update Far Plane" -command UpdateFar]
+set butDrill [ttk::button .top.updateDrill -text "Update Drill Angle" -command UpdateDrill]
+
+set butStart [ttk::button .top.startSim -text "Start" -command StartSim]
+set butQ [ttk::button .top.quit -text "Quit" -command exit]
+
+set checkCut [checkbutton .top.checkCut -text "Do Cutaway" -variable commandDoCut -command UpdateCut -anchor w]
 
 # Create a labeled entry for the command
 
@@ -64,8 +67,10 @@ grid .top.cmdFar -row 3 -column 1 -sticky e
 grid .top.updateDrill -row 4 -column 0 -sticky wens
 grid .top.cmdDrill -row 4 -column 1 -sticky e
 
-grid .top.startSim -row 5 -column 0 -sticky wens 
-grid .top.quit -row 5 -column 1 -sticky e 
+grid .top.checkCut -row 5 -column 1 -sticky e
+
+grid .top.startSim -row 6 -column 0 -sticky wens 
+grid .top.quit -row 6 -column 1 -sticky e 
 
 # Set up key binding equivalents to the buttons
 
@@ -93,6 +98,11 @@ proc UpdateFar {} {
 proc UpdateDrill {} {
 	global commandDrill 
 	setDrillAngle $commandDrill
+}
+
+proc UpdateCut {} {
+	global commandDoCut 
+	setDoCutaway $commandDoCut
 }
 
 proc StartSim {} {
@@ -129,4 +139,3 @@ proc SetItem {} {
     }	
 
 }
-

@@ -42,8 +42,6 @@
 #include "Quad.h"
 
 #include "StringHelpers.hpp"
-//#include <boost_1_58_0/boost/gil/gil_all.hpp>
-//#include "boost/gil/gil_all.hpp"
 #include <opencv2\opencv.hpp>
 #include <opencv2\imgproc\imgproc.hpp>
 #include <opencv2\highgui\highgui.hpp>
@@ -240,11 +238,14 @@ int SetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
 int SetDoCutawayCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
-	//double drillAngle = atof(argv[1]);
-	//if (drillAngle != 0)
-	//	UpdateDrillAngle(drillAngle);
+	int boolPtr[1];
+	if (Tcl_GetBoolean(interp, argv[1], boolPtr) == TCL_OK)
+	{
+		doCutaway = *boolPtr;
+		return TCL_OK;
+	}
 
-	return TCL_OK;
+	return TCL_ERROR;
 }
 
 int GetNearPlaneCmd(ClientData clientData, Tcl_Interp *interp,
@@ -277,9 +278,9 @@ int GetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
 int GetDoCutawayCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
-	//char buffer[20];
-	//sprintf_s(buffer, "%1.0f", doCutaway);
-	//Tcl_SetResult(interp, buffer, TCL_VOLATILE);
+	char buffer[20];
+	sprintf_s(buffer, "%1.0f", doCutaway);
+	Tcl_SetResult(interp, buffer, TCL_VOLATILE);
 	return TCL_OK;
 }
 
