@@ -171,12 +171,11 @@ static Tk_ArgvInfo argTable[] = { {"", TK_ARGV_END} };
 int SetEnvironmentCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
-
 	// TODO: check if file exists
 	std::string envStr = argv[1];
 	UpdateEnvironment(envStr);
 
-	return 0;
+	return TCL_OK;
 }
 
 int SetItemCmd(ClientData clientData, Tcl_Interp *interp,
@@ -186,7 +185,7 @@ int SetItemCmd(ClientData clientData, Tcl_Interp *interp,
 	std::string itemStr = argv[1];
 	UpdateItem(itemStr);
 
-	return 0;
+	return TCL_OK;
 }
 
 bool startSim = false;
@@ -195,7 +194,7 @@ int StartSimCmd(ClientData clientData, Tcl_Interp *interp,
 {
 	startSim = true;
 
-	return 0;
+	return TCL_OK;
 }
 
 int SetNearPlaneCmd(ClientData clientData, Tcl_Interp *interp,
@@ -205,7 +204,7 @@ int SetNearPlaneCmd(ClientData clientData, Tcl_Interp *interp,
 	if (nearPlane != 0)
 		UpdateNearPlane(nearPlane);
 
-	return 0;
+	return TCL_OK;
 }
 
 int SetFarPlaneCmd(ClientData clientData, Tcl_Interp *interp,
@@ -215,7 +214,7 @@ int SetFarPlaneCmd(ClientData clientData, Tcl_Interp *interp,
 	if (farPlane != 0)
 		UpdateFarPlane(farPlane);
 
-	return 0;
+	return TCL_OK;
 }
 
 int SetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
@@ -225,7 +224,34 @@ int SetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
 	if (drillAngle != 0)
 		UpdateDrillAngle(drillAngle);
 
-	return 0;
+	return TCL_OK;
+}
+
+int GetNearPlaneCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	char buffer[20];
+	sprintf_s(buffer, "%.2f", near_plane);
+	Tcl_SetResult(interp, buffer, TCL_VOLATILE);
+	return TCL_OK;
+}
+
+int GetFarPlaneCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	char buffer[20];
+	sprintf_s(buffer, "%.2f", far_plane);
+	Tcl_SetResult(interp, buffer, TCL_VOLATILE);
+	return TCL_OK;
+}
+
+int GetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	char buffer[20];
+	sprintf_s(buffer, "%.2f", drill_angle);
+	Tcl_SetResult(interp, buffer, TCL_VOLATILE);
+	return TCL_OK;
 }
 
 int Tk_AppInit(Tcl_Interp *interp) {
@@ -257,6 +283,15 @@ int Tk_AppInit(Tcl_Interp *interp) {
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
 	Tcl_CreateCommand(interp, "setDrillAngle", SetDrillAngleCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "getNearPlane", GetNearPlaneCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "getFarPlane", GetFarPlaneCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "getDrillAngle", GetDrillAngleCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
 
@@ -334,13 +369,13 @@ int EvalTclFile(char *fileName)
 
 int main(int argc, char** argv) {	
 
-	InitTcl(argc, argv);
-
 	m_environmentDaeFile = "../Models/Japanese/japaneseHouse.dae";
 	m_itemDaeFile = "../Models/Japanese/japaneseNoCarpet.dae";
 
 	// Use input parameters
 	initScreenParameters();
+
+	InitTcl(argc, argv);
 
 	// wait on start key
 	while (!startSim)  {

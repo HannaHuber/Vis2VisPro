@@ -25,15 +25,17 @@
 #   include <stdlib.h>
 #endif
 
+/** Main program for Wish and most other Tk-based applications.
+ * Adaption is done to extract Tk-event loop into event-loop of own application.
+ * @param argc number of arguments
+ * @param argv array of argument strings
+ * @param appInitProc application-specific initialization function to call after most initialization but before starting to execute commands
+ * @param interp used Tcl interpreter
+ */
+void My_Tk_MainEx(int argc, TCHAR **argv, Tcl_AppInitProc *appInitProc, Tcl_Interp *interp);
 
-void My_Tk_MainEx(
-int argc,			/* Number of arguments. */
-TCHAR **argv,		/* Array of argument strings. */
-Tcl_AppInitProc *appInitProc,
-/* Application-specific initialization
-* function to call after most initialization
-* but before starting to execute commands. */
-Tcl_Interp *interp);
-
+/** Termination of main program of Tk-based application.
+ * @param interp used Tcl interpreter
+ */
 void My_TK_EndMainEx(Tcl_Interp *interp);
 

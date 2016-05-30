@@ -20,13 +20,16 @@ set butQ [ttk::button .top.quit -text "Quit" -command exit]
 
 # Create default values
 
-set commandM 1
 set commandEnv ../Models/Japanese/japaneseHouse.dae
 set commandItem ../Models/Japanese/japaneseNoCarpet.dae
 
-set commandDrill 40
-set commandNear 0.1
-set commandFar 180.0
+# set commandDrill 40
+# set commandNear 0.1
+# set commandFar 180.0
+
+set commandDrill [getDrillAngle]
+set commandNear [getNearPlane]
+set commandFar [getFarPlane]
 
 # Create a labeled entry for the command
 
