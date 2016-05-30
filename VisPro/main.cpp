@@ -419,6 +419,8 @@ int main(int argc, char** argv) {
 			Tcl_DoOneEvent(0);
 		}
 	}
+
+	HWND tkWindow = GetActiveWindow();
 	// -----------------------------------------------------------------------------------------
 	// end of program initialization, start program
 	// -----------------------------------------------------------------------------------------
@@ -436,7 +438,7 @@ int main(int argc, char** argv) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);					// OpenGL 4.0
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);	// Core profile
-	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);						// Resizable window	
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);						// not resizable window	
 	
 	// Get monitor
 	GLFWmonitor* monitor = nullptr;
@@ -494,6 +496,16 @@ int main(int argc, char** argv) {
 		// dispatch TCL-events for interpreter
 		if (Tk_GetNumMainWindows() > 0) {
 			Tcl_DoOneEvent(0);
+		}
+
+		if (freeMouse)
+		{
+			// free the mouse by window creation
+			// ---------------------------------
+			// Focus TCL window
+			HWND currWindow = SetFocus(tkWindow);
+
+			freeMouse = false;
 		}
 
 		// Calculate frametime

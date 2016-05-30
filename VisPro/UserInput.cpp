@@ -15,6 +15,7 @@ bool countDown = true;
 
 bool showZBufferView = false;
 bool updateZBufferView = false;
+bool freeMouse = false;
 
 UserInput::UserInput(GLFWwindow* win)
 : window(win)
@@ -84,9 +85,12 @@ vec3 UserInput::getMoveInput() {
 }
 
 vec2 UserInput::getLookInput() {
-	double xpos, ypos;
+	double xpos = 0;
+	double ypos = 0;
+	
 	glfwGetCursorPos(window, &xpos, &ypos);							// Get cursor position
 	glfwSetCursorPos(window, screen_center.x, screen_center.y);		// Set cursor position for next frame
+		
 	return vec2(screen_center.x - xpos, ypos - screen_center.y);	// return horizontal and vertical angle
 }
 
@@ -242,6 +246,17 @@ void UserInput::toggleUpdateZBufferView()
 
 }
 
+void UserInput::doFreeMouse()
+{
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+		if (glfwGetTime() - lastButtonPress > minDist * 6.0){
+			std::cout << "free mouse from screen" << std::endl;
+			lastButtonPress = glfwGetTime();
+			freeMouse = true;
+		}
+	}
+}
+
 void UserInput::switchModi() {
 	
 		switchWireFrameMode();
@@ -255,4 +270,6 @@ void UserInput::switchModi() {
 
 		toggleShowZBufferView();
 		toggleUpdateZBufferView();
+
+		doFreeMouse();
 }

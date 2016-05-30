@@ -45,9 +45,11 @@ private:
 	void toggleShowZBufferView();
 	void toggleUpdateZBufferView();
 
+	void doFreeMouse();
+
 };
 
 //global
-extern bool showFrameTime, useWireFrame, useLinearTexSampling, useViewFrustumCulling, useTransparency, useBloom, countDown, showZBufferView, updateZBufferView;
+extern bool showFrameTime, useWireFrame, useLinearTexSampling, useViewFrustumCulling, useTransparency, useBloom, countDown, showZBufferView, updateZBufferView, freeMouse;
 extern int useMipMapping; // 0: off, 1: nearest neighbour, 2: linear
 
