@@ -1,10 +1,6 @@
 #include "QuadShader.h"
-#include "gtc/type_ptr.hpp"
 
-using namespace glm;
-
-
-QuadShader::QuadShader(float z_near, float z_far, float angle, vec2 texDim)
+QuadShader::QuadShader(float z_near, float z_far, float angle)
 : Shader("./Shader/QuadShader.vert", "./Shader/QuadShader.frag")
 {
 	useShader();
@@ -16,9 +12,6 @@ QuadShader::QuadShader(float z_near, float z_far, float angle, vec2 texDim)
 	// Set tangent of drill angle
 	auto tanphi_location = glGetUniformLocation(programHandle, "tanPhi");
 	glUniform1f(tanphi_location, glm::tan(angle));
-
-	// Set texture dimensions
-	setCutawayDimension(texDim);
 
 	glUseProgram(0);
 }

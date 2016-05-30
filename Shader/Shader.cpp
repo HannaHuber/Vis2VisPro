@@ -3,9 +3,6 @@
 
 #include <iostream>
 #include <fstream>
-#include "gtc/type_ptr.hpp"
-
-#include "StringHelpers.hpp"
 
 using namespace std;
 
@@ -65,14 +62,8 @@ void Shader::useShader() const
 
 void Shader::loadShader(const std::string& shader, GLenum shaderType, GLuint& handle)
 {
-//#ifdef _DEBUG
-	std::string execPath = Helper::ExecutionPath();
-	std::string shader_abs = execPath + shader.substr(2,shader.length()-2);
-	std::ifstream shaderFile(shader_abs);
-//#else
-//	std::ifstream shaderFile(shader);
-//#endif
-
+	std::ifstream shaderFile(shader);
+	
 	if (!shaderFile.good())
 	{
 		std::cout << "Error in Shader.cpp: Loading file '" << shader << "' failed!" << std::endl;
@@ -161,16 +152,6 @@ void Shader::linkWithGeometryShader()
 
 void Shader::setLighting(std::vector<std::shared_ptr<PointLight>> *allLights) {
 
-}
-
-void Shader::setCutawayDimension(glm::vec2 dim)
-{
-	useShader();
-
-	auto dim_location = glGetUniformLocation(programHandle, "texDim");
-	glUniform2fv(dim_location, 1, glm::value_ptr(dim));
-
-	glUseProgram(0);
 }
 
 void Shader::bindTexture(int unit) {
