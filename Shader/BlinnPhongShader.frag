@@ -19,7 +19,8 @@ uniform Material material;
 
 // Cutaway
 uniform sampler2D cutaway_surface;
-uniform bool clip;
+uniform float clip;
+uniform vec2 texDim;
 
 layout(location = 0) out vec4 outColor;
 
@@ -35,9 +36,25 @@ void main() {
 	normalize(worldNormal);	
 
 	bool draw = true;
-	if (clip) {
-		float cutaway_depth = texture(cutaway_surface, gl_FragCoord.xy).b;
-		if (gl_FragCoord.z <= cutaway_depth ) {
+	if (clip>0.5) {
+		// Debug
+		float px = gl_FragCoord.x/texDim.x;
+		float py = gl_FragCoord.y/texDim.y;
+		float pz = gl_FragCoord.z;
+
+		vec3 p = gl_FragCoord.xyz * 0.5 + 0.5;
+		float cutaway_depth = texture(cutaway_surface, vec2(px,py)).b;
+		//float disc = texture(cutaway_surface, vec3(px,py, pz), 0.01);
+
+		// Debug
+		//vec3 cutaway_col = texture(cutaway_surface, vec2(px,py)).rgb;
+		//outColor = vec4(cutaway_depth, cutaway_depth, cutaway_depth, 1);
+		//outColor = vec4(pz, pz, cutaway_depth, 1);
+		//outColor = vec4(cutaway_col.b, cutaway_col.b, cutaway_depth, 1);
+		//draw = false;
+
+		if (pz < cutaway_depth ) {
+		//if (disc==0.0) {
 			draw = false;
 			discard;
 		}
@@ -72,8 +89,11 @@ void main() {
 		if (max(outColor.x, max(outColor.y, outColor.z))>1) {
 			outColor = outColor * 1.0f/max(outColor.x, max(outColor.y, outColor.z));
 		}
+
+		outColor = vec4(outColor.xyz,material.transparency);
 	}
 	
-	outColor = vec4(outColor.xyz,material.transparency);
+	
+	
 		
 }
