@@ -91,7 +91,7 @@ float fov = glm::radians(70.0f);
 
 // Distance transform
 CutawaySurface *cutaway = nullptr;
-float drill_angle = glm::radians(40.0f);
+float drill_angle = 40.0f; // glm::radians();
 float doCutaway = 1.0f;
 
 // Control
@@ -140,7 +140,7 @@ void UpdateFarPlane(float farPlane)
 void UpdateDrillAngle(float drillAngle)
 {
 	// update shader with current value
-	drill_angle = glm::radians(drillAngle);
+	drill_angle = drillAngle; // glm::radians();
 
 	if (m_window != nullptr && cutaway != nullptr)
 	{
@@ -725,6 +725,7 @@ void draw() {
 
 void cleanup() {	
 	delete camera;
+	delete cutaway;
 }
 
 void initScreenParameters(){
@@ -752,7 +753,7 @@ void initScreenParameters(){
 			height = value;
 		}
 		else if (type == "angle"){
-			drill_angle = glm::radians((float)value);
+			drill_angle = (float)value; // glm::radians(); //;
 		}
 		else if (type == "refreshrate"){
 			refreshrate = value;			
