@@ -1,6 +1,6 @@
 #include "MyTkMain.h"
-
 #include "StringHelpers.hpp"
+
 /*
  * tkMain.c --
  *
@@ -16,33 +16,6 @@
  * See the file "license.terms" for information on usage and redistribution of
  * this file, and for a DISCLAIMER OF ALL WARRANTIES.
  */
-
-///**
-// * On Windows, this file needs to be compiled twice, once with
-// * TK_ASCII_MAIN defined. This way both Tk_MainEx and Tk_MainExW
-// * can be implemented, sharing the same source code.
-// */
-//#if defined(TK_ASCII_MAIN)
-//#   ifdef UNICODE
-//#	undef UNICODE
-//#	undef _UNICODE
-//#   else
-//#	define UNICODE
-//#	define _UNICODE
-//#   endif
-//#endif
-//
-//#include "tkInt.h"
-//#include <ctype.h>
-//#include <stdio.h>
-//#include <string.h>
-//#ifdef NO_STDLIB_H
-//#   include "../compat/stdlib.h"
-//#else
-//#   include <stdlib.h>
-//#endif
-
-//extern int TkCygwinMainEx(int, char **, Tcl_AppInitProc *, Tcl_Interp *);
 
 /*
  * The default prompt used when the user has not overridden it.
@@ -67,7 +40,7 @@
 //    void (*dummy[16]) (void); /* dummy entries 0-15, not used */
 //    int (*tclpIsAtty) (int fd); /* 16 */
 //} TclIntPlatStubs;
-extern const TclIntPlatStubs *tclIntPlatStubsPtr;
+//extern const TclIntPlatStubs *tclIntPlatStubsPtr;
 #   include "tkWinInt.h"
 #else
 #   define TCHAR char
@@ -114,13 +87,6 @@ static int WinIsTty(int fd) {
      * always claim to be running on a tty. This probably isn't the right way
      * to do it.
      */
-
-//#if !defined(STATIC_BUILD)
-//	if (tclStubsPtr->reserved9 && tclIntPlatStubsPtr->tclpIsAtty) {
-//	    /* We are running on Cygwin */
-//	    return tclIntPlatStubsPtr->tclpIsAtty(fd);
-//	}
-//#endif
 
     handle = GetStdHandle(STD_INPUT_HANDLE + fd);
 	/*
@@ -192,7 +158,7 @@ My_Tk_MainEx(
     Tcl_Channel chan;
     InteractiveState is;
 
-	// HACK
+	// HACK - transform values to appropriate format
 	unsigned short **usArgV = new unsigned short *[argc];
 	for (int argvIdx = 0; argvIdx < argc; argvIdx++)
 	{
@@ -211,31 +177,6 @@ My_Tk_MainEx(
 	    Tcl_Panic("%s", Tcl_GetString(Tcl_GetObjResult(interp)));
 	}
     }
-
-#if defined(_WIN32) && !defined(UNICODE) && !defined(STATIC_BUILD)
-
-    if (tclStubsPtr->reserved9) {
-	/* We are running win32 Tk under Cygwin, so let's check
-	 * whether the env("DISPLAY") variable or the -display
-	 * argument is set. If so, we really want to run the
-	 * Tk_MainEx function of libtk8.?.dll, not this one. */
-	if (Tcl_GetVar2(interp, "env", "DISPLAY", TCL_GLOBAL_ONLY)) {
-	loadCygwinTk:
-	    if (TkCygwinMainEx(argc, argv, appInitProc, interp)) {
-		/* Should never reach here. */
-		return;
-	    }
-	} else {
-	    int i;
-
-	    for (i = 1; i < argc; ++i) {
-		if (!_tcscmp(argv[i], TEXT("-display"))) {
-		    goto loadCygwinTk;
-		}
-	    }
-	}
-    }
-#endif
 
     Tcl_InitMemory(interp);
 
@@ -267,22 +208,18 @@ My_Tk_MainEx(
 
 	if ((argc > 3) && (0 == _tcscmp(TEXT("-encoding"), argv[1]))
 		&& (TEXT('-') != argv[3][0])) {
-		//Tcl_Obj *value = NewNativeObj(argv[2], -1);
 		Tcl_Obj *value = NewNativeObj(usArgV[2], -1);
-		//Tcl_SetStartupScript(NewNativeObj(argv[3], -1), Tcl_GetString(value));
 		Tcl_SetStartupScript(NewNativeObj(usArgV[3], -1), Tcl_GetString(value));
 		Tcl_DecrRefCount(value);
 	    argc -= 3;
 	    argv += 3;
 	} else if ((argc > 1) && (TEXT('-') != argv[1][0])) {
-		//Tcl_SetStartupScript(NewNativeObj(argv[1], -1), NULL);
 		Tcl_SetStartupScript(NewNativeObj(usArgV[1], -1), NULL);
 		argc--;
 	    argv++;
 	} else if ((argc > 2) && (length = _tcslen(argv[1]))
 		&& (length > 1) && (0 == _tcsncmp(TEXT("-file"), argv[1], length))
 		&& (TEXT('-') != argv[2][0])) {
-		//Tcl_SetStartupScript(NewNativeObj(argv[2], -1), NULL);
 		Tcl_SetStartupScript(NewNativeObj(usArgV[2], -1), NULL);
 		argc -= 2;
 	    argv += 2;
@@ -291,7 +228,6 @@ My_Tk_MainEx(
 
     path = Tcl_GetStartupScript(&encodingName);
     if (path == NULL) {
-		//appName = NewNativeObj(argv[0], -1);
 		appName = NewNativeObj(usArgV[0], -1);
 	}
 	else {
@@ -305,7 +241,6 @@ My_Tk_MainEx(
 
     argvPtr = Tcl_NewListObj(0, NULL);
     while (argc--) {
-		//Tcl_ListObjAppendElement(NULL, argvPtr, NewNativeObj(*argv++, -1));
 		Tcl_ListObjAppendElement(NULL, argvPtr, NewNativeObj(*usArgV++, -1));
 	}
     Tcl_SetVar2Ex(interp, "argv", NULL, argvPtr, TCL_GLOBAL_ONLY);
@@ -383,9 +318,8 @@ My_Tk_MainEx(
      * Loop infinitely, waiting for commands to execute. When there are no
      * windows left, Tk_MainLoop returns and we exit.
      */
-
-
-	// HACK - remove this to integrate in own event loop !!!
+	
+	// move the rest to integrate main loop in own event loop and discard after application run !!!
 
     //Tk_MainLoop();
     //Tcl_DeleteInterp(interp);
@@ -400,7 +334,6 @@ void My_TK_EndMainEx(Tcl_Interp *interp)
 	Tcl_Release(interp);
 	Tcl_SetStartupScript(NULL, NULL);
 	Tcl_Exit(0);
-
 }
 
 /*
@@ -559,10 +492,3 @@ Prompt(
  */
 
 
-
-void My_Test()
-{
-	// do nothing:
-	int i = 0;
-	int j = i + 1;
-}

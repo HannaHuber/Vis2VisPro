@@ -37,4 +37,3 @@ Tcl_Interp *interp);
 
 void My_TK_EndMainEx(Tcl_Interp *interp);
 
-void My_Test();
