@@ -20,6 +20,8 @@ public:
 	glm::vec2 getDimension();
 	GLuint getTextureHandle(int tex);
 	GLuint getFBOHandle(int fbo);
+
+	void clearBuffers();
 	
 	ZBufferShader* z_buffer_shader;
 	Quad* quad;

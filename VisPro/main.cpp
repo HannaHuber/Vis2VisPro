@@ -731,6 +731,8 @@ void draw() {
 
 	if (doCutaway)
 		cutaway->prepareRenderPass(2);
+	else
+		cutaway->clearBuffers();
 
 	// Render scene
 	drawnFaces = obj_manager.draw(cutaway, useViewFrustumCulling);
