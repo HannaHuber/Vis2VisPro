@@ -30,7 +30,7 @@ void main()
 	for (int i=0; i<9; ++i) {
 		qScreenCoords[i] = texture(lookUpTexture, qCoords[i]).rg;
 		z = zMax; // texture(lookUpTexture, qCoords[i]).b;
-		m =  1; //-(PMsz + z)/tanPhi;
+		m =  -(PMsz + z)/tanPhi; //1;
 		//c = z - m*sqrt(pow(gl_FragCoord.x-qScreenCoords[i].x,2)+pow(gl_FragCoord.y-qScreenCoords[i].y,2));
 		c = z - m*sqrt(pow(textureCoords.x-qScreenCoords[i].x,2)+pow(textureCoords.y-qScreenCoords[i].y,2));
 		//c = z - m*max(abs(textureCoords.x-qScreenCoords[i].x),abs(textureCoords.y-qScreenCoords[i].y));
