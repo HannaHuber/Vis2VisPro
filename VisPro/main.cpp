@@ -855,22 +855,22 @@ void draw() {
 	drawnFaces = obj_manager.draw(cutaway, useViewFrustumCulling);
 }
 
+/** Cleanup of simulation objects. 
+  */
 void cleanup() {	
 	delete camera;
 	delete cutaway;
 }
 
+/** Extraction of simulation parameters for screen and cutaway surface calculation from settings file.
+  */
 void initScreenParameters(){
 
 	// Read from file
-//#ifdef _DEBUG
 	std::string execPath = Helper::ExecutionPath();
 	std::string settings_abs = execPath + "settings.txt";
 
 	std::ifstream settingsFile(settings_abs);
-//#else
-//	std::ifstream settingsFile("./settings.txt");
-//#endif
 
 	if (settingsFile.fail()){
 		std::cout << "ERROR: Reading settingsfile failed! Using standard settings instead" << std::endl;
@@ -885,7 +885,7 @@ void initScreenParameters(){
 			height = value;
 		}
 		else if (type == "angle"){
-			drill_angle = (float)value; // glm::radians(); //;
+			drill_angle = (float)value; // glm::radians();
 		}
 		else if (type == "refreshrate"){
 			refreshrate = value;			
