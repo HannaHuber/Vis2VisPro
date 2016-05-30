@@ -92,7 +92,7 @@ float ratio = width / height;
 float fov = glm::radians(70.0f);
 
 // Distance transform
-CutawaySurface cutaway;
+CutawaySurface *cutaway = nullptr;
 float drill_angle = glm::radians(40.0f);
 float doCutaway = 1.0f;
 
@@ -116,11 +116,11 @@ void UpdateNearPlane(float nearPlane)
 	// update shader with current value
 	near_plane = nearPlane;
 
-	if (m_window != nullptr)
+	if (m_window != nullptr && cutaway != nullptr)
 	{
 		// Get actual window size
 		glfwGetWindowSize(m_window, &width, &height);
-		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+		cutaway->update(width, height, near_plane, far_plane, drill_angle, doCutaway);
 		camera->setProjMatrix(width, height, fov, far_plane, near_plane);
 	}
 }
@@ -130,11 +130,11 @@ void UpdateFarPlane(float farPlane)
 	// update shader with current value
 	far_plane = farPlane;
 
-	if (m_window != nullptr)
+	if (m_window != nullptr && cutaway != nullptr)
 	{
 		// Get actual window size
 		glfwGetWindowSize(m_window, &width, &height);
-		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+		cutaway->update(width, height, near_plane, far_plane, drill_angle, doCutaway);
 		camera->setProjMatrix(width, height, fov, far_plane, near_plane);
 	}
 }
@@ -144,11 +144,11 @@ void UpdateDrillAngle(float drillAngle)
 	// update shader with current value
 	drill_angle = glm::radians(drillAngle);
 
-	if (m_window != nullptr)
+	if (m_window != nullptr && cutaway != nullptr)
 	{
 		// Get actual window size
 		glfwGetWindowSize(m_window, &width, &height);
-		cutaway.update(width, height, near_plane, far_plane, drill_angle, doCutaway);
+		cutaway->update(width, height, near_plane, far_plane, drill_angle, doCutaway);
 	}
 }
 
@@ -237,6 +237,16 @@ int SetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
 	return TCL_OK;
 }
 
+int SetDoCutawayCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	//double drillAngle = atof(argv[1]);
+	//if (drillAngle != 0)
+	//	UpdateDrillAngle(drillAngle);
+
+	return TCL_OK;
+}
+
 int GetNearPlaneCmd(ClientData clientData, Tcl_Interp *interp,
 	int argc, CONST84 char *argv[])
 {
@@ -261,6 +271,15 @@ int GetDrillAngleCmd(ClientData clientData, Tcl_Interp *interp,
 	char buffer[20];
 	sprintf_s(buffer, "%.2f", drill_angle);
 	Tcl_SetResult(interp, buffer, TCL_VOLATILE);
+	return TCL_OK;
+}
+
+int GetDoCutawayCmd(ClientData clientData, Tcl_Interp *interp,
+	int argc, CONST84 char *argv[])
+{
+	//char buffer[20];
+	//sprintf_s(buffer, "%1.0f", doCutaway);
+	//Tcl_SetResult(interp, buffer, TCL_VOLATILE);
 	return TCL_OK;
 }
 
@@ -295,6 +314,9 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	Tcl_CreateCommand(interp, "setDrillAngle", SetDrillAngleCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
+	Tcl_CreateCommand(interp, "setDoCutaway", SetDoCutawayCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
 	Tcl_CreateCommand(interp, "getNearPlane", GetNearPlaneCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
@@ -304,7 +326,9 @@ int Tk_AppInit(Tcl_Interp *interp) {
 	Tcl_CreateCommand(interp, "getDrillAngle", GetDrillAngleCmd,
 		(ClientData)Tk_MainWindow(interp),
 		(Tcl_CmdDeleteProc *)NULL);
-
+	Tcl_CreateCommand(interp, "getDoCutaway", GetDoCutawayCmd,
+		(ClientData)Tk_MainWindow(interp),
+		(Tcl_CmdDeleteProc *)NULL);
 	/*
 	* Define start-up filename. This file is read in
 	* case the program is run interactively.
@@ -395,6 +419,8 @@ int main(int argc, char** argv) {
 		}
 
 	}
+
+	cutaway = new CutawaySurface();
 	
 	// Init GLFW
 	if (!glfwInit()) {												// Init GLFW
@@ -442,11 +468,11 @@ int main(int argc, char** argv) {
 	int fps = 0;
 
 	// Init
-	ZBufferView zBufferView(width, height, "FBO1", cutaway.getFBOHandle(1));
+	ZBufferView zBufferView(width, height, "FBO1", cutaway->getFBOHandle(1));
 	RGBBufferView rgbBufferView(width, height, "RGB");
 
-	TextureView tex1View(width, height, "TEX1", Channels::RG_B, 0, cutaway.getTextureHandle(1));
-	TextureView tex2View(width, height, "TEX2", Channels::RG_B, 0, cutaway.getTextureHandle(2));
+	TextureView tex1View(width, height, "TEX1", Channels::RG_B, 0, cutaway->getTextureHandle(1));
+	TextureView tex2View(width, height, "TEX2", Channels::RG_B, 0, cutaway->getTextureHandle(2));
 
 	FrameBufferObjectView fbo101View(width, height, "after createDepthImage", Channels::RG_B, 1, 0, 1);
 	FrameBufferObjectView fbo202View(width, height, "after createDepthImage", Channels::RG_B, 2, 0, 2);
@@ -634,11 +660,11 @@ void init(GLFWwindow* window) {
 		&e_items);
 	
 	// Distance transform
-	cutaway.init(width, height, near_plane, far_plane, drill_angle, doCutaway);	
+	cutaway->init(width, height, near_plane, far_plane, drill_angle, doCutaway);	
 
 
 	// Lighting + cutaway dimensions
-	vec2 dim = cutaway.getDimension();
+	vec2 dim = cutaway->getDimension();
 	obj_manager.init(vec2((float) dim.x, (float) dim.y));
 	
 }
@@ -656,9 +682,9 @@ void update(GLFWwindow* window, float deltaTime) {
 }
 
 void createDepthImage() {
-	cutaway.prepareZBufferPass();							
-	obj_manager.renderToZBuffer(cutaway.z_buffer_shader, camera->proj_matrix*camera->view_matrix());
-	cutaway.endZBufferPass();
+	cutaway->prepareZBufferPass();							
+	obj_manager.renderToZBuffer(cutaway->z_buffer_shader, camera->proj_matrix*camera->view_matrix());
+	cutaway->endZBufferPass();
 }
 
 void calculateCutawaySurface() {
@@ -670,7 +696,7 @@ void calculateCutawaySurface() {
 	while (step > 0) {
 
 		// Draw quad + calculate distance transform
-		cutaway.quadPass(step, camera->proj_matrix);
+		cutaway->quadPass(step, camera->proj_matrix);
 
 		// Update step size for next iteration
 		step /= 2;
@@ -687,10 +713,10 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, width, height);
 
-	cutaway.prepareRenderPass(2);
+	cutaway->prepareRenderPass(2);
 
 	// Render scene
-	drawnFaces = obj_manager.draw(&cutaway, useViewFrustumCulling);
+	drawnFaces = obj_manager.draw(cutaway, useViewFrustumCulling);
 }
 
 void cleanup() {	
