@@ -152,7 +152,7 @@
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;opencv_calib3d2412d.lib;opencv_contrib2412d.lib;opencv_core2412d.lib;opencv_features2d2412d.lib;opencv_flann2412d.lib;opencv_gpu2412d.lib;opencv_highgui2412d.lib;opencv_imgproc2412d.lib;opencv_legacy2412d.lib;opencv_ml2412d.lib;opencv_objdetect2412d.lib;tcl86.lib;tk86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy  $(SolutionDir)shader $(SolutionDir)debug\shader /Y /I /R
+      <Command>rem xcopy  $(SolutionDir)shader $(SolutionDir)debug\shader /Y /I /R
 
 xcopy  $(SolutionDir)dlls $(SolutionDir)debug /Y /I /R
 
@@ -180,7 +180,7 @@ copy  $(SolutionDir)Tcl\VisProGUI.tcl  $(SolutionDir)debug</Command>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;FreeImage.lib;assimp.lib;freetype.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;opencv_calib3d2412.lib;opencv_contrib2412.lib;opencv_core2412.lib;opencv_features2d2412.lib;opencv_flann2412.lib;opencv_gpu2412.lib;opencv_highgui2412.lib;opencv_imgproc2412.lib;opencv_legacy2412.lib;opencv_ml2412.lib;opencv_objdetect2412.lib;opencv_ts2412.lib;opencv_video2412.lib;opencv_nonfree2412.lib;tcl86.lib;tk86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy  $(SolutionDir)shader $(SolutionDir)release\shader /Y /I /R
+      <Command>rem xcopy  $(SolutionDir)shader $(SolutionDir)release\shader /Y /I /R
 
 xcopy  $(SolutionDir)dlls $(SolutionDir)release /Y /I /R
 

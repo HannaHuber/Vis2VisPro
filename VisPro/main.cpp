@@ -418,8 +418,10 @@ int main(int argc, char** argv) {
 		if (Tk_GetNumMainWindows() > 0) {
 			Tcl_DoOneEvent(0);
 		}
-
 	}
+	// -----------------------------------------------------------------------------------------
+	// end of program initialization, start program
+	// -----------------------------------------------------------------------------------------
 
 	cutaway = new CutawaySurface();
 	
@@ -489,6 +491,7 @@ int main(int argc, char** argv) {
 	// ---------------------------------------------------------------------------------
 	while(isRunning)  { 
 
+		// dispatch TCL-events for interpreter
 		if (Tk_GetNumMainWindows() > 0) {
 			Tcl_DoOneEvent(0);
 		}
