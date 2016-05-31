@@ -1,4 +1,9 @@
 #pragma once
+
+/** @file SceneImporter.h
+*@brief Scene importer class file.
+*/
+
 //#include "Triangle.h"
 #include "Geometry.h"
 #include <list>
@@ -11,9 +16,16 @@
 #include <assimp/scene.h> // Output data structure
 #include <assimp/postprocess.h> // Post processing flags
 
+/** Rescponsible for importing geometry into scene.
+  */
 class SceneImporter
 {
 public:
+	/** Import geometries from a give dae file.
+	  * @param pFile dae file name
+	  * @param allLights set of point lights
+	  * @param camera camera of scene
+	  */
 	std::vector<std::shared_ptr<Geometry>> SceneImporter::importFrom(const std::string& pFile, std::vector<std::shared_ptr<PointLight>> *allLights, std::shared_ptr<Camera> camera);
 	void setPrintInfo(bool i);
 private:

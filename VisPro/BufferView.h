@@ -25,7 +25,8 @@
 
 #include <glew.h>
 
-
+/** Channels that indicate how the RGB context should be split up. 
+  */
 enum Channels {RGB, RG_B, R_G_B, R, G, B};
 
 /** Buffer view base class.

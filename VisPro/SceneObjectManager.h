@@ -10,6 +10,8 @@
 #include "Energy.h"
 #include "UserInput.h"
 
+/** Manges scene objects of simulation. 
+  */
 class SceneObjectManager {
 public:
 	SceneObjectManager();

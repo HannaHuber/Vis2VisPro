@@ -18,7 +18,16 @@
 class Shader
 {
 public:
+	/** Constructor.
+	* @param vertexShader vertex shader file
+	* @param fragmentShader fragment shader file
+	*/
 	Shader(const std::string& vertexShader, const std::string& fragmentShader);
+	/** Constructor.
+	* @param vertexShader vertex shader file
+	* @param geometryShader geometry shader file
+	* @param fragmentShader fragment shader file
+	*/
 	Shader(const std::string& vertexShader, const std::string& geometryShader, const std::string& fragmentShader);
 	~Shader();
 
@@ -41,6 +50,8 @@ public:
 	*/
 	virtual void bindTexture(int unit);
 
+	/** Program handle that contains all given shaders.
+	  */
 	GLuint programHandle;
 
 private:

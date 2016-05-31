@@ -1,8 +1,15 @@
 #pragma once
+
+/** @file UserInput.h
+*@brief User input class file.
+*/
+
 #include <iostream>
 #include "glfw3.h"
 #include "glm.hpp"
 
+/** User input class. 
+  */
 class UserInput
 {
 public:
@@ -17,13 +24,8 @@ public:
 	glm::vec3 getMoveInput();
 	glm::vec2 getLookInput();
 	bool getFireInput();
-
 	
-	
-	
-
 	void switchModi();
-
 
 private:
 	GLFWwindow* window;
@@ -42,9 +44,16 @@ private:
 	void switchBloomMode();
 	void switchCountdownMode();
 
+	/** Trigger opening of view of diverse OpenGL buffers of Open GL. 
+	  */
 	void toggleShowZBufferView();
+
+	/** Trigger update of view of diverse OpenGL buffers of Open GL.
+	*/
 	void toggleUpdateZBufferView();
 
+	/** Free the mouse from sticky GLWF window. 
+	  */
 	void doFreeMouse();
 
 };
