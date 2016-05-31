@@ -2,6 +2,10 @@
 
 #pragma once
 
+/** @file Shader.h
+*@brief Shader base class file.
+*/
+
 #include <string>
 #include "glew.h"
 #include "glfw3.h"

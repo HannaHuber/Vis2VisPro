@@ -5,14 +5,33 @@
 #include "QuadShader.h"
 #include <memory>
 
+/** Creation of cutaway surface and usage of resulting frame buffer objects or textures.  
+  */
 class CutawaySurface {
 public: 
 	CutawaySurface();
 	~CutawaySurface();
 
+	/** Init two frame buffer objects and attached textures and create z buffer shader and quad shader.
+	  * @param w width of cutaway surface in screen coordinates
+	  * @param h height of cutaway surface in screen coordinates
+	  * @param z_near distance of near plane
+	  * @param z_far distance of far plane
+	  * @param angle drill angle of cutaway surface cones
+	  * @param cut true if intersection with cutaway surfaces should be performed
+	  */
 	void init(int w, int h, float z_near, float z_far, float angle, float cut);
 
+	/** Update z buffer shader and quad shader.
+	* @param w width of cutaway surface in screen coordinates
+	* @param h height of cutaway surface in screen coordinates
+	* @param z_near distance of near plane
+	* @param z_far distance of far plane
+	* @param angle drill angle of cutaway surface cones
+	* @param cut true if intersection with cutaway surfaces should be performed
+	  */
 	void update(int w, int h, float z_near, float z_far, float angle, float c);
+
 	/** Clear frame buffer object 1 and set appropriate OpenGL depth test.
 	  */
 	void prepareZBufferPass();

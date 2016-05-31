@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file Geometry.h
+*@brief Geometry class file.
+*/
+
 #include "SceneObject.h"
 #include "Mesh.h"
 #include "../VisPro/CutawaySurface.h"

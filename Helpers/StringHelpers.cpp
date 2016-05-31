@@ -154,6 +154,44 @@ namespace Helper
 		return relativeFileName;
 	}
 
+	std::string AbsoluteFileName(std::string relativeFileName)
+	{
+		std::string relFileName = relativeFileName;
+		std::string absFileName = relativeFileName;
+
+		for (int i = 0; i < 100; i++)
+			relFileName = replace((char *)(relFileName.c_str()), "\\", "/");
+
+		std::size_t found = relFileName.find(":/");
+		if (found != std::string::npos)
+			return absFileName;
+
+		std::string execPath = ExecutionPath();
+
+		found = relFileName.find("../");
+		if (found != std::string::npos)
+		{
+			execPath = execPath.substr(0, execPath.length() - 1);
+			found = execPath.find_last_of("/");
+			if (found != std::string::npos)
+			{
+				execPath = execPath.substr(0, found+1);
+				absFileName = execPath + relFileName.substr(3);
+			}
+		}
+		else
+		{
+			found = relFileName.find("./");
+			if (found != std::string::npos)
+			{
+				absFileName = execPath + relFileName.substr(found+2);
+			}
+		}
+
+		return absFileName;
+	}
+
+
 	std::string CleanString(std::string str, bool numbers, bool specialCharacters)
 	{
 		if (numbers)

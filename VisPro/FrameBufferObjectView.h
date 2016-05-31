@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file FrameBufferObjectView.h
+*@brief frame buffer object view class file.
+*/
+
 #include "TextureView.h"
 
 /** Uses the bound texture of the given OpenGL frame buffer object as the buffer to be viewed.

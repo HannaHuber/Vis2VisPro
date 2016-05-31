@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file TextureView.h
+*@brief Texture view class file.
+*/
+
 #include "BufferView.h"
 
 /** Uses the given OpenGL texture as the buffer to be viewed.  
