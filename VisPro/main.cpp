@@ -457,14 +457,14 @@ int main(int argc, char** argv) {
 	ZBufferView zBufferView(width, height, "FBO1", cutaway->getFBOHandle(1));
 	RGBBufferView rgbBufferView(width, height, "RGB");
 
-	TextureView tex1View(width, height, "TEX1", Channels::RG_B, 0, cutaway->getTextureHandle(1));
-	TextureView tex2View(width, height, "TEX2", Channels::RG_B, 0, cutaway->getTextureHandle(2));
+	tex1View = new TextureView(width, height, "TEX1", Channels::RG_B, 0, cutaway->getTextureHandle(1));
+	tex2View = new TextureView(width, height, "TEX2", Channels::RG_B, 0, cutaway->getTextureHandle(2));
 
-	FrameBufferObjectView fbo101View(width, height, "after createDepthImage", Channels::RG_B, 1, 0, 1);
-	FrameBufferObjectView fbo202View(width, height, "after createDepthImage", Channels::RG_B, 2, 0, 2);
+	fbo101View = new FrameBufferObjectView(width, height, "after createDepthImage", Channels::RG_B, 1, 0, 1);
+	fbo202View = new FrameBufferObjectView(width, height, "after createDepthImage", Channels::RG_B, 2, 0, 2);
 
-	FrameBufferObjectView fbo101View_II(width, height, "after calculateCutawaySurface", Channels::RG_B, 1, 0, 1);
-	FrameBufferObjectView fbo202View_II(width, height, "after calculateCutawaySurface", Channels::RG_B, 2, 0, 2);
+	fbo101View_II = new FrameBufferObjectView(width, height, "after calculateCutawaySurface", Channels::RG_B, 1, 0, 1);
+	fbo202View_II = new FrameBufferObjectView(width, height, "after calculateCutawaySurface", Channels::RG_B, 2, 0, 2);
 
 	// Render loop running condition
 	bool isRunning = true;
@@ -516,11 +516,11 @@ int main(int argc, char** argv) {
 			// check depth buffer here
 			// write out z-Buffer as image or view with CodeXL
 			// check fbo1 i.e. tex1 if depth image is written
-			fbo101View.ShowBufferView(showZBufferView);
+			fbo101View->ShowBufferView(showZBufferView);
 			//zBufferView.ShowBufferView(showZBufferView);
 			//rgbBufferView.ShowBufferView(showZBufferView);
 			if (updateZBufferView){
-				fbo101View.UpdateBufferView();
+				fbo101View->UpdateBufferView();
 				//zBufferView.UpdateBufferView();
 				//rgbBufferView.UpdateBufferView();
 			}
@@ -529,11 +529,11 @@ int main(int argc, char** argv) {
 			calculateCutawaySurface();
 
 			// check if fbo1 i.e. tex1 and fbo2 i.e. tex2 has depth values written
-			fbo101View_II.ShowBufferView(showZBufferView);
-			fbo202View_II.ShowBufferView(showZBufferView);
+			fbo101View_II->ShowBufferView(showZBufferView);
+			fbo202View_II->ShowBufferView(showZBufferView);
 			if (updateZBufferView){
-				fbo101View_II.UpdateBufferView();
-				fbo202View_II.UpdateBufferView();
+				fbo101View_II->UpdateBufferView();
+				fbo202View_II->UpdateBufferView();
 			}
 			updateZBufferView = false;
 		}
@@ -691,6 +691,9 @@ void calculateCutawaySurface() {
 
 		// Draw quad + calculate distance transform
 		cutaway->quadPass(step, camera->proj_matrix);
+
+		fbo101View->UpdateBufferView();
+		cv::waitKey(1000);
 
 		// Update step size for next iteration
 		step /= 2;
