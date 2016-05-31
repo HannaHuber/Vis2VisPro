@@ -87,7 +87,7 @@ void main() {
 
 		// Scale out_color to [0,1]
 		if (max(outColor.x, max(outColor.y, outColor.z))>1) {
-			outColor = outColor * 1.0f/max(outColor.x, max(outColor.y, outColor.z));
+			outColor = outColor * 1.0/max(outColor.x, max(outColor.y, outColor.z));
 		}
 
 		outColor = vec4(outColor.xyz,material.transparency);
