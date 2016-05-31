@@ -24,7 +24,7 @@ vec3 getDepthAndCoordinateMax()
 		float z = texture(lookUpTexture, qCoords[i].xy).b;
 		if (z>zMax) {
 			zMax = z;
-			depthAndCoordinateMax = texture(lookUpTexture, textureCoords.xy).rgb;
+			depthAndCoordinateMax = texture(lookUpTexture, qCoords[i].xy).rgb;
 		}
 	}
 	return depthAndCoordinateMax;
@@ -34,16 +34,17 @@ vec3 calcCAndCoordinate(float z, vec2 textureCoords, vec2 qCoords)
 {
 	vec3 cAndCoordinate;
 
-	//vec2 textureCoordinates = textureCoords;
+	vec2 textureCoordinates = textureCoords;
 	//vec2 qCoordinates = qCoords;
 	
-	vec2 textureCoordinates = texture(lookUpTexture, textureCoords).rg;
+	//vec2 textureCoordinates = texture(lookUpTexture, textureCoords).rg;
 	vec2 qCoordinates = texture(lookUpTexture, qCoords).rg;
 
 	float m =  tanPhiInv;
 	float c = z - m*sqrt(pow(textureCoordinates.x - qCoordinates.x,2)+pow(textureCoordinates.y - qCoordinates.y,2));
 
 	cAndCoordinate.xy = qCoordinates;
+	//cAndCoordinate.xy = texture(lookUpTexture, qCoords).rg;
 	cAndCoordinate.z = c;
 
 	return cAndCoordinate;
@@ -52,16 +53,17 @@ vec3 calcCAndCoordinate(float z, vec2 textureCoords, vec2 qCoords)
 void main()
 { 
 	vec3 zAndCoordMax = getDepthAndCoordinateMax();
+	vec3 cAndCoordinateMax = texture(lookUpTexture, textureCoords.xy).rgb;
 	
 	for (int i=0; i<9; ++i)
 	{
 		vec3 cAndCoordinateAct = calcCAndCoordinate(zAndCoordMax.z, textureCoords, qCoords[i]);
-		if(cAndCoordinateAct.z > zAndCoordMax.z)
+		if(cAndCoordinateAct.z > cAndCoordinateMax.z)
 		{
-			zAndCoordMax = cAndCoordinateAct;
+			cAndCoordinateMax = cAndCoordinateAct;
 		}
 	}
-	outColor = zAndCoordMax;
+	outColor = cAndCoordinateMax;
 
 	/*
 	vec2 qScreenCoords[8];
