@@ -501,6 +501,9 @@ int main(int argc, char** argv) {
 			frames = 0;
 		}
 
+		// TEST
+		cutaway->clearBuffers();
+
 		// Update
 		update(m_window, deltaTime);
 
