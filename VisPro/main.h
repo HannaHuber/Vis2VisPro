@@ -93,6 +93,19 @@ GLFWwindow* m_window = nullptr;
 std::string m_environmentDaeFile = "";
 std::string m_itemDaeFile = "";
 
+ZBufferView *zBufferView = nullptr;
+RGBBufferView *rgbBufferView = nullptr;
+
+TextureView *tex1View = nullptr;
+TextureView *tex2View = nullptr;
+
+FrameBufferObjectView *fbo101View = nullptr;
+FrameBufferObjectView *fbo202View = nullptr;
+
+FrameBufferObjectView *fbo101View_II = nullptr;
+FrameBufferObjectView *fbo202View_II = nullptr;
+
+
 // =============================================================================================
 // TCL - Integration
 // =============================================================================================
