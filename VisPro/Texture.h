@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file Texture.h
+*@brief Texture class file.
+*/
+
 #include "glew.h"
 #include <string>
 
@@ -8,6 +12,8 @@ public:
 	Texture(const std::string& path);
 	~Texture();
 
+	/** Bind texture to given texture unit. 
+	  */
 	void bind(int unit);
 
 private:

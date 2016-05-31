@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file ZBufferView.h
+*@brief Z buffer view base class file.
+*/
+
 // Standard
 #include <iostream>
 #include <fstream>
@@ -23,7 +27,8 @@
 
 #include "BufferView.h"
 
-
+/** Z buffer view.
+  */
 class ZBufferView : public BufferView{
 
 private:
@@ -33,6 +38,12 @@ private:
 	GLuint m_fboHandle;
 
 public:
+	/** Constructor.
+	* @param width width of buffer
+	* @param height height of buffer
+	* @param windowName basic name part of OpenCV windows for viewing the buffer
+	* @param fboHandle frame buffer object to extract z buffer
+	*/
 	ZBufferView(int width, int height, const std::string &windowName, GLuint fboHandle);
 
 protected:

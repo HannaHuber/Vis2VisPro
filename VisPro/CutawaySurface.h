@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file CutawaySurface.h
+*@brief Cutaway surface class file.
+*/
+
 #include "ZBufferShader.h"
 #include "Quad.h"
 #include "QuadShader.h"
@@ -71,10 +75,18 @@ public:
 	  */
 	void clearBuffers();
 	
+	/** Z buffer shader used for depth image calculation.
+	  * Draws backfaces in depth image.
+	  */
 	ZBufferShader* z_buffer_shader;
+	/** Quad used for neighbour coordinate interpolation.
+	  */
 	Quad* quad;
+	/** Quad shader that implements the jump flood algorithm.
+	  */
 	QuadShader* quad_shader;
-
+	/** Flag that defines if intersection with cutaway surface should be performed.
+	*/
 	float cut;
 private:
 	GLuint tex1, tex2, look_up_tex, target_tex, fbo1, fbo2, target_fbo;

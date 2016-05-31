@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file RGBBufferView.h
+*@brief RGB buffer view class file.
+*/
+
 // Standard
 #include <iostream>
 #include <fstream>
@@ -24,6 +28,8 @@
 #include "BufferView.h"
 
 
+/** Views the RGB buffer of default frame buffer. 
+  */
 class RGBBufferView : public BufferView{
 
 private:
