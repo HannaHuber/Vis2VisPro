@@ -76,7 +76,7 @@ int SceneObjectManager::draw(const CutawaySurface* c, bool useViewFrustumCulling
 		glDisable(GL_BLEND);
 	}
 
-	// Draw primary objects withour clipping
+	// Draw primary objects without clipping
 	for (std::shared_ptr<Energy> e : *e_items) {				
 		faces += e->draw(c, frustum, vpm, loc, false, false);// do not use view frustum culling because these objects are moving and have only few faces
 	}

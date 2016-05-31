@@ -7,7 +7,15 @@ class Camera : public SceneObject {
 public:
 	Camera(glm::mat4& model_matrix);
 	virtual ~Camera();
+	/** Rotate horizontally and vertically.
+	 * @param look_speed speed of change
+	 * @param angle angles to rotate about
+	 */
 	virtual void update(float look_speed, glm::vec2 angle);			// rotate
+	/** Translate in specified direction.
+	 * @param deltaTime time since last update
+	 * @param direction translation vector
+	*/
 	virtual void update(float deltaTime, glm::vec3 direction);		// translate
 	virtual void update(float deltaTime);
 	virtual void draw();

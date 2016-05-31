@@ -274,7 +274,7 @@ int main(int argc, char** argv);
 void init(GLFWwindow* window);
 
 /** Update of view of given GLFW window.
-* Update camera as well as scene.
+* Update camera as well as scene according to time passed since last update.
 * @param window given GLFW window
 * @param deltaTime time since last update
 */
