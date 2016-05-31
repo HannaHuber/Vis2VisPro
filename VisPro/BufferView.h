@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file BufferView.h
+*@brief Buffer view base class file.
+*/
+
 // Standard
 #include <iostream>
 #include <fstream>

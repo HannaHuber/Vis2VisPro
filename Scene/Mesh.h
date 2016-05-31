@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file Mesh.h
+*@brief Mesh class file.
+*/
+
 #include "glm.hpp"
 #include <list>
 #include <vector>

@@ -22,6 +22,8 @@ namespace Helper
 
 	std::string RelativeFileName(std::string fileName, bool withExtension = false);
 
+	std::string AbsoluteFileName(std::string relativeFileName);
+
 	std::string CleanString(std::string str, bool numbers = true, bool specialCharacters = true);
 
 	wchar_t *convertCharArrayToLPCWSTR(const char* charArray);

@@ -46,7 +46,7 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 	width = w;
 	height = h;
 
-	// Init depth map
+	// Init depth map 1
 	glGenTextures(1, &tex1);
 	glBindTexture(GL_TEXTURE_2D, tex1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
@@ -55,9 +55,8 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LESS);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	
-	// Init framebuffer and attach depth map
+		
+	// Init framebuffer 1 and attach depth map 1 for jump flooding
 	glGenFramebuffers(1, &fbo1);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo1);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex1, 0);
@@ -67,7 +66,7 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 		cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	// Init second texture and framebuffer for jump flooding
+	// Init depth map 2
 	glGenTextures(1, &tex2);
 	glBindTexture(GL_TEXTURE_2D, tex2);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
@@ -76,6 +75,8 @@ void CutawaySurface::init(int w, int h, float z_near, float z_far, float angle, 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LESS);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	
+	// Init framebuffer 2 and attach depth map 2 for jump flooding
 	glGenFramebuffers(1, &fbo2);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo2);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex2, 0);

@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file SceneObjectManager.h
+*@brief scene object manager class file.
+*/
+
 #include "PointLight.h"
 #include "Camera.h"
 #include "Environment.h"

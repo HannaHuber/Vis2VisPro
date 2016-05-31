@@ -626,7 +626,7 @@ void init(GLFWwindow* window) {
 	std::shared_ptr<Camera> importedCamera; //TODO: not used yet
 
 	// Import environmentH
-	cout <<  "env:" << m_environmentDaeFile << endl;
+	m_environmentDaeFile = Helper::AbsoluteFileName(m_environmentDaeFile);
 
 	vector<shared_ptr<Geometry>> list = s.importFrom(m_environmentDaeFile, &allLights, importedCamera);
 
@@ -636,6 +636,8 @@ void init(GLFWwindow* window) {
 	}
 	
 	// Import energy
+	m_itemDaeFile = Helper::AbsoluteFileName(m_itemDaeFile);
+
 	list = s.importFrom(m_itemDaeFile, &allLights, importedCamera);
 
 	for (int i = 0; i < list.size(); i++){
