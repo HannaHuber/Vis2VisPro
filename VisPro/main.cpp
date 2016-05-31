@@ -385,8 +385,8 @@ int EvalTclFile(char *fileName)
 
 int main(int argc, char** argv) {	
 
-	m_environmentDaeFile = "../Models/Japanese/japaneseHouse.dae";
-	m_itemDaeFile = "../Models/Japanese/japaneseNoCarpet.dae";
+	m_environmentDaeFile = "./Models/Japanese/japaneseHouse.dae";
+	m_itemDaeFile = "./Models/Japanese/japaneseNoCarpet.dae";
 
 	// Use input parameters
 	initScreenParameters();
@@ -626,6 +626,8 @@ void init(GLFWwindow* window) {
 	std::shared_ptr<Camera> importedCamera; //TODO: not used yet
 
 	// Import environmentH
+	cout <<  "env:" << m_environmentDaeFile << endl;
+
 	vector<shared_ptr<Geometry>> list = s.importFrom(m_environmentDaeFile, &allLights, importedCamera);
 
 	for (int i = 0; i < list.size(); i++){

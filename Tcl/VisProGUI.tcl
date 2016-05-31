@@ -8,8 +8,8 @@ pack .top -side top -fill x
 
 # Create default values
 
-set commandEnv ../Models/Japanese/japaneseHouse.dae
-set commandItem ../Models/Japanese/japaneseNoCarpet.dae
+set commandEnv ./Models/Japanese/japaneseHouse.dae
+set commandItem ./Models/Japanese/japaneseNoCarpet.dae
 
 # set commandDrill 40
 # set commandNear 0.1
